@@ -2,8 +2,8 @@ namespace EventsWebApplication.Domain.Entities
 {
     public class EventRegistration
     {
-        public int EventId { get; set; }
-        public int ParticipantId { get; set; }
+        public Guid EventId { get; set; }
+        public Guid ParticipantId { get; set; }
         public DateTime RegistrationDate { get; set; }
 
         public virtual Event Event { get; set; }
