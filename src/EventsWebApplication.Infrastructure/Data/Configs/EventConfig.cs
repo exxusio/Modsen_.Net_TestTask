@@ -26,14 +26,19 @@ namespace EventsWebApplication.DataAccess.Configurations
             builder.Property(e => e.Location)
                 .HasMaxLength(200);
 
-            builder.Property(e => e.Category)
-                .HasMaxLength(50);
-
             builder.Property(e => e.ImageUrl)
                 .HasMaxLength(250);
 
             builder.Property(e => e.MaxParticipants)
                 .IsRequired();
+
+            builder.Property(e => e.CategoryId)
+                .IsRequired();
+
+            builder.HasOne(e => e.Category)
+                .WithMany(ec => ec.Events)
+                .HasForeignKey(e => e.CategoryId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasMany(e => e.EventRegistrations)
                 .WithOne(er => er.Event)
