@@ -2,7 +2,7 @@ using EventsWebApplication.Domain.Entities;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 
-namespace EventsWebApplication.DataAccess.Configurations
+namespace EventsWebApplication.Infrastructure.Data.Configs
 {
     public class EventConfig : IEntityTypeConfiguration<Event>
     {
@@ -24,6 +24,7 @@ namespace EventsWebApplication.DataAccess.Configurations
                 .IsRequired();
 
             builder.Property(e => e.Location)
+                .IsRequired()
                 .HasMaxLength(200);
 
             builder.Property(e => e.ImageUrl)
