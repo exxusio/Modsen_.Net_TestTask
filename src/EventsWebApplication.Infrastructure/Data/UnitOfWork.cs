@@ -1,8 +1,8 @@
-using EventsWebApplication.Infrastructure.Data;
+using EventsWebApplication.Infrastructure.Data.Repositories;
 using EventsWebApplication.Domain.Interfaces;
 using EventsWebApplication.Domain.Entities;
 
-namespace DataAccessLayer.Data.Implementations
+namespace EventsWebApplication.Infrastructure.Data
 {
     public class UnitOfWork : IUnitOfWork
     {
