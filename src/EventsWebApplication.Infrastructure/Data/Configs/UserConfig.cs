@@ -22,7 +22,6 @@ namespace EventsWebApplication.DataAccess.Configurations
                 .IsRequired();
 
             builder.Property(u => u.Email)
-                .IsRequired()
                 .HasMaxLength(100);
 
             builder.Property(u => u.RoleId)

@@ -37,8 +37,6 @@ namespace EventsWebApplication.Application.Validations
         public static IRuleBuilder<T, string> Email<T>(this IRuleBuilder<T, string> ruleBuilder)
         {
             return ruleBuilder
-                .NotNull().WithMessage("{PropertyName} should not be null")
-                .NotEmpty().WithMessage("{PropertyName} should not be empty")
                 .EmailAddress().WithMessage("{PropertyName} is not a valid email address")
                 .MaximumLength(100).WithMessage("{PropertyName} should not exceed 100 characters");
         }
