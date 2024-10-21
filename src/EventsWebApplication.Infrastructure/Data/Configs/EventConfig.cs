@@ -24,6 +24,7 @@ namespace EventsWebApplication.DataAccess.Configurations
                 .IsRequired();
 
             builder.Property(e => e.Location)
+                .IsRequired()
                 .HasMaxLength(200);
 
             builder.Property(e => e.ImageUrl)
