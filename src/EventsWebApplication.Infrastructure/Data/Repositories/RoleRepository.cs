@@ -7,7 +7,6 @@ namespace EventsWebApplication.Infrastructure.Data.Repositories
     {
         public RoleRepository(AppDbContext context) : base(context)
         {
-
         }
     }
 }
