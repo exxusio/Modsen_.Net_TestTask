@@ -10,15 +10,22 @@ namespace EventsWebApplication.Application.Profiles
         {
             CreateMap<EventRegistrationCreateDto, EventRegistration>()
                 .ForMember(dest => dest.Event, opt => opt.Ignore())
-                .ForMember(dest => dest.Participant, opt => opt.Ignore());
+                .ForMember(dest => dest.Participant, opt => opt.Ignore())
+                .ForMember(dest => dest.RegistrationDate, opt => opt.Ignore());
 
-            CreateMap<EventRegistrationUpdateDto, EventRegistration>()
+            CreateMap<EventRegistrationCancelDto, EventRegistration>()
                 .ForMember(dest => dest.Event, opt => opt.Ignore())
-                .ForMember(dest => dest.Participant, opt => opt.Ignore());
+                .ForMember(dest => dest.Participant, opt => opt.Ignore())
+                .ForMember(dest => dest.RegistrationDate, opt => opt.Ignore());
 
             CreateMap<EventRegistration, EventRegistrationReadDto>()
                 .ForMember(dest => dest.EventName, opt => opt.MapFrom(src => src.Event.Name))
                 .ForMember(dest => dest.ParticipantName, opt => opt.MapFrom(src => src.Participant.FirstName + " " + src.Participant.LastName));
+
+            CreateMap<EventRegistrationInfoDto, EventRegistration>()
+                .ForMember(dest => dest.Event, opt => opt.Ignore())
+                .ForMember(dest => dest.Participant, opt => opt.Ignore())
+                .ForMember(dest => dest.RegistrationDate, opt => opt.Ignore());
 
             CreateMap<EventRegistration, EventRegistrationDetailedReadDto>()
                 .ForMember(dest => dest.Event.Id, opt => opt.MapFrom(src => src.EventId))

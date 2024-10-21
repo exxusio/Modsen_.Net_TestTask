@@ -17,6 +17,18 @@ namespace EventsWebApplication.Application.Profiles
                 .ForMember(dest => dest.Category, opt => opt.Ignore())
                 .ForMember(dest => dest.EventRegistrations, opt => opt.Ignore());
 
+            CreateMap<Event, EventWithAvailabilityDto>()
+                .ForMember(dest => dest.HasAvailableSeats, opt => opt.MapFrom(src => src.EventRegistrations.Count < src.MaxParticipants));
+
+            CreateMap<EventCriteriaDto, Event>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.Description, opt => opt.Ignore())
+                .ForMember(dest => dest.Time, opt => opt.Ignore())
+                .ForMember(dest => dest.ImageUrl, opt => opt.Ignore())
+                .ForMember(dest => dest.MaxParticipants, opt => opt.Ignore())
+                .ForMember(dest => dest.CategoryId, opt => opt.Ignore())
+                .ForMember(dest => dest.EventRegistrations, opt => opt.Ignore());
+
             CreateMap<Event, EventReadDto>();
 
             CreateMap<Event, EventDetailedReadDto>()

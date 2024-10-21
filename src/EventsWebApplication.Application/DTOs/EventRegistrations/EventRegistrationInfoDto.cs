@@ -1,6 +1,6 @@
 namespace EventsWebApplication.Application.DTOs.EventRegistrations
 {
-    public class EventRegistrationCreateDto
+    public class EventRegistrationInfoDto
     {
         public Guid EventId { get; set; }
         public Guid ParticipantId { get; set; }
