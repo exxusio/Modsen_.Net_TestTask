@@ -15,6 +15,7 @@ namespace EventsWebApplication.Infrastructure.Data
             _repositoryFactories = new Dictionary<Type, Func<AppDbContext, object>>
             {
                 { typeof(Event), ctx => new EventRepository(ctx) },
+                { typeof(EventCategory), ctx => new EventCategoryRepository(ctx) },
                 { typeof(EventRegistration), ctx => new EventRegistrationRepository(ctx) },
                 { typeof(User), ctx => new UserRepository(ctx) },
                 { typeof(Role), ctx => new RoleRepository(ctx) }
