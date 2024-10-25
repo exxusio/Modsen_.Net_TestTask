@@ -6,6 +6,8 @@ namespace EventsWebApplication.Application.Services.Interfaces
 {
     public interface IEventService : IService<Event, EventReadDto, EventDetailedReadDto, EventCreateDto, EventUpdateDto>
     {
-
+        Task<EventDetailedReadDto> GetByNameAsync(string name, CancellationToken cancellationToken = default);
+        Task<IEnumerable<EventReadDto>> GetByCriteriaAsync(EventCriteriaDto dto, CancellationToken cancellationToken = default);
+        Task<IEnumerable<EventWithAvailabilityDto>> GetEventsWithAvailabilityAsync(CancellationToken cancellationToken = default);
     }
 }

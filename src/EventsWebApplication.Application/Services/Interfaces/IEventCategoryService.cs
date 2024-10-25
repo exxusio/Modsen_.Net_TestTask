@@ -6,6 +6,5 @@ namespace EventsWebApplication.Application.Services.Interfaces
 {
     public interface IEventCategoryService : IService<EventCategory, EventCategoryReadDto, EventCategoryDetailedReadDto, EventCategoryCreateDto, EventCategoryUpdateDto>
     {
-
     }
 }
