@@ -14,6 +14,9 @@ namespace EventsWebApplication.Infrastructure.Data.Configs
                 .IsRequired()
                 .HasMaxLength(100);
 
+            builder.HasIndex(r => r.Name)
+                .IsUnique();
+
             builder.Property(e => e.Description)
                 .HasMaxLength(500);
 
