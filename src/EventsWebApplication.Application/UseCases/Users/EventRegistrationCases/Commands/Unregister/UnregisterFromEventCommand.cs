@@ -2,9 +2,9 @@ using MediatR;
 using EventsWebApplication.Application.DTOs;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace EventsWebApplication.Application.UseCases.Users.EventRegistrationCases.Commands.Cancel
+namespace EventsWebApplication.Application.UseCases.Users.EventRegistrationCases.Commands.Unregister
 {
-    public class CancelEventRegistrationCommand : IRequest<EventRegistrationReadDto>
+    public class UnregisterFromEventCommand : IRequest<EventRegistrationReadDto>
     {
         public Guid Id { get; set; }
 

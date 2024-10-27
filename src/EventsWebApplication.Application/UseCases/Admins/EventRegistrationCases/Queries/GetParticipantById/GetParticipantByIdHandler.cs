@@ -3,8 +3,8 @@ using AutoMapper;
 using EventsWebApplication.Application.DTOs;
 using EventsWebApplication.Application.Helpers;
 using EventsWebApplication.Domain.Interfaces.Repositories;
-using EventsWebApplication.Domain.Entities;
 using EventsWebApplication.Domain.Exceptions;
+using EventsWebApplication.Domain.Entities;
 
 namespace EventsWebApplication.Application.UseCases.Admins.EventRegistrationCases.Queries.GetParticipantById
 {

@@ -7,12 +7,12 @@ using EventsWebApplication.Domain.Entities;
 
 namespace EventsWebApplication.Application.UseCases.Users.EventCases.Queries.GetByCriteria
 {
-    public class GetByCriteriaEventHandler(
+    public class GetEventsByCriteriaHandler(
         IEventRepository _repository,
         IMapper _mapper
-    ) : IRequestHandler<GetByCriteriaEventQuery, IEnumerable<EventReadDto>>
+    ) : IRequestHandler<GetEventsByCriteriaQuery, IEnumerable<EventReadDto>>
     {
-        public async Task<IEnumerable<EventReadDto>> Handle(GetByCriteriaEventQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<EventReadDto>> Handle(GetEventsByCriteriaQuery request, CancellationToken cancellationToken)
         {
             var predicate = PredicateBuilder.True<Event>();
 
@@ -30,14 +30,6 @@ namespace EventsWebApplication.Application.UseCases.Users.EventCases.Queries.Get
             {
                 predicate = predicate.And(_event => _event.CategoryId == request.CategoryId);
             }
-
-            // var events = await _repository.GetByPredicateAsync(
-            //     eventDto =>
-            //         (!request.Date.HasValue || eventDto.Date == request.Date.Value) &&
-            //         (string.IsNullOrEmpty(request.Location) || eventDto.Location.Contains(request.Location)) &&
-            //         (request.CategoryId == null || eventDto.CategoryId == request.CategoryId),
-            //     cancellationToken
-            //     );
 
             var events = await _repository.GetByPredicateAsync(predicate, cancellationToken);
             return _mapper.Map<IEnumerable<EventReadDto>>(events);

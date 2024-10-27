@@ -4,16 +4,12 @@ using System.Linq.Expressions;
 
 namespace EventsWebApplication.Infrastructure.Data.Repositories
 {
-    public abstract class BaseRepository<TEntity> : IRepository<TEntity> where TEntity : class
+    public abstract class BaseRepository<TEntity>(
+        AppDbContext context)
+        : IRepository<TEntity> where TEntity : class
     {
-        protected readonly AppDbContext _context;
-        protected readonly DbSet<TEntity> _dbSet;
-
-        protected BaseRepository(AppDbContext context)
-        {
-            _context = context;
-            _dbSet = context.Set<TEntity>();
-        }
+        protected readonly AppDbContext _context = context;
+        protected readonly DbSet<TEntity> _dbSet = context.Set<TEntity>();
 
         public async Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken = default)
         {

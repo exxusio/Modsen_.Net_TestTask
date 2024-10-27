@@ -4,14 +4,14 @@ using EventsWebApplication.Application.DTOs;
 using EventsWebApplication.Domain.Interfaces.Repositories;
 using EventsWebApplication.Domain.Exceptions;
 
-namespace EventsWebApplication.Application.UseCases.Users.EventRegistrationCases.Commands.Cancel
+namespace EventsWebApplication.Application.UseCases.Users.EventRegistrationCases.Commands.Unregister
 {
-    public class CancelEventRegistrationHandler(
+    public class UnregisterFromEventHandler(
         IEventRegistrationRepository _repository,
         IMapper _mapper
-    ) : IRequestHandler<CancelEventRegistrationCommand, EventRegistrationReadDto>
+    ) : IRequestHandler<UnregisterFromEventCommand, EventRegistrationReadDto>
     {
-        public async Task<EventRegistrationReadDto> Handle(CancelEventRegistrationCommand request, CancellationToken cancellationToken)
+        public async Task<EventRegistrationReadDto> Handle(UnregisterFromEventCommand request, CancellationToken cancellationToken)
         {
             var registration = await _repository.GetByIdAsync(request.Id, cancellationToken);
 
@@ -22,7 +22,7 @@ namespace EventsWebApplication.Application.UseCases.Users.EventRegistrationCases
 
             if (registration.ParticipantId != request.UserId)
             {
-                throw new NoPermissionException("Insufficient permissions to perform the operation", nameof(CancelEventRegistrationCommand), request.UserId.ToString());
+                throw new NoPermissionException("Insufficient permissions to perform the operation", nameof(UnregisterFromEventCommand), request.UserId.ToString());
             }
 
             _repository.Delete(registration);

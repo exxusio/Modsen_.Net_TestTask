@@ -8,12 +8,12 @@ using EventsWebApplication.Domain.Entities;
 
 namespace EventsWebApplication.Application.UseCases.Users.EventRegistrationCases.Commands.Register
 {
-    public class RegisterEventRegistrationHandler(
+    public class RegisterForEventHandler(
         IUnitOfWork _unitOfWork,
         IMapper _mapper
-    ) : IRequestHandler<RegisterEventRegistrationCommand, EventRegistrationReadDto>
+    ) : IRequestHandler<RegisterForEventCommand, EventRegistrationReadDto>
     {
-        public async Task<EventRegistrationReadDto> Handle(RegisterEventRegistrationCommand request, CancellationToken cancellationToken)
+        public async Task<EventRegistrationReadDto> Handle(RegisterForEventCommand request, CancellationToken cancellationToken)
         {
             var eventRepository = _unitOfWork.GetRepository<Event>();
 

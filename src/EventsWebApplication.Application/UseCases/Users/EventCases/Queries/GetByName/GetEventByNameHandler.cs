@@ -6,12 +6,12 @@ using EventsWebApplication.Domain.Exceptions;
 
 namespace EventsWebApplication.Application.UseCases.Users.EventCases.Queries.GetByName
 {
-    public class GetByNameEventHandler(
+    public class GetEventByNameHandler(
         IEventRepository _repository,
         IMapper _mapper
-    ) : IRequestHandler<GetByNameEventQuery, EventDetailedReadDto>
+    ) : IRequestHandler<GetEventByNameQuery, EventDetailedReadDto>
     {
-        public async Task<EventDetailedReadDto> Handle(GetByNameEventQuery request, CancellationToken cancellationToken)
+        public async Task<EventDetailedReadDto> Handle(GetEventByNameQuery request, CancellationToken cancellationToken)
         {
             var _event = (await _repository.GetByPredicateAsync(eventDto => eventDto.Name == request.Name, cancellationToken)).FirstOrDefault();
             if (_event == null)

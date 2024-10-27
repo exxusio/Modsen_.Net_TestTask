@@ -1,13 +1,11 @@
 namespace EventsWebApplication.Domain.Exceptions
 {
-    public class NotFoundException : BaseException
+    public class NotFoundException(
+        string message,
+        string resourceName = "Undefined")
+        : BaseException(message, 404)
     {
-        public string ResourceName { get; }
-
-        public NotFoundException(string message, string resourceName = "Undefined") : base(message, 404)
-        {
-            ResourceName = resourceName;
-        }
+        public string ResourceName { get; } = resourceName;
 
         public override string ToString()
         {

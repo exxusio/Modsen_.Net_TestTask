@@ -3,10 +3,9 @@ using EventsWebApplication.Domain.Entities;
 
 namespace EventsWebApplication.Infrastructure.Data.Repositories
 {
-    public class EventRepository : BaseRepository<Event>, IEventRepository
+    public class EventRepository(
+        AppDbContext context)
+        : BaseRepository<Event>(context), IEventRepository
     {
-        public EventRepository(AppDbContext context) : base(context)
-        {
-        }
     }
 }

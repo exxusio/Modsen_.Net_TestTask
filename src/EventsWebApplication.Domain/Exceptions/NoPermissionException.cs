@@ -1,16 +1,13 @@
 namespace EventsWebApplication.Domain.Exceptions
 {
-    public class NoPermissionException : BaseException
+    public class NoPermissionException(
+        string message,
+        string action,
+        string userId = "Undefined")
+        : BaseException(message, 403)
     {
-        public string? UserId { get; }
-        public string? Action { get; }
-
-        public NoPermissionException(string message, string action, string? userId = "Undefined")
-            : base(message, 403)
-        {
-            UserId = userId;
-            Action = action;
-        }
+        public string? UserId { get; } = userId;
+        public string? Action { get; } = action;
 
         public override string ToString()
         {
