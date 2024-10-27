@@ -1,8 +1,8 @@
-using EventsWebApplication.Infrastructure.Data;
+using EventsWebApplication.Infrastructure.Data.Repositories;
 using EventsWebApplication.Domain.Interfaces;
 using EventsWebApplication.Domain.Entities;
 
-namespace DataAccessLayer.Data.Implementations
+namespace EventsWebApplication.Infrastructure.Data
 {
     public class UnitOfWork : IUnitOfWork
     {
@@ -15,6 +15,7 @@ namespace DataAccessLayer.Data.Implementations
             _repositoryFactories = new Dictionary<Type, Func<AppDbContext, object>>
             {
                 { typeof(Event), ctx => new EventRepository(ctx) },
+                { typeof(EventCategory), ctx => new EventCategoryRepository(ctx) },
                 { typeof(EventRegistration), ctx => new EventRegistrationRepository(ctx) },
                 { typeof(User), ctx => new UserRepository(ctx) },
                 { typeof(Role), ctx => new RoleRepository(ctx) }

@@ -2,7 +2,7 @@ using EventsWebApplication.Domain.Entities;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 
-namespace EventsWebApplication.DataAccess.Configurations
+namespace EventsWebApplication.Infrastructure.Data.Configs
 {
     public class UserConfig : IEntityTypeConfiguration<User>
     {
@@ -22,7 +22,6 @@ namespace EventsWebApplication.DataAccess.Configurations
                 .IsRequired();
 
             builder.Property(u => u.Email)
-                .IsRequired()
                 .HasMaxLength(100);
 
             builder.Property(u => u.RoleId)

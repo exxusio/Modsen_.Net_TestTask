@@ -2,7 +2,7 @@ using EventsWebApplication.Domain.Entities;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 
-namespace EventsWebApplication.DataAccess.Configurations
+namespace EventsWebApplication.Infrastructure.Data.Configs
 {
     public class RoleConfig : IEntityTypeConfiguration<Role>
     {
@@ -13,6 +13,9 @@ namespace EventsWebApplication.DataAccess.Configurations
             builder.Property(r => r.Name)
                 .IsRequired()
                 .HasMaxLength(50);
+
+            builder.HasIndex(r => r.Name)
+                .IsUnique();
 
             builder.HasMany(r => r.Users)
                 .WithOne(u => u.Role)

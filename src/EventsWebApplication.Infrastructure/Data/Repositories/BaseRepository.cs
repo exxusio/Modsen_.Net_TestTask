@@ -1,9 +1,8 @@
-using EventsWebApplication.Infrastructure.Data;
 using EventsWebApplication.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace DataAccessLayer.Data.Implementations
+namespace EventsWebApplication.Infrastructure.Data.Repositories
 {
     public abstract class BaseRepository<TEntity> : IRepository<TEntity> where TEntity : class
     {

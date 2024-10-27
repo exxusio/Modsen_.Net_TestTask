@@ -2,13 +2,13 @@ using EventsWebApplication.Domain.Entities;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 
-namespace EventsWebApplication.DataAccess.Configurations
+namespace EventsWebApplication.Infrastructure.Data.Configs
 {
     public class EventRegistrationConfig : IEntityTypeConfiguration<EventRegistration>
     {
         public void Configure(EntityTypeBuilder<EventRegistration> builder)
         {
-            builder.HasKey(er => new { er.EventId, er.ParticipantId });
+            builder.HasKey(e => e.Id);
 
             builder.Property(er => er.EventId)
                 .IsRequired();

@@ -8,6 +8,7 @@ namespace EventsWebApplication.Infrastructure.Data
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         public DbSet<Event> Events => Set<Event>();
+        public DbSet<EventCategory> EventCategories => Set<EventCategory>();
         public DbSet<EventRegistration> EventRegistrations => Set<EventRegistration>();
         public DbSet<User> Users => Set<User>();
         public DbSet<Role> Roles => Set<Role>();
