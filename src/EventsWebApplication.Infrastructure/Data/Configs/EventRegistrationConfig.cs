@@ -8,7 +8,7 @@ namespace EventsWebApplication.Infrastructure.Data.Configs
     {
         public void Configure(EntityTypeBuilder<EventRegistration> builder)
         {
-            builder.HasKey(er => new { er.EventId, er.ParticipantId });
+            builder.HasKey(e => e.Id);
 
             builder.Property(er => er.EventId)
                 .IsRequired();

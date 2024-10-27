@@ -14,6 +14,9 @@ namespace EventsWebApplication.Infrastructure.Data.Configs
                 .IsRequired()
                 .HasMaxLength(50);
 
+            builder.HasIndex(r => r.Name)
+                .IsUnique();
+
             builder.HasMany(r => r.Users)
                 .WithOne(u => u.Role)
                 .HasForeignKey(u => u.RoleId)

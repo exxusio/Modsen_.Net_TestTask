@@ -7,7 +7,6 @@ namespace EventsWebApplication.Infrastructure.Data.Repositories
     {
         public EventRegistrationRepository(AppDbContext context) : base(context)
         {
-
         }
     }
 }
