@@ -28,6 +28,16 @@ namespace EventsWebApplication.Infrastructure.Specifications
                 predicate = predicate.And(_event => _event.Date <= filter.EndDate.Value);
             }
 
+            if (filter.StartTime.HasValue)
+            {
+                predicate = predicate.And(_event => _event.Time >= filter.StartTime.Value);
+            }
+
+            if (filter.EndTime.HasValue)
+            {
+                predicate = predicate.And(_event => _event.Time <= filter.EndTime.Value);
+            }
+
             if (!string.IsNullOrEmpty(filter.Location))
             {
                 predicate = predicate.And(_event => _event.Location.Contains(filter.Location));
