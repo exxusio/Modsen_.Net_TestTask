@@ -1,6 +1,6 @@
 using AutoMapper;
 using EventsWebApplication.Application.DTOs;
-using EventsWebApplication.Application.UseCases.Admins.RoleCases.Commands.Create;
+using EventsWebApplication.Application.UseCases.Admins.RoleCases.Commands.CreateRole;
 using EventsWebApplication.Domain.Entities;
 
 namespace EventsWebApplication.Application.MappingConfigurations

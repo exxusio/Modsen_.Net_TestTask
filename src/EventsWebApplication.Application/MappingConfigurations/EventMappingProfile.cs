@@ -1,6 +1,7 @@
 using AutoMapper;
 using EventsWebApplication.Application.DTOs.Events;
-using EventsWebApplication.Application.UseCases.Admins.EventCases.Commands.Create;
+using EventsWebApplication.Application.UseCases.Admins.EventCases.Commands.CreateEvent;
+using EventsWebApplication.Application.UseCases.Admins.EventCases.Commands.UpdateEvent;
 using EventsWebApplication.Domain.Entities;
 
 namespace EventsWebApplication.Application.MappingConfigurations

@@ -1,0 +1,29 @@
+using MediatR;
+using AutoMapper;
+using EventsWebApplication.Application.DTOs;
+using EventsWebApplication.Domain.Interfaces.Repositories;
+using EventsWebApplication.Domain.Exceptions;
+
+namespace EventsWebApplication.Application.UseCases.Admins.EventCategoryCases.Commands.DeleteCategory
+{
+    public class DeleteCategoryHandler(
+        IEventCategoryRepository _repository,
+        IMapper _mapper
+    ) : IRequestHandler<DeleteCategoryCommand, EventCategoryReadDto>
+    {
+        public async Task<EventCategoryReadDto> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
+        {
+            var category = await _repository.GetByIdAsync(request.Id, cancellationToken);
+
+            if (category == null)
+            {
+                throw new NotFoundException($"Not found with id: {request.Id}", nameof(category));
+            }
+
+            _repository.Delete(category);
+            await _repository.SaveChangesAsync(cancellationToken);
+
+            return _mapper.Map<EventCategoryReadDto>(category);
+        }
+    }
+}
