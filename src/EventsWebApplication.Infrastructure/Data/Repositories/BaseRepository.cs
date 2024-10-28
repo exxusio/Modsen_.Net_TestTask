@@ -1,6 +1,5 @@
-using EventsWebApplication.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
+using EventsWebApplication.Domain.Interfaces;
 
 namespace EventsWebApplication.Infrastructure.Data.Repositories
 {
@@ -19,11 +18,6 @@ namespace EventsWebApplication.Infrastructure.Data.Repositories
         public async Task<TEntity?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
             return await _dbSet.FindAsync(id, cancellationToken);
-        }
-
-        public async Task<IEnumerable<TEntity>> GetByPredicateAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
-        {
-            return await _dbSet.Where(predicate).ToListAsync(cancellationToken);
         }
 
         public async Task AddAsync(TEntity item, CancellationToken cancellationToken = default)

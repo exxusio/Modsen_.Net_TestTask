@@ -29,6 +29,20 @@ namespace EventsWebApplication.Infrastructure.Data
                 throw new InvalidOperationException($"No repository factory found for type {typeof(TEntity).Name}.");
         }
 
+        public TRepository GetRepository<TRepository, TEntity>()
+            where TRepository : IRepository<TEntity>
+            where TEntity : class
+        {
+            if (_repositoryFactories.TryGetValue(typeof(TEntity), out var factory))
+            {
+                return (TRepository)factory.Invoke(_dbContext);
+            }
+            else
+            {
+                throw new InvalidOperationException($"No repository factory found for type {typeof(TEntity).Name}.");
+            }
+        }
+
         public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             return await _dbContext.SaveChangesAsync(cancellationToken);
