@@ -1,6 +1,6 @@
 using MediatR;
 using AutoMapper;
-using EventsWebApplication.Application.DTOs.Events;
+using EventsWebApplication.Application.DTOs;
 using EventsWebApplication.Domain.Interfaces.Repositories;
 using EventsWebApplication.Domain.Exceptions;
 

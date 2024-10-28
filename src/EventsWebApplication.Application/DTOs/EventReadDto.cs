@@ -1,6 +1,6 @@
-namespace EventsWebApplication.Application.DTOs.Events
+namespace EventsWebApplication.Application.DTOs
 {
-    public class EventDetailedReadDto
+    public class EventReadDto
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
@@ -10,6 +10,8 @@ namespace EventsWebApplication.Application.DTOs.Events
         public string Location { get; set; }
         public string ImageUrl { get; set; }
         public int MaxParticipants { get; set; }
+        public int RegisteredCount { get; set; }
+        public bool HasAvailableSeats { get; set; }
         public EventCategoryReadDto Category { get; set; }
     }
 }

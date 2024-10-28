@@ -1,5 +1,5 @@
 using MediatR;
-using EventsWebApplication.Application.DTOs.Events;
+using EventsWebApplication.Application.DTOs;
 
 namespace EventsWebApplication.Application.UseCases.Admins.EventCases.Commands.UpdateEvent
 {
