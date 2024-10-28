@@ -1,6 +1,6 @@
 using System.Linq.Expressions;
 
-namespace EventsWebApplication.Application.Helpers
+namespace EventsWebApplication.Domain.Specifications
 {
     public static class PredicateBuilder
     {
