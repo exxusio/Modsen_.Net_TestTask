@@ -6,8 +6,10 @@ namespace EventsWebApplication.Application.UseCases.Bases.Queries.Paged
     {
         public PagedQueryValidator()
         {
-            RuleFor(x => x.PageNumber).Must(x => x > 0);
-            RuleFor(x => x.PageSize).Must(x => x > 0);
+            RuleFor(x => x.PageNumber)
+                .Paged();
+            RuleFor(x => x.PageSize)
+                .Paged();
         }
     }
 }

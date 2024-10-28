@@ -64,15 +64,20 @@ namespace EventsWebApplication.Application.UseCases
                 .NotNull().WithMessage("{PropertyName} should not be null");
         }
 
-        public static IRuleBuilder<T, DateTime> EventDate<T>(this IRuleBuilder<T, DateTime> ruleBuilder, Func<T, DateTime> getEventDate)
+        public static IRuleBuilder<T, DateTime> EventDate<T>(this IRuleBuilder<T, DateTime> ruleBuilder)
         {
             return ruleBuilder
                 .NotNull().WithMessage("{PropertyName} should not be null")
-                .GreaterThan(DateTime.MinValue).WithMessage("{PropertyName} should be a valid date")
-                .Must((obj, date) => date <= getEventDate(obj)).WithMessage("{PropertyName} cannot be after the event date");
+                .GreaterThan(DateTime.MinValue).WithMessage("{PropertyName} should be a valid date");
         }
 
         public static IRuleBuilder<T, int> MaxParticipants<T>(this IRuleBuilder<T, int> ruleBuilder)
+        {
+            return ruleBuilder
+                .GreaterThan(0).WithMessage("{PropertyName} should be greater than 0");
+        }
+
+        public static IRuleBuilder<T, int> Paged<T>(this IRuleBuilder<T, int> ruleBuilder)
         {
             return ruleBuilder
                 .GreaterThan(0).WithMessage("{PropertyName} should be greater than 0");

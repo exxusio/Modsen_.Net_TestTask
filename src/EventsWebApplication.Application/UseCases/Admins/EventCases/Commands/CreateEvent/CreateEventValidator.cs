@@ -13,7 +13,7 @@ namespace EventsWebApplication.Application.UseCases.Admins.EventCases.Commands.C
                 .Description();
 
             RuleFor(dto => dto.Date)
-                .EventDate(dto => dto.Date);
+                .EventDate();
 
             RuleFor(dto => dto.Time)
                 .EventTime();
