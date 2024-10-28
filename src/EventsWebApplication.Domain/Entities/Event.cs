@@ -1,6 +1,8 @@
+using EventsWebApplication.Domain.Entities.Interfaces;
+
 namespace EventsWebApplication.Domain.Entities
 {
-    public class Event : BaseModel
+    public class Event : BaseModel, IHaveName
     {
         public string Name { get; set; }
         public string Description { get; set; }
