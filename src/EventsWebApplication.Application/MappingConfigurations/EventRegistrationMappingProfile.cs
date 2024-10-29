@@ -13,7 +13,7 @@ namespace EventsWebApplication.Application.MappingConfigurations
                 .ForMember(dest => dest.ParticipantId, opt => opt.MapFrom(src => src.UserId))
                 .ForMember(dest => dest.Event, opt => opt.Ignore())
                 .ForMember(dest => dest.Participant, opt => opt.Ignore())
-                .ForMember(dest => dest.RegistrationDate, opt => opt.Ignore());
+                .ForMember(dest => dest.RegistrationDate, opt => opt.MapFrom(src => DateTime.UtcNow));
 
             CreateMap<EventRegistration, EventRegistrationReadDto>()
                 .ForMember(dest => dest.Event, opt => opt.MapFrom(src => src.Event))
