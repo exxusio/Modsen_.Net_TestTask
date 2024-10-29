@@ -18,7 +18,7 @@ namespace EventsWebApplication.Application.UseCases.Admins.RoleCases.Commands.Cr
 
             if (existingRole != null)
             {
-                throw new NonUniqueNameException($"An entity with the specified name already exists", nameof(existingRole), request.Name);
+                throw new AlreadyExistsException($"An entity with the specified attributes already exists", nameof(Role), nameof(request.Name), request.Name);
             }
 
             var role = _mapper.Map<Role>(request);
