@@ -10,6 +10,16 @@ namespace EventsWebApplication.Infrastructure.Data.Configs
         {
             builder.HasKey(u => u.Id);
 
+            builder.Property(u => u.Login)
+                .IsRequired()
+                .HasMaxLength(20);
+
+            builder.HasIndex(u => u.Login)
+                .IsUnique();
+
+            builder.Property(u => u.HashPassword)
+                .IsRequired();
+
             builder.Property(u => u.FirstName)
                 .IsRequired()
                 .HasMaxLength(50);
@@ -19,10 +29,14 @@ namespace EventsWebApplication.Infrastructure.Data.Configs
                 .HasMaxLength(50);
 
             builder.Property(u => u.DateOfBirth)
-                .IsRequired();
+                .IsRequired(false);
 
             builder.Property(u => u.Email)
-                .HasMaxLength(100);
+                .IsRequired()
+                .HasMaxLength(150);
+
+            builder.HasIndex(u => u.Email)
+                .IsUnique();
 
             builder.Property(u => u.RoleId)
                 .IsRequired();
@@ -35,6 +49,11 @@ namespace EventsWebApplication.Infrastructure.Data.Configs
             builder.HasMany(u => u.EventRegistrations)
                 .WithOne(er => er.Participant)
                 .HasForeignKey(er => er.ParticipantId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasMany(u => u.RefreshTokens)
+                .WithOne(rt => rt.User)
+                .HasForeignKey(rt => rt.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }
