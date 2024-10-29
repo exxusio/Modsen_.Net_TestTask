@@ -1,5 +1,3 @@
-using EventsWebApplication.Application.DTOs.Events;
-
 namespace EventsWebApplication.Application.DTOs
 {
     public class EventRegistrationReadDto

@@ -1,15 +1,13 @@
 namespace EventsWebApplication.Domain.Exceptions
 {
-    public class NonUniqueNameException : BaseException
+    public class NonUniqueNameException(
+        string message,
+        string resourceName,
+        string name)
+        : BaseException(message, 409)
     {
-        public string ResourceName { get; }
-        public string Name { get; }
-
-        public NonUniqueNameException(string message, string resourceName, string name) : base(message, 409)
-        {
-            ResourceName = resourceName;
-            Name = name;
-        }
+        public string ResourceName { get; } = resourceName;
+        public string Name { get; } = name;
 
         public override string ToString()
         {

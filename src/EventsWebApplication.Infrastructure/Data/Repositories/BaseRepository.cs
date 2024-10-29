@@ -1,19 +1,14 @@
-using EventsWebApplication.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
+using EventsWebApplication.Domain.Interfaces;
 
 namespace EventsWebApplication.Infrastructure.Data.Repositories
 {
-    public abstract class BaseRepository<TEntity> : IRepository<TEntity> where TEntity : class
+    public abstract class BaseRepository<TEntity>(
+        AppDbContext context)
+        : IRepository<TEntity> where TEntity : class
     {
-        protected readonly AppDbContext _context;
-        protected readonly DbSet<TEntity> _dbSet;
-
-        protected BaseRepository(AppDbContext context)
-        {
-            _context = context;
-            _dbSet = context.Set<TEntity>();
-        }
+        protected readonly AppDbContext _context = context;
+        protected readonly DbSet<TEntity> _dbSet = context.Set<TEntity>();
 
         public async Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken = default)
         {
@@ -23,11 +18,6 @@ namespace EventsWebApplication.Infrastructure.Data.Repositories
         public async Task<TEntity?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
             return await _dbSet.FindAsync(id, cancellationToken);
-        }
-
-        public async Task<IEnumerable<TEntity>> GetByPredicateAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
-        {
-            return await _dbSet.Where(predicate).ToListAsync(cancellationToken);
         }
 
         public async Task AddAsync(TEntity item, CancellationToken cancellationToken = default)

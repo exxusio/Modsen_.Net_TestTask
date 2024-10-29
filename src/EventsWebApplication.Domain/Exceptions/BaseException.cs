@@ -1,13 +1,11 @@
 namespace EventsWebApplication.Domain.Exceptions
 {
-    public abstract class BaseException : Exception
+    public abstract class BaseException(
+        string message,
+        int statusCode)
+        : Exception(message)
     {
-        public int StatusCode { get; }
-
-        protected BaseException(string message, int statusCode) : base(message)
-        {
-            StatusCode = statusCode;
-        }
+        public int StatusCode { get; } = statusCode;
 
         public override string ToString()
         {

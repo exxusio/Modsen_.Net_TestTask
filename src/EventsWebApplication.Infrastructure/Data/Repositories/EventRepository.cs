@@ -1,12 +1,32 @@
+using Microsoft.EntityFrameworkCore;
+using EventsWebApplication.Infrastructure.Specifications;
 using EventsWebApplication.Domain.Interfaces.Repositories;
 using EventsWebApplication.Domain.Entities;
+using EventsWebApplication.Domain.Filters;
 
 namespace EventsWebApplication.Infrastructure.Data.Repositories
 {
-    public class EventRepository : BaseRepository<Event>, IEventRepository
+    public class EventRepository(
+        AppDbContext context)
+        : BaseRepository<Event>(context), IEventRepository
     {
-        public EventRepository(AppDbContext context) : base(context)
+        public async Task<IEnumerable<Event>> GetEventsByFilter(PagedFilter paged, EventFilter filter, CancellationToken cancellationToken)
         {
+            var specification = new EventsByFilterSpecification(filter);
+
+            return await _dbSet
+            .Where(specification.ToExpression())
+            .Paged(paged)
+            .ToListAsync(cancellationToken);
+        }
+
+        public async Task<Event?> GetEventByName(string name, CancellationToken cancellationToken = default)
+        {
+            var specification = new EventByNameSpecification(name);
+
+            var _event = (await _dbSet.Where(specification.ToExpression()).ToListAsync(cancellationToken)).FirstOrDefault();
+
+            return _event;
         }
     }
 }

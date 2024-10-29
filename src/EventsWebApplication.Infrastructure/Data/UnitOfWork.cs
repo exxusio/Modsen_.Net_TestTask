@@ -4,15 +4,12 @@ using EventsWebApplication.Domain.Entities;
 
 namespace EventsWebApplication.Infrastructure.Data
 {
-    public class UnitOfWork : IUnitOfWork
+    public class UnitOfWork(
+        AppDbContext dbContext)
+        : IUnitOfWork
     {
-        private readonly AppDbContext _dbContext;
-        private readonly Dictionary<Type, Func<AppDbContext, object>> _repositoryFactories;
-
-        public UnitOfWork(AppDbContext dbContext)
-        {
-            _dbContext = dbContext;
-            _repositoryFactories = new Dictionary<Type, Func<AppDbContext, object>>
+        private readonly AppDbContext _dbContext = dbContext;
+        private readonly Dictionary<Type, Func<AppDbContext, object>> _repositoryFactories = new Dictionary<Type, Func<AppDbContext, object>>
             {
                 { typeof(Event), ctx => new EventRepository(ctx) },
                 { typeof(EventCategory), ctx => new EventCategoryRepository(ctx) },
@@ -20,7 +17,6 @@ namespace EventsWebApplication.Infrastructure.Data
                 { typeof(User), ctx => new UserRepository(ctx) },
                 { typeof(Role), ctx => new RoleRepository(ctx) }
             };
-        }
 
         public IRepository<TEntity> GetRepository<TEntity>() where TEntity : class
         {
@@ -31,6 +27,20 @@ namespace EventsWebApplication.Infrastructure.Data
             }
             else
                 throw new InvalidOperationException($"No repository factory found for type {typeof(TEntity).Name}.");
+        }
+
+        public TRepository GetRepository<TRepository, TEntity>()
+            where TRepository : IRepository<TEntity>
+            where TEntity : class
+        {
+            if (_repositoryFactories.TryGetValue(typeof(TEntity), out var factory))
+            {
+                return (TRepository)factory.Invoke(_dbContext);
+            }
+            else
+            {
+                throw new InvalidOperationException($"No repository factory found for type {typeof(TEntity).Name}.");
+            }
         }
 
         public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

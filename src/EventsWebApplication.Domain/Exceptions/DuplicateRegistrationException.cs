@@ -1,16 +1,13 @@
 namespace EventsWebApplication.Domain.Exceptions
 {
-    public class DuplicateRegistrationException : BaseException
+    public class DuplicateRegistrationException(
+        string message,
+        string userId,
+        string eventId)
+        : BaseException(message, 409)
     {
-        public string UserId { get; }
-        public string EventId { get; }
-
-        public DuplicateRegistrationException(string message, string userId, string eventId)
-            : base(message, 409)
-        {
-            UserId = userId;
-            EventId = eventId;
-        }
+        public string UserId { get; } = userId;
+        public string EventId { get; } = eventId;
 
         public override string ToString()
         {
