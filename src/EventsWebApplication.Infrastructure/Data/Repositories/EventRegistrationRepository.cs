@@ -9,7 +9,7 @@ namespace EventsWebApplication.Infrastructure.Data.Repositories
         AppDbContext context)
         : BaseRepository<EventRegistration>(context), IEventRegistrationRepository
     {
-        public async Task<EventRegistration?> GetRegistrationByEventIdAndParticipantId(Guid userId, Guid eventId, CancellationToken cancellationToken = default)
+        public async Task<EventRegistration?> GetRegistrationByEventIdAndParticipantIdAsync(Guid userId, Guid eventId, CancellationToken cancellationToken = default)
         {
             var specification = new RegistrationByEventIdAndParticipantIdSpecification(userId, eventId);
 
@@ -18,7 +18,7 @@ namespace EventsWebApplication.Infrastructure.Data.Repositories
             return registration;
         }
 
-        public async Task<IEnumerable<EventRegistration>> GetRegistrationsByParticipantId(Guid userId, CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<EventRegistration>> GetRegistrationsByParticipantIdAsync(Guid userId, CancellationToken cancellationToken = default)
         {
             var specification = new RegistrationsByParticipantIdSpecification(userId);
 
@@ -27,7 +27,7 @@ namespace EventsWebApplication.Infrastructure.Data.Repositories
             return registration;
         }
 
-        public async Task<IEnumerable<EventRegistration>> GetRegistrationsByEventId(Guid eventId, CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<EventRegistration>> GetRegistrationsByEventIdAsync(Guid eventId, CancellationToken cancellationToken = default)
         {
             var specification = new RegistrationsByEventIdSpecification(eventId);
 

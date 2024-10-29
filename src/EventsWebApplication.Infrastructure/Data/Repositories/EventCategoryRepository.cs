@@ -9,7 +9,7 @@ namespace EventsWebApplication.Infrastructure.Data.Repositories
         AppDbContext context)
         : BaseRepository<EventCategory>(context), IEventCategoryRepository
     {
-        public async Task<EventCategory?> GetCategoryByName(string name, CancellationToken cancellationToken = default)
+        public async Task<EventCategory?> GetCategoryByNameAsync(string name, CancellationToken cancellationToken = default)
         {
             var specification = new EventCategoryByNameSpecification(name);
 

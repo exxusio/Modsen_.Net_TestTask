@@ -17,7 +17,7 @@ namespace EventsWebApplication.Application.UseCases.Admins.EventCases.Commands.C
         {
             var eventRepository = _unitOfWork.GetRepository<IEventRepository, Event>();
 
-            var existingEvent = await eventRepository.GetEventByName(request.Name, cancellationToken);
+            var existingEvent = await eventRepository.GetEventByNameAsync(request.Name, cancellationToken);
 
             if (existingEvent != null)
             {

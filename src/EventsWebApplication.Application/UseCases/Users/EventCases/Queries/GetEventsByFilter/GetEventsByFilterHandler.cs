@@ -16,7 +16,7 @@ namespace EventsWebApplication.Application.UseCases.Users.EventCases.Queries.Get
             var filter = _mapper.Map<EventFilter>(request);
             var paged = _mapper.Map<PagedFilter>(request);
 
-            var events = await _repository.GetEventsByFilter(paged, filter, cancellationToken);
+            var events = await _repository.GetEventsByFilterAsync(paged, filter, cancellationToken);
             return _mapper.Map<IEnumerable<EventReadDto>>(events);
         }
     }

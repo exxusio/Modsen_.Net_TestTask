@@ -23,7 +23,7 @@ namespace EventsWebApplication.Application.UseCases.Admins.EventCases.Commands.U
                 throw new NotFoundException($"Not found with id: {request.Id}", nameof(Event));
             }
 
-            var existingEvent = await eventRepository.GetEventByName(request.Name, cancellationToken);
+            var existingEvent = await eventRepository.GetEventByNameAsync(request.Name, cancellationToken);
 
             if (existingEvent != null && existingEvent.Id != _event.Id)
             {

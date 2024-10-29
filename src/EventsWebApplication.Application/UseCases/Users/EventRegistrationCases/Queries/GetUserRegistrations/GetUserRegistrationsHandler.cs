@@ -12,7 +12,7 @@ namespace EventsWebApplication.Application.UseCases.Users.EventRegistrationCases
     {
         public async Task<IEnumerable<EventRegistrationReadDto>> Handle(GetUserRegistrationsQuery request, CancellationToken cancellationToken)
         {
-            var registrations = await _repository.GetRegistrationsByParticipantId(request.UserId, cancellationToken);
+            var registrations = await _repository.GetRegistrationsByParticipantIdAsync(request.UserId, cancellationToken);
 
             return _mapper.Map<IEnumerable<EventRegistrationReadDto>>(registrations);
         }

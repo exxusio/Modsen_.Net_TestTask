@@ -14,7 +14,7 @@ namespace EventsWebApplication.Application.UseCases.Admins.EventCategoryCases.Co
     {
         public async Task<EventCategoryReadDto> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
         {
-            var existingCategory = await _repository.GetCategoryByName(request.Name, cancellationToken);
+            var existingCategory = await _repository.GetCategoryByNameAsync(request.Name, cancellationToken);
 
             if (existingCategory != null)
             {

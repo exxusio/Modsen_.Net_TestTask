@@ -14,7 +14,7 @@ namespace EventsWebApplication.Application.UseCases.Admins.RoleCases.Commands.Cr
     {
         public async Task<RoleReadDto> Handle(CreateRoleCommand request, CancellationToken cancellationToken)
         {
-            var existingRole = await _repository.GetRoleByName(request.Name, cancellationToken);
+            var existingRole = await _repository.GetRoleByNameAsync(request.Name, cancellationToken);
 
             if (existingRole != null)
             {
