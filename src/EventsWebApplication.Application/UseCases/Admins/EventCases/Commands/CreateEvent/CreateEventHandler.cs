@@ -21,7 +21,7 @@ namespace EventsWebApplication.Application.UseCases.Admins.EventCases.Commands.C
 
             if (existingEvent != null)
             {
-                throw new AlreadyExistsException($"An entity with the specified attributes already exists", nameof(Event), nameof(request.Name), request.Name);
+                throw new AlreadyExistsException("An entity with the specified attributes already exists", nameof(Event), nameof(request.Name), request.Name);
             }
 
             var categoryRepository = _unitOfWork.GetRepository<EventCategory>();
