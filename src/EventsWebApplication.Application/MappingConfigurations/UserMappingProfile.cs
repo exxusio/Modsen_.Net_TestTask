@@ -1,5 +1,7 @@
 using AutoMapper;
-using EventsWebApplication.Application.DTOs.Users;
+using EventsWebApplication.Application.UseCases.Users.UserCases.Commands.CreateUser;
+using EventsWebApplication.Application.UseCases.Users.UserCases.Commands.UpdateUser;
+using EventsWebApplication.Application.DTOs;
 using EventsWebApplication.Domain.Entities;
 
 namespace EventsWebApplication.Application.Profiles
@@ -8,22 +10,26 @@ namespace EventsWebApplication.Application.Profiles
     {
         public UserMappingProfile()
         {
-            // CreateMap<UserCreateDto, User>()
-            //     .ForMember(dest => dest.Id, opt => opt.Ignore())
-            //     .ForMember(dest => dest.Email, opt => opt.Ignore())
-            //     .ForMember(dest => dest.RoleId, opt => opt.Ignore())
-            //     .ForMember(dest => dest.Role, opt => opt.Ignore())
-            //     .ForMember(dest => dest.EventRegistrations, opt => opt.Ignore());
+            CreateMap<CreateUserCommand, User>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.HashPassword, opt => opt.Ignore())
+                .ForMember(dest => dest.DateOfBirth, opt => opt.Ignore())
+                .ForMember(dest => dest.RoleId, opt => opt.Ignore())
+                .ForMember(dest => dest.Role, opt => opt.Ignore())
+                .ForMember(dest => dest.EventRegistrations, opt => opt.Ignore())
+                .ForMember(dest => dest.RefreshTokens, opt => opt.Ignore());
 
-            // CreateMap<UserUpdateDto, User>()
-            //     .ForMember(dest => dest.Role, opt => opt.Ignore())
-            //     .ForMember(dest => dest.EventRegistrations, opt => opt.Ignore());
+            CreateMap<User, UserReadDto>();
 
-            // CreateMap<User, UserReadDto>();
+            CreateMap<User, UserDetailedReadDto>()
+                .ForMember(dest => dest.RoleName, opt => opt.MapFrom(src => src.Role.Name));
 
-            // CreateMap<User, UserDetailedReadDto>()
-            //     .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.Role))
-            //     .ForMember(dest => dest.EventRegistrations, opt => opt.MapFrom(src => src.EventRegistrations));
+            CreateMap<UpdateUserCommand, User>()
+                .ForMember(dest => dest.HashPassword, opt => opt.Ignore())
+                .ForMember(dest => dest.RoleId, opt => opt.Ignore())
+                .ForMember(dest => dest.Role, opt => opt.Ignore())
+                .ForMember(dest => dest.EventRegistrations, opt => opt.Ignore())
+                .ForMember(dest => dest.RefreshTokens, opt => opt.Ignore());
         }
     }
 }

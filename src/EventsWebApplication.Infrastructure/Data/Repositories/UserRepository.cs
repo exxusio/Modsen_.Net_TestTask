@@ -1,5 +1,7 @@
+using EventsWebApplication.Infrastructure.Specifications;
 using EventsWebApplication.Domain.Interfaces.Repositories;
 using EventsWebApplication.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace EventsWebApplication.Infrastructure.Data.Repositories
 {
@@ -7,5 +9,22 @@ namespace EventsWebApplication.Infrastructure.Data.Repositories
         AppDbContext context)
         : BaseRepository<User>(context), IUserRepository
     {
+        public async Task<User?> FindByEmailAsync(string email, CancellationToken cancellationToken = default)
+        {
+            var specification = new UserByEmailSpecification(email);
+
+            var user = (await _dbSet.Where(specification.ToExpression()).ToListAsync(cancellationToken)).FirstOrDefault();
+
+            return user;
+        }
+
+        public async Task<User?> FindByLoginAsync(string login, CancellationToken cancellationToken = default)
+        {
+            var specification = new UserByLoginSpecification(login);
+
+            var user = (await _dbSet.Where(specification.ToExpression()).ToListAsync(cancellationToken)).FirstOrDefault();
+
+            return user;
+        }
     }
 }

@@ -3,6 +3,7 @@ using AutoMapper;
 using EventsWebApplication.Application.DTOs;
 using EventsWebApplication.Domain.Interfaces.Repositories;
 using EventsWebApplication.Domain.Exceptions;
+using EventsWebApplication.Domain.Entities;
 
 namespace EventsWebApplication.Application.UseCases.Users.EventRegistrationCases.Commands.UnregisterFromEvent
 {
@@ -17,7 +18,7 @@ namespace EventsWebApplication.Application.UseCases.Users.EventRegistrationCases
 
             if (registration == null)
             {
-                throw new NotFoundException($"Not found with id: {request.RegistrationId}", nameof(registration));
+                throw new NotFoundException($"Not found with id: {request.RegistrationId}", nameof(EventRegistration));
             }
 
             if (registration.ParticipantId != request.UserId)

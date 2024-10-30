@@ -15,7 +15,8 @@ namespace EventsWebApplication.Infrastructure.Data
                 { typeof(EventCategory), ctx => new EventCategoryRepository(ctx) },
                 { typeof(EventRegistration), ctx => new EventRegistrationRepository(ctx) },
                 { typeof(User), ctx => new UserRepository(ctx) },
-                { typeof(Role), ctx => new RoleRepository(ctx) }
+                { typeof(Role), ctx => new RoleRepository(ctx) },
+                { typeof(RefreshToken), ctx => new RefreshTokenRepository(ctx) }
             };
 
         public IRepository<TEntity> GetRepository<TEntity>() where TEntity : class
@@ -26,7 +27,7 @@ namespace EventsWebApplication.Infrastructure.Data
                 return repository;
             }
             else
-                throw new InvalidOperationException($"No repository factory found for type {typeof(TEntity).Name}.");
+                throw new InvalidOperationException($"No repository factory found for type {typeof(TEntity).Name}");
         }
 
         public TRepository GetRepository<TRepository, TEntity>()
@@ -39,7 +40,7 @@ namespace EventsWebApplication.Infrastructure.Data
             }
             else
             {
-                throw new InvalidOperationException($"No repository factory found for type {typeof(TEntity).Name}.");
+                throw new InvalidOperationException($"No repository factory found for type {typeof(TEntity).Name}");
             }
         }
 

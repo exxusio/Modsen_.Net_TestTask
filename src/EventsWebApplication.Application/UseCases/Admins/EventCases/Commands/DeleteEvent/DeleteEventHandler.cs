@@ -3,6 +3,7 @@ using AutoMapper;
 using EventsWebApplication.Application.DTOs;
 using EventsWebApplication.Domain.Interfaces.Repositories;
 using EventsWebApplication.Domain.Exceptions;
+using EventsWebApplication.Domain.Entities;
 
 namespace EventsWebApplication.Application.UseCases.Admins.EventCases.Commands.DeleteEvent
 {
@@ -17,7 +18,7 @@ namespace EventsWebApplication.Application.UseCases.Admins.EventCases.Commands.D
 
             if (_event == null)
             {
-                throw new NotFoundException($"Not found with id: {request.Id}", nameof(_event));
+                throw new NotFoundException($"Not found with id: {request.Id}", nameof(Event));
             }
 
             _repository.Delete(_event);

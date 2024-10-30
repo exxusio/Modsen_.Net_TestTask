@@ -14,11 +14,11 @@ namespace EventsWebApplication.Application.UseCases.Admins.EventCategoryCases.Co
     {
         public async Task<EventCategoryReadDto> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
         {
-            var existingCategory = await _repository.GetCategoryByName(request.Name, cancellationToken);
+            var existingCategory = await _repository.GetCategoryByNameAsync(request.Name, cancellationToken);
 
             if (existingCategory != null)
             {
-                throw new NonUniqueNameException($"An entity with the specified name already exists", nameof(existingCategory), request.Name);
+                throw new AlreadyExistsException("An entity with the specified attributes already exists", nameof(EventCategory), nameof(request.Name), request.Name);
             }
 
             var category = _mapper.Map<EventCategory>(request);

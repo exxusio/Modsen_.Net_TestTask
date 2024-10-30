@@ -17,11 +17,11 @@ namespace EventsWebApplication.Application.UseCases.Admins.EventCases.Commands.C
         {
             var eventRepository = _unitOfWork.GetRepository<IEventRepository, Event>();
 
-            var existingEvent = await eventRepository.GetEventByName(request.Name, cancellationToken);
+            var existingEvent = await eventRepository.GetEventByNameAsync(request.Name, cancellationToken);
 
             if (existingEvent != null)
             {
-                throw new NonUniqueNameException($"An entity with the specified name already exists", nameof(existingEvent), request.Name);
+                throw new AlreadyExistsException("An entity with the specified attributes already exists", nameof(Event), nameof(request.Name), request.Name);
             }
 
             var categoryRepository = _unitOfWork.GetRepository<EventCategory>();
@@ -31,7 +31,7 @@ namespace EventsWebApplication.Application.UseCases.Admins.EventCases.Commands.C
             var existingCategory = await categoryRepository.GetByIdAsync(request.CategoryId, cancellationToken);
             if (existingCategory == null)
             {
-                throw new NotFoundException($"Not found with id: {request.CategoryId}", nameof(existingCategory));
+                throw new NotFoundException($"Not found with id: {request.CategoryId}", nameof(Event));
             }
 
             _event.Category = existingCategory;

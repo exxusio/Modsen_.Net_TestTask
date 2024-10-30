@@ -10,7 +10,7 @@ namespace EventsWebApplication.Infrastructure.Data.Repositories
         AppDbContext context)
         : BaseRepository<Event>(context), IEventRepository
     {
-        public async Task<IEnumerable<Event>> GetEventsByFilter(PagedFilter paged, EventFilter filter, CancellationToken cancellationToken)
+        public async Task<IEnumerable<Event>> GetEventsByFilterAsync(PagedFilter paged, EventFilter filter, CancellationToken cancellationToken)
         {
             var specification = new EventsByFilterSpecification(filter);
 
@@ -20,7 +20,7 @@ namespace EventsWebApplication.Infrastructure.Data.Repositories
             .ToListAsync(cancellationToken);
         }
 
-        public async Task<Event?> GetEventByName(string name, CancellationToken cancellationToken = default)
+        public async Task<Event?> GetEventByNameAsync(string name, CancellationToken cancellationToken = default)
         {
             var specification = new EventByNameSpecification(name);
 

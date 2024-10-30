@@ -12,6 +12,7 @@ namespace EventsWebApplication.Infrastructure.Data
         public DbSet<EventRegistration> EventRegistrations => Set<EventRegistration>();
         public DbSet<User> Users => Set<User>();
         public DbSet<Role> Roles => Set<Role>();
+        public DbSet<RefreshToken> RefreshToken => Set<RefreshToken>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using FluentValidation;
 
 namespace EventsWebApplication.Application.UseCases
@@ -24,21 +25,6 @@ namespace EventsWebApplication.Application.UseCases
         {
             return ruleBuilder
                 .MaximumLength(500).WithMessage("{PropertyName} should not exceed 500 characters");
-        }
-
-        public static IRuleBuilder<T, DateTime> DateOfBirth<T>(this IRuleBuilder<T, DateTime> ruleBuilder)
-        {
-            return ruleBuilder
-                .NotNull().WithMessage("{PropertyName} should not be null")
-                .LessThan(DateTime.Now).WithMessage("{PropertyName} cannot be in the future")
-                .GreaterThan(DateTime.MinValue).WithMessage("{PropertyName} should be a valid date");
-        }
-
-        public static IRuleBuilder<T, string> Email<T>(this IRuleBuilder<T, string> ruleBuilder)
-        {
-            return ruleBuilder
-                .EmailAddress().WithMessage("{PropertyName} is not a valid email address")
-                .MaximumLength(100).WithMessage("{PropertyName} should not exceed 100 characters");
         }
 
         public static IRuleBuilder<T, string> EventLocation<T>(this IRuleBuilder<T, string> ruleBuilder)
@@ -81,6 +67,44 @@ namespace EventsWebApplication.Application.UseCases
         {
             return ruleBuilder
                 .GreaterThan(0).WithMessage("{PropertyName} should be greater than 0");
+        }
+
+        public static IRuleBuilder<T, string> Login<T>(this IRuleBuilder<T, string> ruleBuilder)
+        {
+            return ruleBuilder
+                .NotNull().WithMessage("{PropertyName} should not be null")
+                .NotEmpty().WithMessage("{PropertyName} should not be empty")
+                .Length(6, 20).WithMessage("{PropertyName} should have length between 3 and 20");
+        }
+
+        public static IRuleBuilder<T, string> Password<T>(this IRuleBuilder<T, string> ruleBuilder)
+        {
+            return ruleBuilder
+                .NotNull().WithMessage("{PropertyName} should not be null")
+                .NotEmpty().WithMessage("Please, enter the password")
+                .Length(8, 20).WithMessage("Password must be between 4 and 15 characters");
+        }
+
+        public static IRuleBuilder<T, string> ConfirmPassword<T>(this IRuleBuilder<T, string> ruleBuilder, Expression<Func<T, string>> passwordProperty)
+        {
+            return ruleBuilder
+                .Equal(passwordProperty).WithMessage("Password and confirmation do not match.");
+        }
+
+        public static IRuleBuilder<T, DateTime> DateOfBirth<T>(this IRuleBuilder<T, DateTime> ruleBuilder)
+        {
+            return ruleBuilder
+                .NotNull().WithMessage("{PropertyName} should not be null")
+                .LessThan(DateTime.Now).WithMessage("{PropertyName} cannot be in the future")
+                .GreaterThan(DateTime.MinValue).WithMessage("{PropertyName} should be a valid date");
+        }
+
+        public static IRuleBuilder<T, string> Email<T>(this IRuleBuilder<T, string> ruleBuilder)
+        {
+            return ruleBuilder
+                .NotNull().WithMessage("{PropertyName} should not be null")
+                .EmailAddress().WithMessage("{PropertyName} is not a valid email address")
+                .MaximumLength(150).WithMessage("{PropertyName} should not exceed 100 characters");
         }
     }
 }

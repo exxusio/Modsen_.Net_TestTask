@@ -3,6 +3,7 @@ using AutoMapper;
 using EventsWebApplication.Application.DTOs;
 using EventsWebApplication.Domain.Interfaces.Repositories;
 using EventsWebApplication.Domain.Exceptions;
+using EventsWebApplication.Domain.Entities;
 
 namespace EventsWebApplication.Application.UseCases.Admins.EventCategoryCases.Commands.DeleteCategory
 {
@@ -17,7 +18,7 @@ namespace EventsWebApplication.Application.UseCases.Admins.EventCategoryCases.Co
 
             if (category == null)
             {
-                throw new NotFoundException($"Not found with id: {request.Id}", nameof(category));
+                throw new NotFoundException($"Not found with id: {request.Id}", nameof(EventCategory));
             }
 
             _repository.Delete(category);

@@ -14,11 +14,11 @@ namespace EventsWebApplication.Application.UseCases.Admins.RoleCases.Commands.Cr
     {
         public async Task<RoleReadDto> Handle(CreateRoleCommand request, CancellationToken cancellationToken)
         {
-            var existingRole = await _repository.GetRoleByName(request.Name, cancellationToken);
+            var existingRole = await _repository.GetRoleByNameAsync(request.Name, cancellationToken);
 
             if (existingRole != null)
             {
-                throw new NonUniqueNameException($"An entity with the specified name already exists", nameof(existingRole), request.Name);
+                throw new AlreadyExistsException("An entity with the specified attributes already exists", nameof(Role), nameof(request.Name), request.Name);
             }
 
             var role = _mapper.Map<Role>(request);

@@ -20,7 +20,7 @@ namespace EventsWebApplication.Application.UseCases.Users.EventRegistrationCases
             var _event = await eventRepository.GetByIdAsync(request.EventId, cancellationToken);
             if (_event == null)
             {
-                throw new NotFoundException($"Not found with id: {request.EventId}", nameof(_event));
+                throw new NotFoundException($"Not found with id: {request.EventId}", nameof(Event));
             }
 
             var userRepository = _unitOfWork.GetRepository<User>();
@@ -28,12 +28,12 @@ namespace EventsWebApplication.Application.UseCases.Users.EventRegistrationCases
             var user = await userRepository.GetByIdAsync(request.UserId, cancellationToken);
             if (user == null)
             {
-                throw new NotFoundException($"Not found with id: {request.UserId}", nameof(user));
+                throw new NotFoundException($"Not found with id: {request.UserId}", nameof(User));
             }
 
             var eventRegistrationRepository = _unitOfWork.GetRepository<IEventRegistrationRepository, EventRegistration>();
 
-            var existingRegistration = await eventRegistrationRepository.GetRegistrationByEventIdAndParticipantId(request.UserId, request.EventId, cancellationToken);
+            var existingRegistration = await eventRegistrationRepository.GetRegistrationByEventIdAndParticipantIdAsync(request.UserId, request.EventId, cancellationToken);
 
             if (existingRegistration != null)
             {

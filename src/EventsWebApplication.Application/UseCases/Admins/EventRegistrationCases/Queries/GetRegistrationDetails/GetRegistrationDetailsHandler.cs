@@ -14,7 +14,7 @@ namespace EventsWebApplication.Application.UseCases.Admins.EventRegistrationCase
     {
         public async Task<EventRegistrationReadDto> Handle(GetRegistrationDetailsQuery request, CancellationToken cancellationToken)
         {
-            var registration = await _repository.GetRegistrationByEventIdAndParticipantId(request.UserId, request.EventId, cancellationToken);
+            var registration = await _repository.GetRegistrationByEventIdAndParticipantIdAsync(request.UserId, request.EventId, cancellationToken);
 
             if (registration == null)
             {

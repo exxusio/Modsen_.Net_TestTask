@@ -9,7 +9,7 @@ namespace EventsWebApplication.Infrastructure.Data.Repositories
         AppDbContext context)
         : BaseRepository<Role>(context), IRoleRepository
     {
-        public async Task<Role?> GetRoleByName(string name, CancellationToken cancellationToken = default)
+        public async Task<Role?> GetRoleByNameAsync(string name, CancellationToken cancellationToken = default)
         {
             var specification = new RoleByNameSpecification(name);
 
