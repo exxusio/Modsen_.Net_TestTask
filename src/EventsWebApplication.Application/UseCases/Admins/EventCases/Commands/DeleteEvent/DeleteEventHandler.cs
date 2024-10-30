@@ -3,11 +3,13 @@ using AutoMapper;
 using EventsWebApplication.Application.DTOs;
 using EventsWebApplication.Domain.Interfaces.Repositories;
 using EventsWebApplication.Domain.Exceptions;
+using EventsWebApplication.Domain.Interfaces;
 using EventsWebApplication.Domain.Entities;
 
 namespace EventsWebApplication.Application.UseCases.Admins.EventCases.Commands.DeleteEvent
 {
     public class DeleteEventHandler(
+        ICacheRepository _cache,
         IEventRepository _repository,
         IMapper _mapper
     ) : IRequestHandler<DeleteEventCommand, EventReadDto>
@@ -24,7 +26,10 @@ namespace EventsWebApplication.Application.UseCases.Admins.EventCases.Commands.D
             _repository.Delete(_event);
             await _repository.SaveChangesAsync(cancellationToken);
 
-            return _mapper.Map<EventReadDto>(_event);
+            var eventReadDto = _mapper.Map<EventReadDto>(_event);
+            await _cache.DeleteAsync<EventReadDto>(eventReadDto.Id.ToString());
+
+            return eventReadDto;
         }
     }
 }
