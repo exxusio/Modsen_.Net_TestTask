@@ -1,7 +1,7 @@
 using MediatR;
 using EventsWebApplication.Application.DTOs;
 
-namespace EventsWebApplication.Application.UseCases.Admins.UserCases.Queries.ChangeUserRole
+namespace EventsWebApplication.Application.UseCases.Admins.UserCases.Commands.ChangeUserRole
 {
     public class ChangeUserRoleQuery : IRequest<UserReadDto>
     {

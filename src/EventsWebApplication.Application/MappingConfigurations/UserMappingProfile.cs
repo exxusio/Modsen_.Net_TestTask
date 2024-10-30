@@ -21,6 +21,9 @@ namespace EventsWebApplication.Application.Profiles
 
             CreateMap<User, UserReadDto>();
 
+            CreateMap<User, UserDetailedReadDto>()
+                .ForMember(dest => dest.RoleName, opt => opt.MapFrom(src => src.Role.Name));
+
             CreateMap<UpdateUserCommand, User>()
                 .ForMember(dest => dest.HashPassword, opt => opt.Ignore())
                 .ForMember(dest => dest.RoleId, opt => opt.Ignore())

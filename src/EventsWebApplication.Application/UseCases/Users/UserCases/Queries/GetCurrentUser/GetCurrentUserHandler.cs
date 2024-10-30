@@ -10,9 +10,9 @@ namespace EventsWebApplication.Application.UseCases.Users.UserCases.Queries.GetC
     public class GetCurrentUserHandler(
         IUserRepository _repository,
         IMapper _mapper
-    ) : IRequestHandler<GetCurrentUserQuery, UserReadDto>
+    ) : IRequestHandler<GetCurrentUserQuery, UserDetailedReadDto>
     {
-        public async Task<UserReadDto> Handle(GetCurrentUserQuery request, CancellationToken cancellationToken)
+        public async Task<UserDetailedReadDto> Handle(GetCurrentUserQuery request, CancellationToken cancellationToken)
         {
             var user = await _repository.GetByIdAsync(request.Id, cancellationToken);
 
@@ -21,7 +21,7 @@ namespace EventsWebApplication.Application.UseCases.Users.UserCases.Queries.GetC
                 throw new NotFoundException($"Not found with id: {request.Id}", nameof(User));
             }
 
-            return _mapper.Map<UserReadDto>(user);
+            return _mapper.Map<UserDetailedReadDto>(user);
         }
     }
 }

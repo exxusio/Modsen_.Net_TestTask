@@ -6,7 +6,7 @@ using EventsWebApplication.Domain.Exceptions;
 using EventsWebApplication.Domain.Entities;
 using EventsWebApplication.Domain.Interfaces;
 
-namespace EventsWebApplication.Application.UseCases.Admins.UserCases.Queries.ChangeUserRole
+namespace EventsWebApplication.Application.UseCases.Admins.UserCases.Commands.ChangeUserRole
 {
     public class ChangeUserRoleHandler(
         IUnitOfWork _unitOfWork,

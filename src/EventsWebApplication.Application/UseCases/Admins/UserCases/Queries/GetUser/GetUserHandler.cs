@@ -10,9 +10,9 @@ namespace EventsWebApplication.Application.UseCases.Admins.UserCases.Queries.Get
     public class GetUserHandler(
         IUserRepository _repository,
         IMapper _mapper
-    ) : IRequestHandler<GetUserQuery, UserReadDto>
+    ) : IRequestHandler<GetUserQuery, UserDetailedReadDto>
     {
-        public async Task<UserReadDto> Handle(GetUserQuery request, CancellationToken cancellationToken)
+        public async Task<UserDetailedReadDto> Handle(GetUserQuery request, CancellationToken cancellationToken)
         {
             var user = await _repository.GetByIdAsync(request.Id, cancellationToken);
 
@@ -21,7 +21,7 @@ namespace EventsWebApplication.Application.UseCases.Admins.UserCases.Queries.Get
                 throw new NotFoundException($"Not found with id: {request.Id}", nameof(User));
             }
 
-            return _mapper.Map<UserReadDto>(user);
+            return _mapper.Map<UserDetailedReadDto>(user);
         }
     }
 }
