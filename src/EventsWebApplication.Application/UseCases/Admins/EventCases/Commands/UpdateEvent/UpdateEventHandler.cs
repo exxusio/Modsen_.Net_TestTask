@@ -1,6 +1,7 @@
 using MediatR;
 using AutoMapper;
 using EventsWebApplication.Application.DTOs;
+using EventsWebApplication.Application.Configs.Cache;
 using EventsWebApplication.Domain.Interfaces.Repositories;
 using EventsWebApplication.Domain.Exceptions;
 using EventsWebApplication.Domain.Interfaces;
@@ -9,6 +10,7 @@ using EventsWebApplication.Domain.Entities;
 namespace EventsWebApplication.Application.UseCases.Admins.EventCases.Commands.UpdateEvent
 {
     public class UpdateEventHandler(
+        ICacheRepository _cache,
         IUnitOfWork _unitOfWork,
         IMapper _mapper
     ) : IRequestHandler<UpdateEventCommand, EventReadDto>
@@ -40,7 +42,11 @@ namespace EventsWebApplication.Application.UseCases.Admins.EventCases.Commands.U
 
             var newEvent = _mapper.Map(request, _event);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
-            return _mapper.Map<EventReadDto>(newEvent);
+
+            var eventReadDto = _mapper.Map<EventReadDto>(newEvent);
+            await _cache.SetAsync(eventReadDto.Id.ToString(), eventReadDto, CacheConfig.EVENT_TIME);
+
+            return eventReadDto;
         }
     }
 }
