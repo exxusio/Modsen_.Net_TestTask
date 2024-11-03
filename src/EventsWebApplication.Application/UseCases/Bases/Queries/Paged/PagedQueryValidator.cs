@@ -2,7 +2,8 @@ using FluentValidation;
 
 namespace EventsWebApplication.Application.UseCases.Bases.Queries.Paged
 {
-    public class PagedQueryValidator : AbstractValidator<PagedQuery>
+    public class PagedQueryValidator
+        : AbstractValidator<PagedQuery>
     {
         public PagedQueryValidator()
         {

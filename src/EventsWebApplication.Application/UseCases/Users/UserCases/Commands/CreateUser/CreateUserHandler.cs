@@ -1,10 +1,10 @@
 using MediatR;
 using AutoMapper;
-using EventsWebApplication.Application.Algorithms.Interfaces;
-using EventsWebApplication.Application.DTOs;
-using EventsWebApplication.Domain.Interfaces.Repositories;
+using EventsWebApplication.Application.DTOs.Users;
+using EventsWebApplication.Application.Abstractions.Auth;
+using EventsWebApplication.Application.Abstractions.Data;
+using EventsWebApplication.Domain.Repositories;
 using EventsWebApplication.Domain.Exceptions;
-using EventsWebApplication.Domain.Interfaces;
 using EventsWebApplication.Domain.Entities;
 using EventsWebApplication.Domain.Consts;
 
@@ -23,21 +23,36 @@ namespace EventsWebApplication.Application.UseCases.Users.UserCases.Commands.Cre
             var checkEmail = await userRepository.FindByEmailAsync(request.Email, cancellationToken);
             if (checkEmail != null)
             {
-                throw new AlreadyExistsException("The email is already in use", nameof(User), nameof(request.Email), request.Email);
+                throw new AlreadyExistsException(
+                    "The email is already in use",
+                    nameof(User),
+                    nameof(request.Email),
+                    request.Email
+                );
             }
 
             var checkLogin = await userRepository.FindByLoginAsync(request.Login, cancellationToken);
             if (checkLogin != null)
             {
-                throw new AlreadyExistsException("The login is already taken", nameof(User), nameof(request.Login), request.Login);
+                throw new AlreadyExistsException(
+                    "The login is already taken",
+                    nameof(User),
+                    nameof(request.Login),
+                    request.Login
+                );
             }
 
             var roleRepository = _unitOfWork.GetRepository<IRoleRepository, Role>();
 
-            var role = await roleRepository.GetRoleByNameAsync(BaseRoles.User, cancellationToken);
+            var role = await roleRepository.GetByNameAsync(BaseRoles.User, cancellationToken);
             if (role == null)
             {
-                throw new NotFoundException($"Not found with name: {BaseRoles.User}", nameof(Role));
+                throw new NotFoundException(
+                    $"Not found with name",
+                    nameof(Role),
+                    nameof(BaseRoles),
+                    BaseRoles.User
+                );
             }
 
             var newUser = _mapper.Map<User>(request);
@@ -47,6 +62,7 @@ namespace EventsWebApplication.Application.UseCases.Users.UserCases.Commands.Cre
 
             await userRepository.AddAsync(newUser, cancellationToken);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
+
             return _mapper.Map<UserReadDto>(newUser);
         }
     }

@@ -3,7 +3,8 @@ using EventsWebApplication.Application.DTOs;
 
 namespace EventsWebApplication.Application.UseCases.Admins.EventCases.Commands.UpdateEvent
 {
-    public class UpdateEventCommand : IRequest<EventReadDto>
+    public class UpdateEventCommand
+    : IRequest<EventReadDto>
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

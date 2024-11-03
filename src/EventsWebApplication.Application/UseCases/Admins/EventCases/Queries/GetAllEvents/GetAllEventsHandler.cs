@@ -1,7 +1,7 @@
 using MediatR;
 using AutoMapper;
 using EventsWebApplication.Application.DTOs;
-using EventsWebApplication.Domain.Interfaces.Repositories;
+using EventsWebApplication.Domain.Repositories;
 
 namespace EventsWebApplication.Application.UseCases.Admins.EventCases.Queries.GetAllEvents
 {

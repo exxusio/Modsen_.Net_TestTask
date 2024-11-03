@@ -1,8 +1,8 @@
 using AutoMapper;
-using EventsWebApplication.Application.Algorithms.Interfaces;
 using EventsWebApplication.Application.DTOs.Tokens;
+using EventsWebApplication.Application.Abstractions.Auth;
+using EventsWebApplication.Application.Abstractions.Data;
 using EventsWebApplication.Domain.Entities;
-using EventsWebApplication.Domain.Interfaces;
 
 namespace EventsWebApplication.Application.UseCases.Bases.Handlers.Tokens
 {

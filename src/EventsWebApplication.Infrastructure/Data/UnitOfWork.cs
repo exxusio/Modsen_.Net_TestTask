@@ -1,25 +1,29 @@
 using EventsWebApplication.Infrastructure.Data.Repositories;
-using EventsWebApplication.Domain.Interfaces;
+using EventsWebApplication.Application.Abstractions.Data;
+using EventsWebApplication.Domain.Repositories.Bases;
+using EventsWebApplication.Domain.Exceptions;
 using EventsWebApplication.Domain.Entities;
 
 namespace EventsWebApplication.Infrastructure.Data
 {
     public class UnitOfWork(
-        AppDbContext dbContext)
-        : IUnitOfWork
+        AppDbContext dbContext
+    ) : IUnitOfWork
     {
         private readonly AppDbContext _dbContext = dbContext;
-        private readonly Dictionary<Type, Func<AppDbContext, object>> _repositoryFactories = new Dictionary<Type, Func<AppDbContext, object>>
-            {
-                { typeof(Event), ctx => new EventRepository(ctx) },
-                { typeof(EventCategory), ctx => new EventCategoryRepository(ctx) },
-                { typeof(EventRegistration), ctx => new EventRegistrationRepository(ctx) },
-                { typeof(User), ctx => new UserRepository(ctx) },
-                { typeof(Role), ctx => new RoleRepository(ctx) },
-                { typeof(RefreshToken), ctx => new RefreshTokenRepository(ctx) }
-            };
+        private readonly Dictionary<Type, Func<AppDbContext, object>> _repositoryFactories =
+        new Dictionary<Type, Func<AppDbContext, object>>
+        {
+            { typeof(EventRegistration), ctx => new EventRegistrationRepository(ctx) },
+            { typeof(EventCategory), ctx => new EventCategoryRepository(ctx) },
+            { typeof(RefreshToken), ctx => new RefreshTokenRepository(ctx) },
+            { typeof(Event), ctx => new EventRepository(ctx) },
+            { typeof(User), ctx => new UserRepository(ctx) },
+            { typeof(Role), ctx => new RoleRepository(ctx) }
+        };
 
-        public IRepository<TEntity> GetRepository<TEntity>() where TEntity : class
+        public IRepository<TEntity> GetRepository<TEntity>()
+            where TEntity : class
         {
             if (_repositoryFactories.TryGetValue(typeof(TEntity), out var factory))
             {
@@ -27,7 +31,12 @@ namespace EventsWebApplication.Infrastructure.Data
                 return repository;
             }
             else
-                throw new InvalidOperationException($"No repository factory found for type {typeof(TEntity).Name}");
+                throw new NotFoundException(
+                    "No repository factory found",
+                    nameof(TEntity),
+                    "Repository",
+                    "RepositoryName"
+                );
         }
 
         public TRepository GetRepository<TRepository, TEntity>()
@@ -40,18 +49,18 @@ namespace EventsWebApplication.Infrastructure.Data
             }
             else
             {
-                throw new InvalidOperationException($"No repository factory found for type {typeof(TEntity).Name}");
+                throw new NotFoundException(
+                    "No repository factory found",
+                    nameof(TEntity),
+                    "Repository",
+                    "RepositoryName"
+                );
             }
         }
 
         public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             return await _dbContext.SaveChangesAsync(cancellationToken);
-        }
-
-        public void Dispose()
-        {
-            _dbContext.Dispose();
         }
     }
 }

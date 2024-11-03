@@ -1,10 +1,13 @@
 using EventsWebApplication.Domain.Entities.Interfaces;
+using EventsWebApplication.Domain.Entities.Bases;
 
 namespace EventsWebApplication.Domain.Entities
 {
-    public class EventCategory : BaseModel, IHaveName
+    public class EventCategory
+    : BaseModel, IHaveName
     {
         public string Name { get; set; }
-        public virtual ICollection<Event> Events { get; set; } = new List<Event>();
+
+        public virtual IEnumerable<Event> Events { get; set; }
     }
 }

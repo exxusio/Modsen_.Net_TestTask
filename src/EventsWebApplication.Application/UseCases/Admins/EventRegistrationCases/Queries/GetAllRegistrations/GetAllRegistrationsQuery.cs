@@ -3,7 +3,8 @@ using EventsWebApplication.Application.DTOs;
 
 namespace EventsWebApplication.Application.UseCases.Admins.EventRegistrationCases.Queries.GetAllRegistrations
 {
-    public class GetAllRegistrationsQuery : IRequest<IEnumerable<EventRegistrationReadDto>>
+    public class GetAllRegistrationsQuery
+    : IRequest<IEnumerable<EventRegistrationReadDto>>
     {
     }
 }

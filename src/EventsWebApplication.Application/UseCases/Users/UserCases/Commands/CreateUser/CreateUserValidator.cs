@@ -2,7 +2,8 @@ using FluentValidation;
 
 namespace EventsWebApplication.Application.UseCases.Users.UserCases.Commands.CreateUser
 {
-    public class CreateUserValidator : AbstractValidator<CreateUserCommand>
+    public class CreateUserValidator
+    : AbstractValidator<CreateUserCommand>
     {
         public CreateUserValidator()
         {

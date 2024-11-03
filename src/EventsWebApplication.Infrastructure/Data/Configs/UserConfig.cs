@@ -1,10 +1,11 @@
-using EventsWebApplication.Domain.Entities;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using EventsWebApplication.Domain.Entities;
 
 namespace EventsWebApplication.Infrastructure.Data.Configs
 {
-    public class UserConfig : IEntityTypeConfiguration<User>
+    public class UserConfig
+    : IEntityTypeConfiguration<User>
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {

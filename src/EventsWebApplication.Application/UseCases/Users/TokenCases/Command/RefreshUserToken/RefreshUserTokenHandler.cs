@@ -1,11 +1,11 @@
 using MediatR;
 using AutoMapper;
-using EventsWebApplication.Application.UseCases.Bases.Handlers.Tokens;
-using EventsWebApplication.Application.Algorithms.Interfaces;
 using EventsWebApplication.Application.DTOs.Tokens;
-using EventsWebApplication.Domain.Interfaces.Repositories;
+using EventsWebApplication.Application.Abstractions.Auth;
+using EventsWebApplication.Application.Abstractions.Data;
+using EventsWebApplication.Application.UseCases.Bases.Handlers.Tokens;
+using EventsWebApplication.Domain.Repositories;
 using EventsWebApplication.Domain.Exceptions;
-using EventsWebApplication.Domain.Interfaces;
 using EventsWebApplication.Domain.Entities;
 
 namespace EventsWebApplication.Application.UseCases.Users.TokenCases.Command.RefreshUserToken
@@ -20,19 +20,25 @@ namespace EventsWebApplication.Application.UseCases.Users.TokenCases.Command.Ref
         {
             var refreshTokenRepository = _unitOfWork.GetRepository<IRefreshTokenRepository, RefreshToken>();
 
-            var refreshToken = await refreshTokenRepository.GetByIdAsync(request.Id);
-
+            var refreshToken = await refreshTokenRepository.GetByIdAsync(request.Key);
             if (refreshToken == null)
             {
-                throw new NotFoundException($"Not found with id: {request.Id}", nameof(RefreshToken));
+                throw new NotFoundException(
+                    $"Not found with id",
+                    nameof(RefreshToken),
+                    nameof(request.Key),
+                    request.Key.ToString()
+                );
             }
 
             var user = refreshToken.User;
-            refreshTokenRepository.Delete(refreshToken);
 
+            refreshTokenRepository.Delete(refreshToken);
             if (!refreshToken.IsActive)
             {
-                throw new ExpireException("The refresh token is expired and can no longer be used");
+                throw new ExpireException(
+                    "The refresh token is expired and can no longer be used"
+                );
             }
 
             return await GenerateAndSaveTokens(user, cancellationToken);

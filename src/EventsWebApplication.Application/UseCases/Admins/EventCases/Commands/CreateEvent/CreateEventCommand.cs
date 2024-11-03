@@ -3,7 +3,8 @@ using EventsWebApplication.Application.DTOs;
 
 namespace EventsWebApplication.Application.UseCases.Admins.EventCases.Commands.CreateEvent
 {
-    public class CreateEventCommand : IRequest<EventReadDto>
+    public class CreateEventCommand
+    : IRequest<EventReadDto>
     {
         public string Name { get; set; }
         public string Description { get; set; }

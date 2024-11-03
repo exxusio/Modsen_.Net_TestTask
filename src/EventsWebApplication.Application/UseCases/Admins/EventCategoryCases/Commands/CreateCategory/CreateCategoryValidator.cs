@@ -2,7 +2,8 @@ using FluentValidation;
 
 namespace EventsWebApplication.Application.UseCases.Admins.EventCategoryCases.Commands.CreateCategory
 {
-    public class CreateCategoryValidator : AbstractValidator<CreateCategoryCommand>
+    public class CreateCategoryValidator
+    : AbstractValidator<CreateCategoryCommand>
     {
         public CreateCategoryValidator()
         {

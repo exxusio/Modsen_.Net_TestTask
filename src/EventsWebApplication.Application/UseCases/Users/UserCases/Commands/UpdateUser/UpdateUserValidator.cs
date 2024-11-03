@@ -2,7 +2,8 @@ using FluentValidation;
 
 namespace EventsWebApplication.Application.UseCases.Users.UserCases.Commands.UpdateUser
 {
-    public class UpdateUserValidator : AbstractValidator<UpdateUserCommand>
+    public class UpdateUserValidator
+    : AbstractValidator<UpdateUserCommand>
     {
         public UpdateUserValidator()
         {

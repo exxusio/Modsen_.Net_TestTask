@@ -1,16 +1,16 @@
 using MediatR;
 using AutoMapper;
 using EventsWebApplication.Application.DTOs;
-using EventsWebApplication.Application.Configs.Cache;
-using EventsWebApplication.Domain.Interfaces.Repositories;
+using EventsWebApplication.Application.Abstractions.Data;
+using EventsWebApplication.Application.Abstractions.Caching;
+using EventsWebApplication.Domain.Repositories;
 using EventsWebApplication.Domain.Exceptions;
-using EventsWebApplication.Domain.Interfaces;
 using EventsWebApplication.Domain.Entities;
 
 namespace EventsWebApplication.Application.UseCases.Admins.EventCases.Commands.UpdateEvent
 {
     public class UpdateEventHandler(
-        ICacheRepository _cache,
+        ICacheService _cache,
         IUnitOfWork _unitOfWork,
         IMapper _mapper
     ) : IRequestHandler<UpdateEventCommand, EventReadDto>
@@ -22,14 +22,23 @@ namespace EventsWebApplication.Application.UseCases.Admins.EventCases.Commands.U
             var _event = await eventRepository.GetByIdAsync(request.Id, cancellationToken);
             if (_event == null)
             {
-                throw new NotFoundException($"Not found with id: {request.Id}", nameof(Event));
+                throw new NotFoundException(
+                    $"Not found with id",
+                    nameof(Event),
+                    nameof(request.Id),
+                    request.Id.ToString()
+                );
             }
 
-            var existingEvent = await eventRepository.GetEventByNameAsync(request.Name, cancellationToken);
-
+            var existingEvent = await eventRepository.GetByNameAsync(request.Name, cancellationToken);
             if (existingEvent != null && existingEvent.Id != _event.Id)
             {
-                throw new AlreadyExistsException("An entity with the specified attributes already exists", nameof(Event), nameof(request.Name), request.Name);
+                throw new AlreadyExistsException(
+                    "An entity with the specified attributes already exists",
+                    nameof(Event),
+                    nameof(request.Name),
+                    request.Name
+                );
             }
 
             var categoryRepository = _unitOfWork.GetRepository<EventCategory>();
@@ -37,14 +46,20 @@ namespace EventsWebApplication.Application.UseCases.Admins.EventCases.Commands.U
             var existingCategory = await categoryRepository.GetByIdAsync(request.CategoryId, cancellationToken);
             if (existingCategory == null)
             {
-                throw new NotFoundException($"Not found with id: {request.CategoryId}", nameof(EventCategory));
+                throw new NotFoundException(
+                    $"Not found with id",
+                    nameof(EventCategory),
+                    nameof(request.CategoryId),
+                    request.CategoryId.ToString()
+                );
             }
 
             var newEvent = _mapper.Map(request, _event);
+
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             var eventReadDto = _mapper.Map<EventReadDto>(newEvent);
-            await _cache.SetAsync(eventReadDto.Id.ToString(), eventReadDto, CacheConfig.EVENT_TIME);
+            await _cache.SetAsync(eventReadDto.Id.ToString(), eventReadDto);
 
             return eventReadDto;
         }

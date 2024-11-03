@@ -2,7 +2,8 @@ using FluentValidation;
 
 namespace EventsWebApplication.Application.UseCases.Users.UserCases.Commands.ChangeUserPassword
 {
-    public class ChangeUserPasswordValidator : AbstractValidator<ChangeUserPasswordCommand>
+    public class ChangeUserPasswordValidator
+    : AbstractValidator<ChangeUserPasswordCommand>
     {
         public ChangeUserPasswordValidator()
         {

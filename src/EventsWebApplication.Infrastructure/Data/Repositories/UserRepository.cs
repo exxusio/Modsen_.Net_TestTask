@@ -1,13 +1,14 @@
-using EventsWebApplication.Infrastructure.Specifications;
-using EventsWebApplication.Domain.Interfaces.Repositories;
-using EventsWebApplication.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using EventsWebApplication.Infrastructure.Data.Repositories.Bases;
+using EventsWebApplication.Domain.Specifications;
+using EventsWebApplication.Domain.Repositories;
+using EventsWebApplication.Domain.Entities;
 
 namespace EventsWebApplication.Infrastructure.Data.Repositories
 {
     public class UserRepository(
-        AppDbContext context)
-        : BaseRepository<User>(context), IUserRepository
+        AppDbContext context
+    ) : BaseRepository<User>(context), IUserRepository
     {
         public async Task<User?> FindByEmailAsync(string email, CancellationToken cancellationToken = default)
         {

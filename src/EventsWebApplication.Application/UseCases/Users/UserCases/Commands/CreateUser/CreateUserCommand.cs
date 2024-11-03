@@ -1,9 +1,10 @@
 using MediatR;
-using EventsWebApplication.Application.DTOs;
+using EventsWebApplication.Application.DTOs.Users;
 
 namespace EventsWebApplication.Application.UseCases.Users.UserCases.Commands.CreateUser
 {
-    public class CreateUserCommand : IRequest<UserReadDto>
+    public class CreateUserCommand
+    : IRequest<UserReadDto>
     {
         public string Login { get; set; }
         public string Password { get; set; }

@@ -1,8 +1,10 @@
 using EventsWebApplication.Domain.Entities.Interfaces;
+using EventsWebApplication.Domain.Entities.Bases;
 
 namespace EventsWebApplication.Domain.Entities
 {
-    public class Event : BaseModel, IHaveName
+    public class Event
+    : BaseModel, IHaveName
     {
         public string Name { get; set; }
         public string Description { get; set; }
@@ -14,6 +16,6 @@ namespace EventsWebApplication.Domain.Entities
         public Guid CategoryId { get; set; }
 
         public virtual EventCategory Category { get; set; }
-        public virtual ICollection<EventRegistration> EventRegistrations { get; set; } = new List<EventRegistration>();
+        public virtual IEnumerable<EventRegistration> EventRegistrations { get; set; }
     }
 }

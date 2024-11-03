@@ -1,10 +1,11 @@
 using MediatR;
-using EventsWebApplication.Application.DTOs;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using EventsWebApplication.Application.DTOs;
 
 namespace EventsWebApplication.Application.UseCases.Users.EventRegistrationCases.Commands.RegisterForEvent
 {
-    public class RegisterForEventCommand : IRequest<EventRegistrationReadDto>
+    public class RegisterForEventCommand
+    : IRequest<EventRegistrationReadDto>
     {
         public Guid EventId { get; set; }
 

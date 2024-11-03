@@ -5,7 +5,7 @@ using EventsWebApplication.Application.UseCases.Bases.Queries.Paged;
 namespace EventsWebApplication.Application.UseCases.Users.EventCases.Queries.GetEventsByFilter
 {
     public class GetEventsByFilterQuery
-        : PagedQuery, IRequest<IEnumerable<EventReadDto>>
+    : PagedQuery, IRequest<IEnumerable<EventReadDto>>
     {
         public string? SearchTerm { get; set; }
         public DateTime? StartDate { get; set; }

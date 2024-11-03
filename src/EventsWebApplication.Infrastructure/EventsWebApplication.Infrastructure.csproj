@@ -2,14 +2,23 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EventsWebApplication.Domain\EventsWebApplication.Domain.csproj" />
+    <ProjectReference Include="..\EventsWebApplication.Application\EventsWebApplication.Application.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="IdentityServer4" Version="4.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="8.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.10">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.10" />
     <PackageReference Include="StackExchange.Redis" Version="2.8.16" />
   </ItemGroup>
 

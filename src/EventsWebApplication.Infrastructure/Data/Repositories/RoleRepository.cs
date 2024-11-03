@@ -1,15 +1,16 @@
 using Microsoft.EntityFrameworkCore;
-using EventsWebApplication.Infrastructure.Specifications;
-using EventsWebApplication.Domain.Interfaces.Repositories;
+using EventsWebApplication.Infrastructure.Data.Repositories.Bases;
+using EventsWebApplication.Domain.Specifications;
+using EventsWebApplication.Domain.Repositories;
 using EventsWebApplication.Domain.Entities;
 
 namespace EventsWebApplication.Infrastructure.Data.Repositories
 {
     public class RoleRepository(
-        AppDbContext context)
-        : BaseRepository<Role>(context), IRoleRepository
+        AppDbContext context
+    ) : BaseRepository<Role>(context), IRoleRepository
     {
-        public async Task<Role?> GetRoleByNameAsync(string name, CancellationToken cancellationToken = default)
+        public async Task<Role?> GetByNameAsync(string name, CancellationToken cancellationToken = default)
         {
             var specification = new RoleByNameSpecification(name);
 

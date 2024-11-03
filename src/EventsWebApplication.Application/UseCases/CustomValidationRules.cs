@@ -1,5 +1,5 @@
-using System.Linq.Expressions;
 using FluentValidation;
+using System.Linq.Expressions;
 
 namespace EventsWebApplication.Application.UseCases
 {

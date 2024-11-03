@@ -3,11 +3,12 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace EventsWebApplication.Application.UseCases.Users.UserCases.Commands.LogoutUser
 {
-    public class LogoutUserCommand : IRequest
+    public class LogoutUserCommand
+    : IRequest
     {
-        public Guid Id { get; set; }
+        public Guid Key { get; set; }
 
         [BindNever]
-        public Guid UserId { get; set; }
+        public Guid Id { get; set; }
     }
 }

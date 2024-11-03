@@ -1,7 +1,7 @@
 using MediatR;
 using AutoMapper;
 using EventsWebApplication.Application.DTOs;
-using EventsWebApplication.Domain.Interfaces.Repositories;
+using EventsWebApplication.Domain.Repositories;
 using EventsWebApplication.Domain.Exceptions;
 using EventsWebApplication.Domain.Entities;
 
@@ -14,11 +14,15 @@ namespace EventsWebApplication.Application.UseCases.Admins.EventRegistrationCase
     {
         public async Task<EventRegistrationReadDto> Handle(GetRegistrationDetailsQuery request, CancellationToken cancellationToken)
         {
-            var registration = await _repository.GetRegistrationByEventIdAndParticipantIdAsync(request.UserId, request.EventId, cancellationToken);
-
+            var registration = await _repository.GetByEventIdAndParticipantIdAsync(request.UserId, request.EventId, cancellationToken);
             if (registration == null)
             {
-                throw new NotFoundException($"Not found with id: {request.UserId}", nameof(User));
+                throw new NotFoundException(
+                    $"Not found with id",
+                    nameof(EventRegistration),
+                    $"{nameof(request.UserId)}  :::  {nameof(request.EventId)}",
+                    $"{request.UserId}  :::  {request.EventId}"
+                );
             }
 
             return _mapper.Map<EventRegistrationReadDto>(registration);

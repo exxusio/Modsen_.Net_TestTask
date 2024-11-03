@@ -1,8 +1,8 @@
 using MediatR;
 using AutoMapper;
 using EventsWebApplication.Application.DTOs;
-using EventsWebApplication.Domain.Interfaces.Repositories;
-using EventsWebApplication.Domain.Interfaces;
+using EventsWebApplication.Application.Abstractions.Data;
+using EventsWebApplication.Domain.Repositories;
 using EventsWebApplication.Domain.Exceptions;
 using EventsWebApplication.Domain.Entities;
 
@@ -20,7 +20,12 @@ namespace EventsWebApplication.Application.UseCases.Users.EventRegistrationCases
             var _event = await eventRepository.GetByIdAsync(request.EventId, cancellationToken);
             if (_event == null)
             {
-                throw new NotFoundException($"Not found with id: {request.EventId}", nameof(Event));
+                throw new NotFoundException(
+                    $"Not found with id",
+                    nameof(Event),
+                    nameof(request.EventId),
+                    request.EventId.ToString()
+                );
             }
 
             var userRepository = _unitOfWork.GetRepository<User>();
@@ -28,13 +33,17 @@ namespace EventsWebApplication.Application.UseCases.Users.EventRegistrationCases
             var user = await userRepository.GetByIdAsync(request.UserId, cancellationToken);
             if (user == null)
             {
-                throw new NotFoundException($"Not found with id: {request.UserId}", nameof(User));
+                throw new NotFoundException(
+                    $"Not found with id",
+                    nameof(User),
+                    nameof(request.UserId),
+                    request.UserId.ToString()
+                );
             }
 
             var eventRegistrationRepository = _unitOfWork.GetRepository<IEventRegistrationRepository, EventRegistration>();
 
-            var existingRegistration = await eventRegistrationRepository.GetRegistrationByEventIdAndParticipantIdAsync(request.UserId, request.EventId, cancellationToken);
-
+            var existingRegistration = await eventRegistrationRepository.GetByEventIdAndParticipantIdAsync(request.UserId, request.EventId, cancellationToken);
             if (existingRegistration != null)
             {
                 throw new DuplicateRegistrationException(
@@ -46,8 +55,8 @@ namespace EventsWebApplication.Application.UseCases.Users.EventRegistrationCases
 
             var registration = _mapper.Map<EventRegistration>(request);
 
-            await eventRegistrationRepository.AddAsync(registration);
-            await _unitOfWork.SaveChangesAsync();
+            await eventRegistrationRepository.AddAsync(registration, cancellationToken);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return _mapper.Map<EventRegistrationReadDto>(registration);
         }

@@ -1,10 +1,11 @@
-using EventsWebApplication.Domain.Entities;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using EventsWebApplication.Domain.Entities;
 
 namespace EventsWebApplication.Infrastructure.Data.Configs
 {
-    public class EventCategoryConfig : IEntityTypeConfiguration<EventCategory>
+    public class EventCategoryConfig
+    : IEntityTypeConfiguration<EventCategory>
     {
         public void Configure(EntityTypeBuilder<EventCategory> builder)
         {

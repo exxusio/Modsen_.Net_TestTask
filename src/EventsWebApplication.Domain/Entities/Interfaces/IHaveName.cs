@@ -4,5 +4,4 @@ namespace EventsWebApplication.Domain.Entities.Interfaces
     {
         string Name { get; }
     }
-
 }

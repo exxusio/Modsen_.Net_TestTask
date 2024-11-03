@@ -1,7 +1,7 @@
 using MediatR;
 using AutoMapper;
 using EventsWebApplication.Application.DTOs;
-using EventsWebApplication.Domain.Interfaces.Repositories;
+using EventsWebApplication.Domain.Repositories;
 using EventsWebApplication.Domain.Exceptions;
 using EventsWebApplication.Domain.Entities;
 
@@ -14,11 +14,14 @@ namespace EventsWebApplication.Application.UseCases.Admins.EventCategoryCases.Co
     {
         public async Task<EventCategoryReadDto> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
         {
-            var existingCategory = await _repository.GetCategoryByNameAsync(request.Name, cancellationToken);
-
+            var existingCategory = await _repository.GetByNameAsync(request.Name, cancellationToken);
             if (existingCategory != null)
             {
-                throw new AlreadyExistsException("An entity with the specified attributes already exists", nameof(EventCategory), nameof(request.Name), request.Name);
+                throw new AlreadyExistsException(
+                    "An entity with the specified attributes already exists",
+                    nameof(EventCategory), nameof(request.Name),
+                    request.Name
+                );
             }
 
             var category = _mapper.Map<EventCategory>(request);

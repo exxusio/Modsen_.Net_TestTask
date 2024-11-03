@@ -1,11 +1,11 @@
 using MediatR;
 using AutoMapper;
-using EventsWebApplication.Application.UseCases.Bases.Handlers.Tokens;
-using EventsWebApplication.Application.Algorithms.Interfaces;
 using EventsWebApplication.Application.DTOs.Tokens;
-using EventsWebApplication.Domain.Interfaces.Repositories;
+using EventsWebApplication.Application.Abstractions.Auth;
+using EventsWebApplication.Application.Abstractions.Data;
+using EventsWebApplication.Application.UseCases.Bases.Handlers.Tokens;
+using EventsWebApplication.Domain.Repositories;
 using EventsWebApplication.Domain.Exceptions;
-using EventsWebApplication.Domain.Interfaces;
 using EventsWebApplication.Domain.Entities;
 
 namespace EventsWebApplication.Application.UseCases.Users.UserCases.Commands.LoginUser
@@ -24,13 +24,17 @@ namespace EventsWebApplication.Application.UseCases.Users.UserCases.Commands.Log
             var user = await userRepository.FindByLoginAsync(request.Login, cancellationToken);
             if (user == null)
             {
-                throw new UnauthorizedException("User not found");
+                throw new UnauthorizedException(
+                    "User not found"
+                );
             }
 
             var succeeded = _passwordHasher.VerifyPassword(user.HashPassword, request.Password);
             if (!succeeded)
             {
-                throw new UnauthorizedException("Incorrect login or password");
+                throw new UnauthorizedException(
+                    "Incorrect login or password"
+                );
             }
 
             return await GenerateAndSaveTokens(user, cancellationToken);

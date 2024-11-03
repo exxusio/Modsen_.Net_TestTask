@@ -2,7 +2,8 @@ using FluentValidation;
 
 namespace EventsWebApplication.Application.UseCases.Admins.EventCases.Commands.CreateEvent
 {
-    public class CreateEventValidator : AbstractValidator<CreateEventCommand>
+    public class CreateEventValidator
+    : AbstractValidator<CreateEventCommand>
     {
         public CreateEventValidator()
         {
