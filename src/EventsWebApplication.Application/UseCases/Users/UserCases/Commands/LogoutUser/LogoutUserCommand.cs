@@ -1,4 +1,5 @@
 using MediatR;
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace EventsWebApplication.Application.UseCases.Users.UserCases.Commands.LogoutUser
@@ -9,6 +10,7 @@ namespace EventsWebApplication.Application.UseCases.Users.UserCases.Commands.Log
         public Guid Key { get; set; }
 
         [BindNever]
-        public Guid Id { get; set; }
+        [JsonIgnore]
+        public Guid UserId { get; set; }
     }
 }

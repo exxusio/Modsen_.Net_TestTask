@@ -8,6 +8,6 @@ namespace EventsWebApplication.Application.UseCases.Users.UserCases.Commands.Del
     : IRequest<UserReadDto>
     {
         [BindNever]
-        public Guid Id { get; set; }
+        public Guid UserId { get; set; }
     }
 }

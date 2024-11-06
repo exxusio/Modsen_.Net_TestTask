@@ -14,14 +14,14 @@ namespace EventsWebApplication.Application.UseCases.Users.EventRegistrationCases
     {
         public async Task<EventRegistrationReadDto> Handle(UnregisterFromEventCommand request, CancellationToken cancellationToken)
         {
-            var registration = await _repository.GetByIdAsync(request.Id, cancellationToken);
+            var registration = await _repository.GetByIdAsync(request.RegistrationId, cancellationToken);
             if (registration == null)
             {
                 throw new NotFoundException(
                     $"Not found with id",
                     nameof(EventRegistration),
-                    nameof(request.Id),
-                    request.Id.ToString()
+                    nameof(request.RegistrationId),
+                    request.RegistrationId.ToString()
                 );
             }
 

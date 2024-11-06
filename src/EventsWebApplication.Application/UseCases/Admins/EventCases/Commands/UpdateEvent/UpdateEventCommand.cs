@@ -1,4 +1,6 @@
 using MediatR;
+using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using EventsWebApplication.Application.DTOs;
 
 namespace EventsWebApplication.Application.UseCases.Admins.EventCases.Commands.UpdateEvent
@@ -6,7 +8,9 @@ namespace EventsWebApplication.Application.UseCases.Admins.EventCases.Commands.U
     public class UpdateEventCommand
     : IRequest<EventReadDto>
     {
-        public Guid Id { get; set; }
+        [BindNever]
+        [JsonIgnore]
+        public Guid EventId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public DateTime Date { get; set; }

@@ -1,4 +1,6 @@
 using MediatR;
+using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using EventsWebApplication.Application.DTOs;
 
 namespace EventsWebApplication.Application.UseCases.Admins.EventCases.Commands.DeleteEvent
@@ -6,6 +8,8 @@ namespace EventsWebApplication.Application.UseCases.Admins.EventCases.Commands.D
     public class DeleteEventCommand
     : IRequest<EventReadDto>
     {
-        public Guid Id { get; set; }
+        [BindNever]
+        [JsonIgnore]
+        public Guid EventId { get; set; }
     }
 }

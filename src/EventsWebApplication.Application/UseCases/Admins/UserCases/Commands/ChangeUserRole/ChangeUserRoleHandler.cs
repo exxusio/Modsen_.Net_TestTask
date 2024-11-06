@@ -17,14 +17,14 @@ namespace EventsWebApplication.Application.UseCases.Admins.UserCases.Commands.Ch
         {
             var userRepository = _unitOfWork.GetRepository<User>();
 
-            var user = await userRepository.GetByIdAsync(request.Id, cancellationToken);
+            var user = await userRepository.GetByIdAsync(request.UserId, cancellationToken);
             if (user == null)
             {
                 throw new NotFoundException(
                     $"Not found with id",
                     nameof(User),
-                    nameof(request.Id),
-                    request.Id.ToString()
+                    nameof(request.UserId),
+                    request.UserId.ToString()
                 );
             }
 

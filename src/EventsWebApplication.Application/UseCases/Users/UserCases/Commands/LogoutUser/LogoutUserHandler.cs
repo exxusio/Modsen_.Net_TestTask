@@ -26,14 +26,14 @@ namespace EventsWebApplication.Application.UseCases.Users.UserCases.Commands.Log
 
             var userRepository = _unitOfWork.GetRepository<User>();
 
-            var user = await userRepository.GetByIdAsync(request.Id);
+            var user = await userRepository.GetByIdAsync(request.UserId);
             if (user == null)
             {
                 throw new NotFoundException(
                     $"Not found with id",
                     nameof(User),
-                    nameof(request.Id),
-                    request.Id.ToString()
+                    nameof(request.UserId),
+                    request.UserId.ToString()
                 );
             }
 
@@ -41,7 +41,7 @@ namespace EventsWebApplication.Application.UseCases.Users.UserCases.Commands.Log
             {
                 throw new NoPermissionException(
                     "Insufficient permissions to perform the operation",
-                    request.Id.ToString(),
+                    request.UserId.ToString(),
                     nameof(LogoutUserCommand)
                 );
             }

@@ -14,14 +14,14 @@ namespace EventsWebApplication.Application.UseCases.Users.UserCases.Queries.GetC
     {
         public async Task<UserDetailedReadDto> Handle(GetCurrentUserQuery request, CancellationToken cancellationToken)
         {
-            var user = await _repository.GetByIdAsync(request.Id, cancellationToken);
+            var user = await _repository.GetByIdAsync(request.UserId, cancellationToken);
             if (user == null)
             {
                 throw new NotFoundException(
                     $"Not found with id",
                     nameof(User),
-                    nameof(request.Id),
-                    request.Id.ToString()
+                    nameof(request.UserId),
+                    request.UserId.ToString()
                 );
             }
 

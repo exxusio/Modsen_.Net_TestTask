@@ -7,8 +7,8 @@ namespace EventsWebApplication.Application.UseCases.Users.EventRegistrationCases
     public class UnregisterFromEventCommand
     : IRequest<EventRegistrationReadDto>
     {
-        public Guid Id { get; set; }
-
+        [BindNever]
+        public Guid RegistrationId { get; set; }
         [BindNever]
         public Guid UserId { get; set; }
     }

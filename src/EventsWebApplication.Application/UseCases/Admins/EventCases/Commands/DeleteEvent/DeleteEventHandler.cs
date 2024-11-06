@@ -16,14 +16,14 @@ namespace EventsWebApplication.Application.UseCases.Admins.EventCases.Commands.D
     {
         public async Task<EventReadDto> Handle(DeleteEventCommand request, CancellationToken cancellationToken)
         {
-            var _event = await _repository.GetByIdAsync(request.Id, cancellationToken);
+            var _event = await _repository.GetByIdAsync(request.EventId, cancellationToken);
             if (_event == null)
             {
                 throw new NotFoundException(
                     $"Not found with id",
                     nameof(Event),
-                    nameof(request.Id),
-                    request.Id.ToString()
+                    nameof(request.EventId),
+                    request.EventId.ToString()
                 );
             }
 

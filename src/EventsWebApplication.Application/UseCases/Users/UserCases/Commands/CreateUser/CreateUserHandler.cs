@@ -20,17 +20,6 @@ namespace EventsWebApplication.Application.UseCases.Users.UserCases.Commands.Cre
         {
             var userRepository = _unitOfWork.GetRepository<IUserRepository, User>();
 
-            var checkEmail = await userRepository.FindByEmailAsync(request.Email, cancellationToken);
-            if (checkEmail != null)
-            {
-                throw new AlreadyExistsException(
-                    "The email is already in use",
-                    nameof(User),
-                    nameof(request.Email),
-                    request.Email
-                );
-            }
-
             var checkLogin = await userRepository.FindByLoginAsync(request.Login, cancellationToken);
             if (checkLogin != null)
             {
@@ -39,6 +28,17 @@ namespace EventsWebApplication.Application.UseCases.Users.UserCases.Commands.Cre
                     nameof(User),
                     nameof(request.Login),
                     request.Login
+                );
+            }
+
+            var checkEmail = await userRepository.FindByEmailAsync(request.Email, cancellationToken);
+            if (checkEmail != null)
+            {
+                throw new AlreadyExistsException(
+                    "The email is already in use",
+                    nameof(User),
+                    nameof(request.Email),
+                    request.Email
                 );
             }
 

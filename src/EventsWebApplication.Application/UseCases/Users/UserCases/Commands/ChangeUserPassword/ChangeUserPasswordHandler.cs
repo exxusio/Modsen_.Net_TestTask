@@ -16,14 +16,14 @@ namespace EventsWebApplication.Application.UseCases.Users.UserCases.Commands.Cha
     {
         public async Task<UserReadDto> Handle(ChangeUserPasswordCommand request, CancellationToken cancellationToken)
         {
-            var user = await _repository.GetByIdAsync(request.Id, cancellationToken);
+            var user = await _repository.GetByIdAsync(request.UserId, cancellationToken);
             if (user == null)
             {
                 throw new NotFoundException(
                     $"Not found with id",
                     nameof(User),
-                    nameof(request.Id),
-                    request.Id.ToString()
+                    nameof(request.UserId),
+                    request.UserId.ToString()
                 );
             }
 

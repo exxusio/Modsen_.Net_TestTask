@@ -14,14 +14,14 @@ namespace EventsWebApplication.Application.UseCases.Admins.EventCategoryCases.Co
     {
         public async Task<EventCategoryReadDto> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
         {
-            var category = await _repository.GetByIdAsync(request.Id, cancellationToken);
+            var category = await _repository.GetByIdAsync(request.CategoryId, cancellationToken);
             if (category == null)
             {
                 throw new NotFoundException(
                     $"Not found with id",
                     nameof(Event),
-                    nameof(request.Id),
-                    request.Id.ToString()
+                    nameof(request.CategoryId),
+                    request.CategoryId.ToString()
                 );
             }
 

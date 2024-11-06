@@ -11,7 +11,6 @@ namespace EventsWebApplication.Application.UseCases.Users.UserCases.Commands.Cha
                 .Password();
 
             RuleFor(dto => dto.ConfirmPassword)
-                .Password()
                 .ConfirmPassword(dto => dto.Password);
         }
     }

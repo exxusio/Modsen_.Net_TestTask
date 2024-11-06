@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using EventsWebApplication.Application.DTOs;
 
 namespace EventsWebApplication.Application.UseCases.Users.EventCases.Queries.GetEventById
@@ -6,6 +7,7 @@ namespace EventsWebApplication.Application.UseCases.Users.EventCases.Queries.Get
     public class GetEventByIdQuery
     : IRequest<EventReadDto>
     {
-        public Guid Id { get; set; }
+        [BindNever]
+        public Guid EventId { get; set; }
     }
 }

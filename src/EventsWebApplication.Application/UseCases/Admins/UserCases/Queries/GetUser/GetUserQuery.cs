@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using EventsWebApplication.Application.DTOs.Users;
 
 namespace EventsWebApplication.Application.UseCases.Admins.UserCases.Queries.GetUser
@@ -6,6 +7,7 @@ namespace EventsWebApplication.Application.UseCases.Admins.UserCases.Queries.Get
     public class GetUserQuery
     : IRequest<UserDetailedReadDto>
     {
-        public Guid Id { get; set; }
+        [BindNever]
+        public Guid UserId { get; set; }
     }
 }

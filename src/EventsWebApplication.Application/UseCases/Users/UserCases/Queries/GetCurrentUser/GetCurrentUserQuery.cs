@@ -8,6 +8,6 @@ namespace EventsWebApplication.Application.UseCases.Users.UserCases.Queries.GetC
     : IRequest<UserDetailedReadDto>
     {
         [BindNever]
-        public Guid Id { get; set; }
+        public Guid UserId { get; set; }
     }
 }

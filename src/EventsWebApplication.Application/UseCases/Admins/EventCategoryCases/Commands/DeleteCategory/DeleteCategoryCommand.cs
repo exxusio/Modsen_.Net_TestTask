@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using EventsWebApplication.Application.DTOs;
 
 namespace EventsWebApplication.Application.UseCases.Admins.EventCategoryCases.Commands.DeleteCategory
@@ -6,6 +7,7 @@ namespace EventsWebApplication.Application.UseCases.Admins.EventCategoryCases.Co
     public class DeleteCategoryCommand
     : IRequest<EventCategoryReadDto>
     {
-        public Guid Id { get; set; }
+        [BindNever]
+        public Guid CategoryId { get; set; }
     }
 }

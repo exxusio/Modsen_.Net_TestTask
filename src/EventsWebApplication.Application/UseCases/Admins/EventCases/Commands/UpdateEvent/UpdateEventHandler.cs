@@ -19,14 +19,14 @@ namespace EventsWebApplication.Application.UseCases.Admins.EventCases.Commands.U
         {
             var eventRepository = _unitOfWork.GetRepository<IEventRepository, Event>();
 
-            var _event = await eventRepository.GetByIdAsync(request.Id, cancellationToken);
+            var _event = await eventRepository.GetByIdAsync(request.EventId, cancellationToken);
             if (_event == null)
             {
                 throw new NotFoundException(
                     $"Not found with id",
                     nameof(Event),
-                    nameof(request.Id),
-                    request.Id.ToString()
+                    nameof(request.EventId),
+                    request.EventId.ToString()
                 );
             }
 

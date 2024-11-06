@@ -1,4 +1,5 @@
 using MediatR;
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using EventsWebApplication.Application.DTOs.Users;
 
@@ -8,7 +9,8 @@ namespace EventsWebApplication.Application.UseCases.Users.UserCases.Commands.Upd
     : IRequest<UserReadDto>
     {
         [BindNever]
-        public Guid Id { get; set; }
+        [JsonIgnore]
+        public Guid UserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime DateOfBirth { get; set; }
