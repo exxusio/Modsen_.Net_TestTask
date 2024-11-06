@@ -41,8 +41,7 @@ namespace EventsWebApplication.Application.UseCases
                 .Must(uri =>
                     string.IsNullOrEmpty(uri) ||
                     Uri.IsWellFormedUriString(uri, UriKind.Absolute)
-                    ).WithMessage("Image should be a valid URL")
-                .MaximumLength(250).WithMessage("Image should not exceed 250 characters");
+                    ).WithMessage("Image should be a valid URL");
         }
 
         public static IRuleBuilder<T, TimeSpan> EventTime<T>(this IRuleBuilder<T, TimeSpan> ruleBuilder)
