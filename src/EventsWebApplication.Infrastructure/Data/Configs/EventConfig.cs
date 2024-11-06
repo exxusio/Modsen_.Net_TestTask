@@ -34,7 +34,7 @@ namespace EventsWebApplication.Infrastructure.Data.Configs
                 .HasMaxLength(200);
 
             builder.Property(e => e.ImageUrl)
-                .HasMaxLength(250);
+                .HasColumnType("TEXT");
 
             builder.Property(e => e.MaxParticipants)
                 .IsRequired();

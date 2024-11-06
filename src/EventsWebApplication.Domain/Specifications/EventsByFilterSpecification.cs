@@ -14,29 +14,29 @@ namespace EventsWebApplication.Domain.Specifications
         {
             var predicate = PredicateBuilder.True<Event>();
 
-            if (!string.IsNullOrEmpty(filter.SearchTerm))
+            if (!string.IsNullOrEmpty(filter.EventName))
             {
-                predicate = predicate.And(_event => _event.Name.Contains(filter.SearchTerm));
+                predicate = predicate.And(_event => _event.Name.Contains(filter.EventName));
             }
 
-            if (filter.StartDate.HasValue)
+            if (filter.FromDate.HasValue)
             {
-                predicate = predicate.And(_event => _event.Date >= filter.StartDate.Value);
+                predicate = predicate.And(_event => _event.Date >= filter.FromDate.Value);
             }
 
-            if (filter.EndDate.HasValue)
+            if (filter.ToDate.HasValue)
             {
-                predicate = predicate.And(_event => _event.Date <= filter.EndDate.Value);
+                predicate = predicate.And(_event => _event.Date <= filter.ToDate.Value);
             }
 
-            if (filter.StartTime.HasValue)
+            if (filter.FromTime.HasValue)
             {
-                predicate = predicate.And(_event => _event.Time >= filter.StartTime.Value);
+                predicate = predicate.And(_event => _event.Time >= filter.FromTime.Value);
             }
 
-            if (filter.EndTime.HasValue)
+            if (filter.ToTime.HasValue)
             {
-                predicate = predicate.And(_event => _event.Time <= filter.EndTime.Value);
+                predicate = predicate.And(_event => _event.Time <= filter.ToTime.Value);
             }
 
             if (!string.IsNullOrEmpty(filter.Location))
