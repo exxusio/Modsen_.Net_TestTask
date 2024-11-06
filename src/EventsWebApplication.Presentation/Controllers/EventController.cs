@@ -18,7 +18,7 @@ namespace EventsWebApplication.Presentation.Controllers
     ) : ControllerBase
     {
         [HttpGet]
-        [AllowAnonymous]
+        [Authorize(Policy = Policies.AdminOnlyActions)]
         public async Task<IActionResult> GetAllEvents([FromQuery] GetAllEventsQuery query, CancellationToken cancellationToken = default)
         {
             var events = await mediator.Send(query, cancellationToken);
@@ -37,9 +37,9 @@ namespace EventsWebApplication.Presentation.Controllers
             return Ok(_event);
         }
 
-        [HttpPut("filter/page={pageNumber}")]
+        [HttpGet("filter/page={pageNumber}")]
         [AllowAnonymous]
-        public async Task<IActionResult> GetEventsByFilter(int pageNumber, [FromBody] GetEventsByFilterQuery query, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> GetEventsByFilter(int pageNumber, [FromQuery] GetEventsByFilterQuery query, CancellationToken cancellationToken = default)
         {
             query.PageNumber = pageNumber;
             query.PageSize = 20;
