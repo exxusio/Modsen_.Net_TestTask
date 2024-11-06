@@ -23,8 +23,20 @@ namespace EventsWebApplication.Application.Configs.Mappings
 
             CreateMap<Event, EventReadDto>()
                 .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category))
-                .ForMember(dest => dest.HasAvailableSeats, opt => opt.MapFrom(src => src.EventRegistrations.Count() < src.MaxParticipants))
-                .ForMember(dest => dest.RegisteredCount, opt => opt.MapFrom(src => src.EventRegistrations.Count()));
+                .ForMember(dest => dest.HasAvailableSeats, opt =>
+                    opt.MapFrom(src =>
+                        (src.EventRegistrations != null
+                            ? src.EventRegistrations.Count()
+                            : 0) < src.MaxParticipants
+                    )
+                )
+                .ForMember(dest => dest.RegisteredCount, opt =>
+                    opt.MapFrom(src =>
+                        src.EventRegistrations != null
+                            ? src.EventRegistrations.Count()
+                            : 0
+                    )
+                );
         }
     }
 }
