@@ -10,9 +10,9 @@ namespace EventsWebApplication.Infrastructure
 {
     public static class DbInitializer
     {
-        public static void Initialize(AppDbContext appDbcontext)
+        public static async Task Initialize(AppDbContext appDbcontext)
         {
-            appDbcontext.Database.Migrate();
+            await appDbcontext.Database.MigrateAsync();
         }
 
         public static async Task SeedAsync(IUnitOfWork unitOfWork, IPasswordHasher passwordHasher)
