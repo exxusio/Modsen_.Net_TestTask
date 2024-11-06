@@ -22,9 +22,11 @@ namespace EventsWebApplication.Infrastructure.Data.Configs
                 .HasMaxLength(500);
 
             builder.Property(e => e.Date)
+                .HasColumnType("date")
                 .IsRequired();
 
             builder.Property(e => e.Time)
+                .HasColumnType("time")
                 .IsRequired();
 
             builder.Property(e => e.Location)

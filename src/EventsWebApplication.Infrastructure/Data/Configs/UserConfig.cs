@@ -30,6 +30,7 @@ namespace EventsWebApplication.Infrastructure.Data.Configs
                 .HasMaxLength(50);
 
             builder.Property(u => u.DateOfBirth)
+                .HasColumnType("date")
                 .IsRequired(false);
 
             builder.Property(u => u.Email)

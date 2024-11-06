@@ -15,9 +15,19 @@ namespace EventsWebApplication.Infrastructure.Data.Configs
                 .IsRequired();
 
             builder.Property(rt => rt.CreationTime)
+                .HasColumnType("timestamp with time zone")
+                .HasConversion(
+                    v => DateTime.SpecifyKind(v, DateTimeKind.Utc),
+                    v => DateTime.SpecifyKind(v, DateTimeKind.Utc)
+                )
                 .IsRequired();
 
             builder.Property(rt => rt.ExpirationTime)
+                .HasColumnType("timestamp with time zone")
+                .HasConversion(
+                    v => DateTime.SpecifyKind(v, DateTimeKind.Utc),
+                    v => DateTime.SpecifyKind(v, DateTimeKind.Utc)
+                )
                 .IsRequired();
 
             builder.HasOne(rt => rt.User)
