@@ -53,6 +53,15 @@ namespace EventsWebApplication.Application.UseCases.Users.EventRegistrationCases
                 );
             }
 
+            if (_event.EventRegistrations.Count() >= _event.MaxParticipants)
+            {
+                throw new NoAvailableSeatsException(
+                    "No available seats for this event",
+                    request.UserId.ToString(),
+                    request.EventId.ToString()
+                );
+            }
+
             var registration = _mapper.Map<EventRegistration>(request);
 
             await eventRegistrationRepository.AddAsync(registration, cancellationToken);
