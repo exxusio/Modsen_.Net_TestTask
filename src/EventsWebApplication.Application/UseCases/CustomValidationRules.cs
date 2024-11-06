@@ -18,7 +18,7 @@ namespace EventsWebApplication.Application.UseCases
             return ruleBuilder
                 .NotNull().WithMessage("{PropertyName} should not be null")
                 .NotEmpty().WithMessage("{PropertyName} should not be empty")
-                .Length(3, 100).WithMessage("{PropertyName} should have length between 3 and 50");
+                .Length(3, 100).WithMessage("{PropertyName} should have length between 3 and 100");
         }
 
         public static IRuleBuilder<T, string> Description<T>(this IRuleBuilder<T, string> ruleBuilder)
@@ -38,10 +38,11 @@ namespace EventsWebApplication.Application.UseCases
         public static IRuleBuilder<T, string> ImageUrl<T>(this IRuleBuilder<T, string> ruleBuilder)
         {
             return ruleBuilder
-                .NotNull().WithMessage("{PropertyName} should not be null")
-                .NotEmpty().WithMessage("{PropertyName} should not be empty")
-                .Must(uri => Uri.IsWellFormedUriString(uri, UriKind.Absolute)).WithMessage("{PropertyName} should be a valid URL")
-                .MaximumLength(250).WithMessage("{PropertyName} should not exceed 250 characters");
+                .Must(uri =>
+                    string.IsNullOrEmpty(uri) ||
+                    Uri.IsWellFormedUriString(uri, UriKind.Absolute)
+                    ).WithMessage("Image should be a valid URL")
+                .MaximumLength(250).WithMessage("Image should not exceed 250 characters");
         }
 
         public static IRuleBuilder<T, TimeSpan> EventTime<T>(this IRuleBuilder<T, TimeSpan> ruleBuilder)
@@ -74,21 +75,21 @@ namespace EventsWebApplication.Application.UseCases
             return ruleBuilder
                 .NotNull().WithMessage("{PropertyName} should not be null")
                 .NotEmpty().WithMessage("{PropertyName} should not be empty")
-                .Length(6, 20).WithMessage("{PropertyName} should have length between 3 and 20");
+                .Length(6, 20).WithMessage("{PropertyName} should have length between 6 and 20");
         }
 
         public static IRuleBuilder<T, string> Password<T>(this IRuleBuilder<T, string> ruleBuilder)
         {
             return ruleBuilder
                 .NotNull().WithMessage("{PropertyName} should not be null")
-                .NotEmpty().WithMessage("Please, enter the password")
-                .Length(8, 20).WithMessage("Password must be between 4 and 15 characters");
+                .NotEmpty().WithMessage("Please, enter the {PropertyName}")
+                .Length(8, 20).WithMessage("{PropertyName} must be between 8 and 20 characters");
         }
 
         public static IRuleBuilder<T, string> ConfirmPassword<T>(this IRuleBuilder<T, string> ruleBuilder, Expression<Func<T, string>> passwordProperty)
         {
             return ruleBuilder
-                .Equal(passwordProperty).WithMessage("Password and confirmation do not match.");
+                .Equal(passwordProperty).WithMessage("Password and confirmation do not match");
         }
 
         public static IRuleBuilder<T, DateTime> DateOfBirth<T>(this IRuleBuilder<T, DateTime> ruleBuilder)
@@ -104,7 +105,7 @@ namespace EventsWebApplication.Application.UseCases
             return ruleBuilder
                 .NotNull().WithMessage("{PropertyName} should not be null")
                 .EmailAddress().WithMessage("{PropertyName} is not a valid email address")
-                .MaximumLength(150).WithMessage("{PropertyName} should not exceed 100 characters");
+                .MaximumLength(150).WithMessage("{PropertyName} should not exceed 150 characters");
         }
     }
 }
