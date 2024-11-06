@@ -11,6 +11,19 @@ namespace EventsWebApplication.Domain.Exceptions
         public string? UserId { get; } = userId;
         public string? Action { get; } = action;
 
+        public override object GetErrorDetails()
+        {
+            return new
+            {
+                Info = base.GetErrorDetails(),
+                Details = new
+                {
+                    UserId,
+                    Action
+                }
+            };
+        }
+
         public override string ToString()
         {
             return $"{base.ToString()}, UserID: {UserId}, Action: {Action}";
