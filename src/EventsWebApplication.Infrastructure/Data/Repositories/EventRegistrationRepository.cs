@@ -10,9 +10,9 @@ namespace EventsWebApplication.Infrastructure.Data.Repositories
         AppDbContext context
     ) : BaseRepository<EventRegistration>(context), IEventRegistrationRepository
     {
-        public async Task<EventRegistration?> GetByEventIdAndParticipantIdAsync(Guid userId, Guid eventId, CancellationToken cancellationToken = default)
+        public async Task<EventRegistration?> GetByEventIdAndParticipantIdAsync(Guid eventId, Guid userId, CancellationToken cancellationToken = default)
         {
-            var specification = new RegistrationByEventIdAndParticipantIdSpecification(userId, eventId);
+            var specification = new RegistrationByEventIdAndParticipantIdSpecification(eventId, userId);
 
             var registration = (await _dbSet.Where(specification.ToExpression()).ToListAsync(cancellationToken)).FirstOrDefault();
 

@@ -43,7 +43,7 @@ namespace EventsWebApplication.Application.UseCases.Users.EventRegistrationCases
 
             var eventRegistrationRepository = _unitOfWork.GetRepository<IEventRegistrationRepository, EventRegistration>();
 
-            var existingRegistration = await eventRegistrationRepository.GetByEventIdAndParticipantIdAsync(request.UserId, request.EventId, cancellationToken);
+            var existingRegistration = await eventRegistrationRepository.GetByEventIdAndParticipantIdAsync(request.EventId, request.UserId, cancellationToken);
             if (existingRegistration != null)
             {
                 throw new DuplicateRegistrationException(
