@@ -2,6 +2,7 @@ using MediatR;
 using AutoMapper;
 using EventsWebApplication.Application.DTOs;
 using EventsWebApplication.Application.Abstractions.Data;
+using EventsWebApplication.Application.Abstractions.Caching;
 using EventsWebApplication.Domain.Repositories;
 using EventsWebApplication.Domain.Exceptions;
 using EventsWebApplication.Domain.Entities;
@@ -9,6 +10,7 @@ using EventsWebApplication.Domain.Entities;
 namespace EventsWebApplication.Application.UseCases.Users.EventRegistrationCases.Commands.RegisterForEvent
 {
     public class RegisterForEventHandler(
+        ICacheService _cache,
         IUnitOfWork _unitOfWork,
         IMapper _mapper
     ) : IRequestHandler<RegisterForEventCommand, EventRegistrationReadDto>
@@ -67,7 +69,10 @@ namespace EventsWebApplication.Application.UseCases.Users.EventRegistrationCases
             await eventRegistrationRepository.AddAsync(registration, cancellationToken);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return _mapper.Map<EventRegistrationReadDto>(registration);
+            var registrationReadDto = _mapper.Map<EventRegistrationReadDto>(registration);
+            await _cache.SetAsync(registrationReadDto.Event.Id.ToString(), registrationReadDto.Event);
+
+            return registrationReadDto;
         }
     }
 }

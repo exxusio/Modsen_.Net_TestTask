@@ -1,6 +1,8 @@
 using MediatR;
 using AutoMapper;
 using EventsWebApplication.Application.DTOs;
+using EventsWebApplication.Application.Abstractions.Data;
+using EventsWebApplication.Application.Abstractions.Caching;
 using EventsWebApplication.Domain.Repositories;
 using EventsWebApplication.Domain.Exceptions;
 using EventsWebApplication.Domain.Entities;
@@ -8,36 +10,59 @@ using EventsWebApplication.Domain.Entities;
 namespace EventsWebApplication.Application.UseCases.Users.EventRegistrationCases.Commands.UnregisterFromEvent
 {
     public class UnregisterFromEventHandler(
-        IEventRegistrationRepository _repository,
+        ICacheService _cache,
+        IUnitOfWork _unitOfWork,
         IMapper _mapper
     ) : IRequestHandler<UnregisterFromEventCommand, EventRegistrationReadDto>
     {
         public async Task<EventRegistrationReadDto> Handle(UnregisterFromEventCommand request, CancellationToken cancellationToken)
         {
-            var registration = await _repository.GetByIdAsync(request.RegistrationId, cancellationToken);
-            if (registration == null)
+            var eventRepository = _unitOfWork.GetRepository<Event>();
+
+            var _event = await eventRepository.GetByIdAsync(request.EventId, cancellationToken);
+            if (_event == null)
             {
                 throw new NotFoundException(
                     $"Not found with id",
-                    nameof(EventRegistration),
-                    nameof(request.RegistrationId),
-                    request.RegistrationId.ToString()
+                    nameof(Event),
+                    nameof(request.EventId),
+                    request.EventId.ToString()
                 );
             }
 
-            if (registration.ParticipantId != request.UserId)
+            var userRepository = _unitOfWork.GetRepository<User>();
+
+            var user = await userRepository.GetByIdAsync(request.UserId, cancellationToken);
+            if (user == null)
             {
-                throw new NoPermissionException(
-                    "Insufficient permissions to perform the operation",
-                    request.UserId.ToString(),
-                    nameof(UnregisterFromEventCommand)
+                throw new NotFoundException(
+                    $"Not found with id",
+                    nameof(User),
+                    nameof(request.UserId),
+                    request.UserId.ToString()
                 );
             }
 
-            _repository.Delete(registration);
-            await _repository.SaveChangesAsync(cancellationToken);
+            var eventRegistrationRepository = _unitOfWork.GetRepository<IEventRegistrationRepository, EventRegistration>();
 
-            return _mapper.Map<EventRegistrationReadDto>(registration);
+            var registration = await eventRegistrationRepository.GetByEventIdAndParticipantIdAsync(request.EventId, request.UserId, cancellationToken);
+            if (registration == null)
+            {
+                throw new NotFoundException(
+                    $"Registration not found for the specified event",
+                    nameof(Event),
+                    nameof(request.EventId),
+                    request.EventId.ToString()
+                );
+            }
+
+            eventRegistrationRepository.Delete(registration);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+            var registrationReadDto = _mapper.Map<EventRegistrationReadDto>(registration);
+            await _cache.SetAsync(registrationReadDto.Event.Id.ToString(), registrationReadDto.Event);
+
+            return registrationReadDto;
         }
     }
 }

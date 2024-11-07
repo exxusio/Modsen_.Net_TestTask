@@ -8,7 +8,7 @@ namespace EventsWebApplication.Application.UseCases.Users.EventRegistrationCases
     : IRequest<EventRegistrationReadDto>
     {
         [BindNever]
-        public Guid RegistrationId { get; set; }
+        public Guid EventId { get; set; }
         [BindNever]
         public Guid UserId { get; set; }
     }

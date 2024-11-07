@@ -81,11 +81,11 @@ namespace EventsWebApplication.Presentation.Controllers
             return Ok(registration);
         }
 
-        [HttpDelete("{registrationId}")]
+        [HttpDelete("{eventId}")]
         [Authorize(Policy = Policies.UnregisterFromEvent)]
-        public async Task<IActionResult> UnregisterFromEvent(Guid registrationId, [FromQuery] UnregisterFromEventCommand command, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> UnregisterFromEvent(Guid eventId, [FromQuery] UnregisterFromEventCommand command, CancellationToken cancellationToken = default)
         {
-            command.RegistrationId = registrationId;
+            command.EventId = eventId;
             command.UserId = UserId;
 
             var registration = await mediator.Send(command, cancellationToken);
