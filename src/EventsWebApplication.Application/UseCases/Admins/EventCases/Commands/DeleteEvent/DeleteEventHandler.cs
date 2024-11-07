@@ -27,10 +27,11 @@ namespace EventsWebApplication.Application.UseCases.Admins.EventCases.Commands.D
                 );
             }
 
+            var eventReadDto = _mapper.Map<EventReadDto>(_event);
+
             _repository.Delete(_event);
             await _repository.SaveChangesAsync(cancellationToken);
 
-            var eventReadDto = _mapper.Map<EventReadDto>(_event);
             await _cache.DeleteAsync<EventReadDto>(eventReadDto.Id.ToString());
 
             return eventReadDto;
