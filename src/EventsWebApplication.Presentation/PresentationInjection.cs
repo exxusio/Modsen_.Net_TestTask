@@ -1,3 +1,6 @@
+using Serilog;
+using Serilog.Exceptions;
+using Serilog.Formatting.Json;
 using Microsoft.OpenApi.Models;
 using EventsWebApplication.Presentation.Middlewares;
 
@@ -5,11 +8,12 @@ namespace EventsWebApplication.Presentation
 {
     public static class PresentationInjection
     {
-        public static IServiceCollection AddPresentation(this IServiceCollection services)
+        public static IServiceCollection AddPresentation(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddControllers();
             services.SwaggerConfigure();
-            services.MiddlewareConfigure();
+            services.LoggerConfigure(configuration);
+            services.MiddlewareScoped();
             return services;
         }
 
@@ -48,8 +52,27 @@ namespace EventsWebApplication.Presentation
             return services;
         }
 
-        private static IServiceCollection MiddlewareConfigure(this IServiceCollection services)
+        private static IServiceCollection LoggerConfigure(this IServiceCollection services, IConfiguration configuration)
         {
+            var loggingSettings = configuration.GetSection("LoggingSettings");
+
+            Log.Logger = new LoggerConfiguration()
+                .Enrich.FromLogContext()
+                .Enrich.WithExceptionDetails()
+                .WriteTo.File(
+                    new JsonFormatter(),
+                    loggingSettings["Path"]!,
+                    rollingInterval: Enum.Parse<RollingInterval>(loggingSettings["RollingInterval"]!),
+                    retainedFileCountLimit: int.Parse(loggingSettings["RetainedFileCountLimit"]!),
+                    fileSizeLimitBytes: long.Parse(loggingSettings["FileSizeLimitBytes"]!))
+                .CreateLogger();
+
+            return services;
+        }
+
+        private static IServiceCollection MiddlewareScoped(this IServiceCollection services)
+        {
+            services.AddScoped<LoggingExceptionsMiddleware>();
             services.AddScoped<ExceptionHandlingMiddleware>();
 
             return services;

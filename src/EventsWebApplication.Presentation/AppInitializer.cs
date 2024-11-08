@@ -15,6 +15,7 @@ namespace EventsWebApplication.Presentation
             webApplication.UseAuthentication();
             webApplication.UseAuthorization();
 
+            webApplication.UseMiddleware<LoggingExceptionsMiddleware>();
             webApplication.UseMiddleware<ExceptionHandlingMiddleware>();
 
             webApplication.UseHttpsRedirection();
