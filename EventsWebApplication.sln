@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventsWebApplication.Applic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventsWebApplication.Presentation", "src\EventsWebApplication.Presentation\EventsWebApplication.Presentation.csproj", "{43781A34-18F5-4D3C-ADC5-98B34E86FF55}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventsWebApplication.Tests", "src\EventsWebApplication.Tests\EventsWebApplication.Tests.csproj", "{7FDD1F36-9AC3-47DC-8FF2-797EAEFEBD82}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{43781A34-18F5-4D3C-ADC5-98B34E86FF55}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43781A34-18F5-4D3C-ADC5-98B34E86FF55}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{43781A34-18F5-4D3C-ADC5-98B34E86FF55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7FDD1F36-9AC3-47DC-8FF2-797EAEFEBD82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FDD1F36-9AC3-47DC-8FF2-797EAEFEBD82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FDD1F36-9AC3-47DC-8FF2-797EAEFEBD82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FDD1F36-9AC3-47DC-8FF2-797EAEFEBD82}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -44,6 +50,7 @@ Global
 		{94F1273B-21D2-4C89-AC17-EF440E4FE831} = {C5053F03-6041-4EDC-AFBA-42E4238ADF55}
 		{587D5487-B52C-49AB-A379-FFB6D33C9A94} = {C5053F03-6041-4EDC-AFBA-42E4238ADF55}
 		{43781A34-18F5-4D3C-ADC5-98B34E86FF55} = {C5053F03-6041-4EDC-AFBA-42E4238ADF55}
+		{7FDD1F36-9AC3-47DC-8FF2-797EAEFEBD82} = {C5053F03-6041-4EDC-AFBA-42E4238ADF55}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {306E87A2-4242-4583-8ABF-BCBF98831B21}
