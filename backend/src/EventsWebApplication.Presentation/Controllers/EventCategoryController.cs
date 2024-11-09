@@ -2,7 +2,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using EventsWebApplication.Application.Configs.Policies;
-using EventsWebApplication.Application.UseCases.Admins.EventCategoryCases.Queries.GetAllCategories;
+using EventsWebApplication.Application.UseCases.Users.EventCategoryCases.Queries.GetAllCategories;
 using EventsWebApplication.Application.UseCases.Admins.EventCategoryCases.Commands.CreateCategory;
 using EventsWebApplication.Application.UseCases.Admins.EventCategoryCases.Commands.DeleteCategory;
 

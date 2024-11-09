@@ -3,7 +3,7 @@ using AutoMapper;
 using EventsWebApplication.Application.DTOs;
 using EventsWebApplication.Domain.Repositories;
 
-namespace EventsWebApplication.Application.UseCases.Admins.EventCategoryCases.Queries.GetAllCategories
+namespace EventsWebApplication.Application.UseCases.Users.EventCategoryCases.Queries.GetAllCategories
 {
     public class GetAllCategoriesHandler(
         IEventCategoryRepository _repository,
