@@ -7,7 +7,7 @@ namespace EventsWebApplication.Domain.Repositories
     public interface IEventRepository
     : IRepository<Event>
     {
-        Task<IEnumerable<Event>> GetByFilterAsync(PagedFilter paged, EventFilter filter, CancellationToken cancellationToken);
+        Task<(IEnumerable<Event>, int)> GetByFilterAsync(PagedFilter paged, EventFilter filter, CancellationToken cancellationToken);
         Task<Event?> GetByNameAsync(string name, CancellationToken cancellationToken = default);
     }
 }

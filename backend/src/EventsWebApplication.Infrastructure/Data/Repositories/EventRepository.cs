@@ -11,14 +11,19 @@ namespace EventsWebApplication.Infrastructure.Data.Repositories
         AppDbContext context
     ) : BaseRepository<Event>(context), IEventRepository
     {
-        public async Task<IEnumerable<Event>> GetByFilterAsync(PagedFilter paged, EventFilter filter, CancellationToken cancellationToken)
+        public async Task<(IEnumerable<Event>, int)> GetByFilterAsync(PagedFilter paged, EventFilter filter, CancellationToken cancellationToken)
         {
             var specification = new EventsByFilterSpecification(filter);
 
-            return await _dbSet
-                .Where(specification.ToExpression())
+            var eventsQuery = _dbSet.Where(specification.ToExpression());
+
+            var totalCount = await eventsQuery.CountAsync(cancellationToken);
+
+            var events = await eventsQuery
                 .Paged(paged)
                 .ToListAsync(cancellationToken);
+
+            return (events, totalCount);
         }
 
         public async Task<Event?> GetByNameAsync(string name, CancellationToken cancellationToken = default)

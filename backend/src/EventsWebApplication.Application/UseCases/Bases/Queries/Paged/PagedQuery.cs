@@ -8,8 +8,6 @@ namespace EventsWebApplication.Application.UseCases.Bases.Queries.Paged
         [BindNever]
         [JsonIgnore]
         public int PageNumber { get; set; }
-        [BindNever]
-        [JsonIgnore]
         public int PageSize { get; set; }
     }
 }

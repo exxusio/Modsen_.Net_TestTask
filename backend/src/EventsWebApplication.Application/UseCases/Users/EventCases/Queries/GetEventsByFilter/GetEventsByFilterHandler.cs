@@ -9,15 +9,22 @@ namespace EventsWebApplication.Application.UseCases.Users.EventCases.Queries.Get
     public class GetEventsByFilterHandler(
         IEventRepository _repository,
         IMapper _mapper
-    ) : IRequestHandler<GetEventsByFilterQuery, IEnumerable<EventReadDto>>
+    ) : IRequestHandler<GetEventsByFilterQuery, GetEventsByFilterResponse>
     {
-        public async Task<IEnumerable<EventReadDto>> Handle(GetEventsByFilterQuery request, CancellationToken cancellationToken)
+        public async Task<GetEventsByFilterResponse> Handle(GetEventsByFilterQuery request, CancellationToken cancellationToken)
         {
             var filter = _mapper.Map<EventFilter>(request);
             var paged = _mapper.Map<PagedFilter>(request);
 
-            var events = await _repository.GetByFilterAsync(paged, filter, cancellationToken);
-            return _mapper.Map<IEnumerable<EventReadDto>>(events);
+            var (events, totalEvents) = await _repository.GetByFilterAsync(paged, filter, cancellationToken);
+
+            var eventDtos = _mapper.Map<IEnumerable<EventReadDto>>(events);
+
+            return new GetEventsByFilterResponse
+            {
+                Events = eventDtos,
+                TotalCount = totalEvents
+            };
         }
     }
 }
