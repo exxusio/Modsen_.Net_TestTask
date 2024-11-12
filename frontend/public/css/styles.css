@@ -1,0 +1,100 @@
+:root {
+    --backgroud-color: 255, 255, 255; /*#ffffff*/
+
+    --primary-dark: 108, 88, 76; /* #6c584c */
+    --primary-color: 169, 132, 103; /* #a98467 */
+    --primary-light: 189, 152, 123; /* #bd987b */
+
+    --secondary-dark: 214, 205, 167; /* #d6cda7 */
+    --secondary-color: 233, 224, 190; /* #e9e0be */
+    --secondary-light: 240, 234, 210; /* #f0ead2 */
+
+    --tertiary-dark: 173, 193, 120; /* #adc178 */
+    --tertiary-color: 195, 214, 143; /* #c3d68f */
+    --tertiary-light: 221, 229, 182; /* #dde5b6 */
+
+    --error-dark: 241, 142, 142; /* #f18e8e */
+    --error-color: 255, 167, 167; /* #ffa7a7 */
+    --error-light: 255, 187, 187; /* #ffbbbb */
+
+    --white-color: 255, 255, 255; /*#ffffff*/
+    --black-color: 0, 0, 0; /*#000000*/
+}
+
+@font-face {
+    font-family: "Pixel";
+    src: url("../fonts/pixel.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    font-family: "Pixel", sans-serif;
+    background-color: rgb(var(--backgroud-color));
+    height: 100%;
+    margin: 0;
+    width: 100%;
+}
+
+.error-message {
+    color: rgb(var(--error-dark));
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.error-message p {
+    margin: 0;
+}
+
+.btn {
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 0.3s ease;
+}
+
+.btn:disabled {
+    cursor: not-allowed;
+}
+
+.btn:focus {
+    outline: none;
+}
+
+.btn-primary {
+    width: 70%;
+    background-color: rgb(var(--primary-color));
+    color: rgb(var(--white-color));
+}
+
+.btn-secondary {
+    width: 40%;
+    background-color: rgb(var(--tertiary-color));
+    color: rgb(var(--white-color));
+}
+
+.btn-primary:hover {
+    background-color: rgb(var(--primary-dark));
+}
+
+.btn-secondary:hover {
+    background-color: rgb(var(--tertiary-dark));
+}
+
+.btn-primary:focus {
+    box-shadow: 0 0 5px rgb(var(--primary-dark));
+}
+
+.btn-secondary:focus {
+    box-shadow: 0 0 5px rgb(var(--tertiary-dark));
+}
+
+.btn-primary:disabled {
+    background-color: rgb(var(--primary-light), 0.3);
+}
+
+.btn-secondary:disabled {
+    background-color: rgb(var(--tertiary-light), 0.3);
+}
