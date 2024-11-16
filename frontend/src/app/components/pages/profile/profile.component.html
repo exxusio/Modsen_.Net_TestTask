@@ -1,0 +1,184 @@
+<div *ngIf="user" class="profile-container">
+    <h2>My Profile</h2>
+
+    <form
+        class="update-form"
+        [formGroup]="profileForm"
+        (ngSubmit)="updateProfile()"
+    >
+        <h3 class="role">Role: {{ user.roleName }}</h3>
+        <div class="profile-info">
+            <div class="profile-item">
+                <label for="firstName"
+                    >First Name
+                    <span [ngClass]="{ disabled: !isEditing }">*</span>
+                </label>
+                <input
+                    id="firstName"
+                    formControlName="firstName"
+                    placeholder="Enter your first name"
+                    [ngClass]="{ disabled: !isEditing }"
+                />
+                <div
+                    *ngIf="
+                        firstName().invalid &&
+                        (firstName().dirty || firstName().touched)
+                    "
+                    class="error-message"
+                >
+                    <p *ngIf="firstName().hasError('required')">
+                        First Name is required
+                    </p>
+                    <p *ngIf="firstName().hasError('minlength')">
+                        First Name must be at least
+                        {{ firstName().errors?.['minlength'].requiredLength }}
+                        characters long
+                    </p>
+                    <p *ngIf="firstName().hasError('maxlength')">
+                        First Name must be no longer than
+                        {{ firstName().errors?.['maxlength'].requiredLength }}
+                        characters
+                    </p>
+                </div>
+            </div>
+
+            <div class="profile-item">
+                <label for="lastName"
+                    >Last Name
+                    <span [ngClass]="{ disabled: !isEditing }">*</span>
+                </label>
+                <input
+                    id="lastName"
+                    formControlName="lastName"
+                    placeholder="Enter your last name"
+                    [ngClass]="{ disabled: !isEditing }"
+                />
+                <div
+                    *ngIf="
+                        lastName().invalid &&
+                        (lastName().dirty || lastName().touched)
+                    "
+                    class="error-message"
+                >
+                    <p *ngIf="lastName().hasError('required')">
+                        Last Name is required
+                    </p>
+                    <p *ngIf="lastName().hasError('minlength')">
+                        Last Name must be at least
+                        {{ lastName().errors?.['minlength'].requiredLength }}
+                        characters long
+                    </p>
+                    <p *ngIf="lastName().hasError('maxlength')">
+                        Last Name must be no longer than
+                        {{ lastName().errors?.['maxlength'].requiredLength }}
+                        characters
+                    </p>
+                </div>
+            </div>
+
+            <div class="profile-item">
+                <label for="dateOfBirth">Date of Birth</label>
+                <input
+                    id="dateOfBirth"
+                    formControlName="dateOfBirth"
+                    placeholder="DD.MM.YYYY"
+                    [ngClass]="{ disabled: !isEditing }"
+                />
+                <div
+                    *ngIf="
+                        dateOfBirth().invalid &&
+                        (dateOfBirth().dirty || dateOfBirth().touched)
+                    "
+                    class="error-message"
+                >
+                    <p *ngIf="dateOfBirth().hasError('required')">
+                        Date of Birth is required
+                    </p>
+                    <p *ngIf="dateOfBirth().hasError('invalidDateFormat')">
+                        Invalid date format. Use DD.MM.YYYY
+                    </p>
+                    <p *ngIf="dateOfBirth().hasError('dateTooFuture')">
+                        Date cannot be in the future
+                    </p>
+                    <p *ngIf="dateOfBirth().hasError('invalidDate')">
+                        Invalid date
+                    </p>
+                </div>
+            </div>
+
+            <div class="profile-item">
+                <label for="email"
+                    >Email
+                    <span [ngClass]="{ disabled: !isEditing }">*</span>
+                </label>
+                <input
+                    id="email"
+                    formControlName="email"
+                    placeholder="Enter your email"
+                    [ngClass]="{ disabled: !isEditing }"
+                />
+                <div
+                    *ngIf="
+                        email().invalid && (email().dirty || email().touched)
+                    "
+                    class="error-message"
+                >
+                    <p *ngIf="email().hasError('required')">
+                        Email is required
+                    </p>
+                    <p *ngIf="email().hasError('email')">
+                        Please enter a valid email address
+                    </p>
+                    <p *ngIf="email().hasError('maxlength')">
+                        Email must be no longer than
+                        {{ email().errors?.['maxlength'].requiredLength }}
+                        characters
+                    </p>
+                </div>
+            </div>
+
+            <button
+                *ngIf="isEditing"
+                type="submit"
+                [disabled]="profileForm.invalid"
+                class="btn btn-primary"
+                (click)="toggleEditing()"
+            >
+                Save Changes
+            </button>
+
+            <button
+                *ngIf="!isEditing"
+                type="button"
+                (click)="toggleEditing()"
+                class="btn btn-primary"
+            >
+                Edit Profile
+            </button>
+
+            <button
+                *ngIf="isEditing"
+                type="button"
+                (click)="resetUserData()"
+                class="btn btn-primary close"
+                style="margin-top: 0"
+            >
+                Cancel
+            </button>
+
+            <button
+                *ngIf="!isEditing"
+                type="button"
+                class="btn btn-primary"
+                (click)="toggleChangePasswordModal()"
+            >
+                Change Password
+            </button>
+        </div>
+    </form>
+
+    <app-change-password
+        *ngIf="isPasswordChangeModalVisible"
+        (close)="toggleChangePasswordModal()"
+    ></app-change-password>
+</div>
