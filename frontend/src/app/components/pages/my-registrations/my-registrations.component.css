@@ -1,0 +1,60 @@
+* {
+    box-sizing: border-box;
+}
+
+:host {
+    padding: 20px;
+}
+
+.table {
+    width: 100%;
+    max-width: 800px;
+    margin: 30px auto;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(var(--black-color), 0.15);
+    background-color: rgb(var(--white-color));
+}
+
+.title {
+    text-align: center;
+    background: linear-gradient(
+        135deg,
+        rgb(var(--primary-light)),
+        rgb(var(--primary-dark))
+    );
+    color: rgb(var(--white-color));
+    padding: 15px;
+    font-size: 1.75rem;
+    font-weight: bold;
+}
+
+.registration-list-header {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    font-size: 1rem;
+    background-color: rgba(var(--black-color), 0.05);
+    font-weight: bold;
+    color: rgb(var(--black-color));
+    border-bottom: 2px solid rgb(var(--primary-color));
+}
+
+.registration-list-body {
+    max-height: 585px;
+    overflow-y: auto;
+}
+
+.registration-cell {
+    flex: 1;
+    padding: 10px;
+    text-align: center;
+    font-size: 1rem;
+    color: rgb(var(--black-color));
+}
+
+@media (max-width: 1200px) {
+    .registration-list-body {
+        max-height: 195px;
+        overflow-y: auto;
+    }
+}
