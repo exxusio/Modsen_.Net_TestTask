@@ -13,16 +13,16 @@ import { ApiConfig } from '../configs/api-config';
     providedIn: 'root',
 })
 export class EventService {
-    private readonly apiUrl = `${ApiConfig.BaseUrl}/events`;
+    private readonly _apiUrl = `${ApiConfig.BaseUrl}/events`;
 
     constructor(private readonly http: HttpClient) {}
 
     public getAllEvents(): Observable<EventRead[]> {
-        return this.http.get<EventRead[]>(this.apiUrl);
+        return this.http.get<EventRead[]>(this._apiUrl);
     }
 
     public getEventById(eventId: string): Observable<EventRead> {
-        return this.http.get<EventRead>(`${this.apiUrl}/${eventId}`);
+        return this.http.get<EventRead>(`${this._apiUrl}/${eventId}`);
     }
 
     public getEventsByFilter(
@@ -34,13 +34,13 @@ export class EventService {
         params = HttpHelper.AddEventFilterToQuery(params, filter);
         params = HttpHelper.AddPageSizeToQuery(params, pageSize);
         return this.http.get<EventsByFilter>(
-            `${this.apiUrl}/filter/page=${pageNumber}`,
+            `${this._apiUrl}/filter/page=${pageNumber}`,
             { params }
         );
     }
 
     public createEvent(eventCreate: EventCreate): Observable<EventRead> {
-        return this.http.post<EventRead>(this.apiUrl, eventCreate);
+        return this.http.post<EventRead>(this._apiUrl, eventCreate);
     }
 
     public updateEvent(
@@ -48,12 +48,12 @@ export class EventService {
         eventUpdate: EventUpdate
     ): Observable<EventRead> {
         return this.http.put<EventRead>(
-            `${this.apiUrl}/${eventId}`,
+            `${this._apiUrl}/${eventId}`,
             eventUpdate
         );
     }
 
     public deleteEvent(eventId: string): Observable<EventRead> {
-        return this.http.delete<EventRead>(`${this.apiUrl}/${eventId}`);
+        return this.http.delete<EventRead>(`${this._apiUrl}/${eventId}`);
     }
 }
