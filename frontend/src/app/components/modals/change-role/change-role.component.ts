@@ -49,15 +49,25 @@ export class ChangeRoleComponent {
     }
 
     private loadUser(): void {
-        this._userService.getUser(this.userId).subscribe((user) => {
-            this.user = user;
-            this.loadCurrentRole(); /*плохо работает*/
+        this._userService.getUser(this.userId).subscribe({
+            next: (user) => {
+                this.user = user;
+                this.loadCurrentRole(); /*плохо работает*/
+            },
+            error: (error) => {
+                this._notifyService.showUnexpectedError();
+            },
         });
     }
 
     private loadRoles(): void {
-        this._roleService.getAllRoles().subscribe((roles) => {
-            this.roles = roles;
+        this._roleService.getAllRoles().subscribe({
+            next: (roles) => {
+                this.roles = roles;
+            },
+            error: (error) => {
+                this._notifyService.showUnexpectedError();
+            },
         });
     }
 
