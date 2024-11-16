@@ -56,18 +56,21 @@
 }
 
 .user-avatar {
-    margin-right: 5px;
+    border-radius: 50%;
 }
 
 .avatar-img {
     width: 40px;
     height: 40px;
-    border-radius: 50%;
 }
 
 .menu-icon {
     width: 30px;
     height: 30px;
+}
+
+.menu-icon.rotate {
+    transform: rotate(180deg);
 }
 
 .dropdown-menu {

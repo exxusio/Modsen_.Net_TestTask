@@ -28,13 +28,9 @@
             </div>
             <div class="menu-toggle">
                 <img
-                    [src]="
-                        menuOpen
-                            ? '/svgs/icons/close.svg'
-                            : '/svgs/icons/menu.svg'
-                    "
-                    alt="Menu Toggle"
+                    src="/svgs/icons/menu.svg"
                     class="menu-icon"
+                    [class.rotate]="menuOpen"
                 />
             </div>
         </div>
