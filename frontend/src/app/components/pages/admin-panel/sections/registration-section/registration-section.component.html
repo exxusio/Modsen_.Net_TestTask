@@ -1,0 +1,29 @@
+<app-search
+    [data]="getRegistrations"
+    [searchField]="searchField"
+    (searchResults)="searchRegistrations($event)"
+>
+</app-search>
+
+<div class="table">
+    <div class="registration-list-header">
+        <div class="registration-cell">Registration Date</div>
+        <div class="registration-cell">User Email</div>
+        <div class="registration-cell">Event Name</div>
+    </div>
+
+    <div class="registration-list-body">
+        <app-row
+            *ngFor="let registration of registrations"
+            [data]="registration"
+            [columns]="columns"
+            (clicked)="onRegistrationClicked($event)"
+        ></app-row>
+    </div>
+</div>
+
+<app-registration-info
+    *ngIf="clickRegistration"
+    [registration]="clickRegistration"
+    (close)="clickRegistration = undefined"
+></app-registration-info>
