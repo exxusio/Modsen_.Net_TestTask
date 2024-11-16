@@ -1,0 +1,22 @@
+<div class="modal-content">
+    <div class="modal">
+        <h2 class="modal-title">What would you like to view?</h2>
+        <div class="modal-buttons">
+            <button class="btn btn-secondary confirm" (click)="viewUser()">
+                User
+            </button>
+            <button class="btn btn-secondary confirm" (click)="viewEvent()">
+                Event
+            </button>
+        </div>
+        <button class="btn btn-secondary close" (click)="cancel()">
+            Cancel
+        </button>
+    </div>
+</div>
+
+<app-change-role
+    *ngIf="isUser"
+    [userId]="currentUserId"
+    (close)="close.emit()"
+></app-change-role>
