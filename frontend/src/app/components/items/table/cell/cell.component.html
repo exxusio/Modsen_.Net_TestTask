@@ -1,0 +1,24 @@
+<div class="cell" *ngIf="isMultipleColumns(column)">
+    <div class="multiple-cell" *ngFor="let field of getMultipleColumns(column)">
+        <ng-container
+            *ngTemplateOutlet="renderField; context: { field: field }"
+        ></ng-container>
+    </div>
+</div>
+<div class="cell" *ngIf="!isMultipleColumns(column)">
+    <ng-container
+        *ngTemplateOutlet="renderField; context: { field: column }"
+    ></ng-container>
+</div>
+
+<ng-template #renderField let-field="field">
+    <span *ngIf="isDateColumn(field)">
+        {{ getNestedValue(data, field) | date : "dd.MM.yyyy" }}
+    </span>
+    <span *ngIf="isTimeColumn(field)">
+        {{ getNestedValue(data, field) | time : "HH:mm" }}
+    </span>
+    <span *ngIf="!isDateColumn(field) && !isTimeColumn(field)">
+        {{ getNestedValue(data, field) }}
+    </span>
+</ng-template>

@@ -1,0 +1,7 @@
+<div *ngFor="let column of columns">
+    <app-cell
+        [data]="data"
+        [column]="column"
+        (clicked)="onClick($event)"
+    ></app-cell>
+</div>
