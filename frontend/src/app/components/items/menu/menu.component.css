@@ -1,0 +1,150 @@
+:host {
+    position: fixed;
+    z-index: 1005;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 80px;
+    background-color: rgb(var(--secondary-light));
+    transition: width 0.3s ease;
+    overflow: hidden;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+:host::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+}
+
+:host:hover {
+    width: 300px;
+}
+
+.sidebar-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1rem;
+    transition: width 0.3s ease;
+}
+
+.site-icon {
+    width: 50px;
+    height: 50px;
+    transition: width 0.3s ease, height 0.3s ease;
+}
+
+.site-name {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    margin-top: 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: rgb(var(--primary-dark));
+}
+
+:host:hover .site-name {
+    opacity: 1;
+    visibility: visible;
+}
+
+:host:hover .site-icon {
+    width: 100px;
+    height: 100px;
+}
+
+.sidebar-menu {
+    list-style-type: none;
+    padding: 1rem;
+    margin: 0;
+    margin-top: 20px;
+    width: 100%;
+}
+
+.bottom-menu {
+    margin-top: auto;
+    margin-bottom: 40px;
+    padding: 1rem;
+}
+
+.sidebar-menu li {
+    margin: 1.5rem 0;
+    cursor: pointer;
+}
+
+.sidebar-menu li a {
+    text-decoration: none;
+    color: rgb(var(--primary-dark));
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar-menu li .icon {
+    width: 30px;
+    height: 30px;
+    margin-right: 1rem;
+}
+
+.sidebar-menu li .menu-text {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    white-space: nowrap;
+}
+
+:host:hover .sidebar-menu li .menu-text {
+    opacity: 1;
+    visibility: visible;
+}
+
+.sidebar-menu li a:hover {
+    background-color: rgba(var(--secondary-dark), 0.8);
+}
+
+.sidebar-menu li.logout a:hover {
+    background-color: rgba(var(--error-dark), 0.8);
+}
+
+.sidebar-menu li.login a:hover {
+    background-color: rgba(var(--tertiary-dark), 0.8);
+}
+
+@media (max-width: 1200px) {
+    :host:hover {
+        width: 200px;
+    }
+
+    .site-name {
+        font-size: 0.9rem;
+    }
+
+    .site-icon {
+        width: 40px;
+        height: 40px;
+    }
+
+    .sidebar-menu li a {
+        font-size: 0.8rem;
+    }
+
+    .sidebar-menu li .icon {
+        width: 25px;
+        height: 25px;
+    }
+
+    .sidebar-menu li {
+        margin: 0.2rem 0;
+    }
+
+    .sidebar-menu {
+        padding: 1rem;
+        margin-top: 0px;
+    }
+}
