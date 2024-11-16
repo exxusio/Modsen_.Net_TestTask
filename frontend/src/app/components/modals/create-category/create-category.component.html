@@ -1,0 +1,55 @@
+<div class="modal-content">
+    <form
+        class="modal-form"
+        [formGroup]="createCategoryForm"
+        (ngSubmit)="createCategory()"
+    >
+        <div class="modal-item">
+            <label for="name"
+                >Category Name
+                <span *ngIf="name().hasError('required')">*</span>
+            </label>
+            <input
+                id="name"
+                type="text"
+                formControlName="name"
+                placeholder="Enter category name"
+            />
+            <div
+                *ngIf="name().invalid && (name().dirty || name().touched)"
+                class="error-message"
+            >
+                <p *ngIf="name().hasError('required')">
+                    Category name is required
+                </p>
+                <p *ngIf="name().hasError('minlength')">
+                    Category name must be at least
+                    {{ name().errors?.['minlength'].requiredLength }} characters
+                    long
+                </p>
+                <p *ngIf="name().hasError('maxlength')">
+                    Category name must be no longer than
+                    {{ name().errors?.['maxlength'].requiredLength }} characters
+                </p>
+            </div>
+        </div>
+
+        <div style="width: 100%">
+            <button
+                type="submit"
+                [disabled]="createCategoryForm.invalid"
+                class="btn btn-primary"
+            >
+                Create Category
+            </button>
+
+            <button
+                type="button"
+                (click)="closeModal()"
+                class="btn btn-primary close"
+            >
+                Close
+            </button>
+        </div>
+    </form>
+</div>
