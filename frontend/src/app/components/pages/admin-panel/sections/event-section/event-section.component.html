@@ -1,0 +1,31 @@
+<app-search
+    [data]="getEvents"
+    [searchField]="searchField"
+    (searchResults)="events = $event"
+>
+    <button class="btn btn-secondary" (click)="toggleModal()">+</button>
+</app-search>
+
+<div class="table">
+    <div class="event-list-header">
+        <div class="event-cell">Name</div>
+        <div class="event-cell">Date</div>
+        <div class="event-cell">Location</div>
+        <div class="event-cell">Category</div>
+    </div>
+
+    <div class="event-list-body">
+        <app-row
+            *ngFor="let event of events"
+            [data]="event"
+            [columns]="columns"
+            (clicked)="onEventClicked($event)"
+        ></app-row>
+    </div>
+</div>
+
+<app-create-event
+    *ngIf="isCreate"
+    (close)="toggleModal()"
+    (updateData)="loadEvents()"
+></app-create-event>
