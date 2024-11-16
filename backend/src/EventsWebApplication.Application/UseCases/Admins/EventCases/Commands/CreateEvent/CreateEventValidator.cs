@@ -8,18 +8,21 @@ namespace EventsWebApplication.Application.UseCases.Admins.EventCases.Commands.C
         public CreateEventValidator()
         {
             RuleFor(dto => dto.Name)
-                .EventOrEventCategoryName();
+                .NotNullNotEmpty()
+                .EventName();
 
             RuleFor(dto => dto.Description)
                 .Description();
 
             RuleFor(dto => dto.Date)
-                .EventDate();
+                .EventDate()
+                .NewEventDate();
 
             RuleFor(dto => dto.Time)
                 .EventTime();
 
             RuleFor(dto => dto.Location)
+                .NotNullNotEmpty()
                 .EventLocation();
 
             RuleFor(dto => dto.ImageUrl)

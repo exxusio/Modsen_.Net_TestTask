@@ -8,21 +8,26 @@ namespace EventsWebApplication.Application.UseCases.Users.UserCases.Commands.Cre
         public CreateUserValidator()
         {
             RuleFor(dto => dto.Login)
+                .NotNullNotEmpty()
                 .Login();
 
             RuleFor(dto => dto.Password)
+                .NotNullNotEmpty()
                 .Password();
 
             RuleFor(dto => dto.ConfirmPassword)
                 .ConfirmPassword(dto => dto.Password);
 
             RuleFor(dto => dto.FirstName)
-                .RoleOrUserName();
+                .NotNullNotEmpty()
+                .UserName();
 
             RuleFor(dto => dto.LastName)
-                .RoleOrUserName();
+                .NotNullNotEmpty()
+                .UserName();
 
             RuleFor(dto => dto.Email)
+                .NotNullNotEmpty()
                 .Email();
         }
     }

@@ -8,7 +8,8 @@ namespace EventsWebApplication.Application.UseCases.Admins.EventCategoryCases.Co
         public CreateCategoryValidator()
         {
             RuleFor(dto => dto.Name)
-                .EventOrEventCategoryName();
+                .NotNullNotEmpty()
+                .EventCategoryName();
         }
     }
 }

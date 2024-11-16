@@ -5,33 +5,40 @@ namespace EventsWebApplication.Application.UseCases
 {
     public static class CustomValidationRules
     {
-        public static IRuleBuilder<T, string> RoleOrUserName<T>(this IRuleBuilder<T, string> ruleBuilder)
+        public static IRuleBuilder<T, string> NotNullNotEmpty<T>(this IRuleBuilder<T, string> ruleBuilder)
         {
             return ruleBuilder
                 .NotNull().WithMessage("{PropertyName} should not be null")
-                .NotEmpty().WithMessage("{PropertyName} should not be empty")
+                .NotEmpty().WithMessage("{PropertyName} should not be empty");
+        }
+
+        public static IRuleBuilder<T, string> UserName<T>(this IRuleBuilder<T, string> ruleBuilder)
+        {
+            return ruleBuilder
                 .Length(3, 50).WithMessage("{PropertyName} should have length between 3 and 50");
         }
 
-        public static IRuleBuilder<T, string> EventOrEventCategoryName<T>(this IRuleBuilder<T, string> ruleBuilder)
+        public static IRuleBuilder<T, string> EventCategoryName<T>(this IRuleBuilder<T, string> ruleBuilder)
         {
             return ruleBuilder
-                .NotNull().WithMessage("{PropertyName} should not be null")
-                .NotEmpty().WithMessage("{PropertyName} should not be empty")
+                .Length(3, 30).WithMessage("{PropertyName} should have length between 3 and 30");
+        }
+
+        public static IRuleBuilder<T, string> EventName<T>(this IRuleBuilder<T, string> ruleBuilder)
+        {
+            return ruleBuilder
                 .Length(3, 100).WithMessage("{PropertyName} should have length between 3 and 100");
         }
 
         public static IRuleBuilder<T, string> Description<T>(this IRuleBuilder<T, string> ruleBuilder)
         {
             return ruleBuilder
-                .MaximumLength(500).WithMessage("{PropertyName} should not exceed 500 characters");
+                .MaximumLength(3000).WithMessage("{PropertyName} should not exceed 3000 characters");
         }
 
         public static IRuleBuilder<T, string> EventLocation<T>(this IRuleBuilder<T, string> ruleBuilder)
         {
             return ruleBuilder
-                .NotNull().WithMessage("{PropertyName} should not be null")
-                .NotEmpty().WithMessage("{PropertyName} should not be empty")
                 .Length(3, 200).WithMessage("{PropertyName} should have length between 3 and 200");
         }
 
@@ -57,6 +64,12 @@ namespace EventsWebApplication.Application.UseCases
                 .GreaterThan(DateTime.MinValue).WithMessage("{PropertyName} should be a valid date");
         }
 
+        public static IRuleBuilder<T, DateTime> NewEventDate<T>(this IRuleBuilder<T, DateTime> ruleBuilder)
+        {
+            return ruleBuilder
+                .GreaterThan(DateTime.Now).WithMessage("{PropertyName} should be in the future, not today");
+        }
+
         public static IRuleBuilder<T, int> MaxParticipants<T>(this IRuleBuilder<T, int> ruleBuilder)
         {
             return ruleBuilder
@@ -72,16 +85,12 @@ namespace EventsWebApplication.Application.UseCases
         public static IRuleBuilder<T, string> Login<T>(this IRuleBuilder<T, string> ruleBuilder)
         {
             return ruleBuilder
-                .NotNull().WithMessage("{PropertyName} should not be null")
-                .NotEmpty().WithMessage("{PropertyName} should not be empty")
                 .Length(6, 20).WithMessage("{PropertyName} should have length between 6 and 20");
         }
 
         public static IRuleBuilder<T, string> Password<T>(this IRuleBuilder<T, string> ruleBuilder)
         {
             return ruleBuilder
-                .NotNull().WithMessage("{PropertyName} should not be null")
-                .NotEmpty().WithMessage("Please, enter the {PropertyName}")
                 .Length(8, 20).WithMessage("{PropertyName} must be between 8 and 20 characters");
         }
 
@@ -102,7 +111,6 @@ namespace EventsWebApplication.Application.UseCases
         public static IRuleBuilder<T, string> Email<T>(this IRuleBuilder<T, string> ruleBuilder)
         {
             return ruleBuilder
-                .NotNull().WithMessage("{PropertyName} should not be null")
                 .EmailAddress().WithMessage("{PropertyName} is not a valid email address")
                 .MaximumLength(150).WithMessage("{PropertyName} should not exceed 150 characters");
         }

@@ -19,7 +19,7 @@ namespace EventsWebApplication.Infrastructure.Data.Configs
                 .IsUnique();
 
             builder.Property(e => e.Description)
-                .HasMaxLength(500);
+                .HasMaxLength(3000);
 
             builder.Property(e => e.Date)
                 .HasColumnType("date")

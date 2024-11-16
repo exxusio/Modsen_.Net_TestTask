@@ -8,6 +8,7 @@ namespace EventsWebApplication.Application.UseCases.Users.UserCases.Commands.Cha
         public ChangeUserPasswordValidator()
         {
             RuleFor(dto => dto.Password)
+                .NotNullNotEmpty()
                 .Password();
 
             RuleFor(dto => dto.ConfirmPassword)

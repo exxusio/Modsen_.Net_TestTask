@@ -9,15 +9,18 @@ namespace EventsWebApplication.Application.UseCases.Users.UserCases.Commands.Upd
         {
 
             RuleFor(dto => dto.FirstName)
-                .RoleOrUserName();
+                .NotNullNotEmpty()
+                .UserName();
 
             RuleFor(dto => dto.LastName)
-                .RoleOrUserName();
+                .NotNullNotEmpty()
+                .UserName();
 
             RuleFor(dto => dto.DateOfBirth)
                 .DateOfBirth();
 
             RuleFor(dto => dto.Email)
+                .NotNullNotEmpty()
                 .Email();
         }
     }
