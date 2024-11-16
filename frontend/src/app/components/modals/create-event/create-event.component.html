@@ -1,0 +1,226 @@
+<div class="modal-content">
+    <form
+        class="modal-form"
+        [formGroup]="createEventForm"
+        (ngSubmit)="createEvent()"
+    >
+        <div class="modal-item">
+            <label for="name"
+                >Event Name
+                <span>*</span>
+            </label>
+            <input
+                id="name"
+                type="text"
+                formControlName="name"
+                placeholder="Enter event name"
+            />
+            <div
+                *ngIf="name().invalid && (name().dirty || name().touched)"
+                class="error-message"
+            >
+                <p *ngIf="name().hasError('required')">
+                    Event name is required
+                </p>
+                <p *ngIf="name().hasError('minlength')">
+                    Event name must be at least
+                    {{ name().errors?.['minlength'].requiredLength }} characters
+                    long
+                </p>
+                <p *ngIf="name().hasError('maxlength')">
+                    Event name must be no longer than
+                    {{ name().errors?.['maxlength'].requiredLength }} characters
+                </p>
+            </div>
+        </div>
+
+        <div class="modal-item">
+            <label for="date"
+                >Event Date
+                <span>*</span>
+            </label>
+            <input id="date" type="date" formControlName="date" />
+            <div
+                *ngIf="date().invalid && (date().dirty || date().touched)"
+                class="error-message"
+            >
+                <p *ngIf="date().hasError('required')">
+                    Event date is required
+                </p>
+                <p *ngIf="date().hasError('pastDate')">
+                    Event date must be in the future
+                </p>
+            </div>
+        </div>
+
+        <div class="modal-item">
+            <label for="time"
+                >Event Time
+                <span>*</span>
+            </label>
+            <input id="time" type="time" formControlName="time" />
+            <div
+                *ngIf="time().invalid && (time().dirty || time().touched)"
+                class="error-message"
+            >
+                <p *ngIf="time().hasError('required')">
+                    Event time is required
+                </p>
+            </div>
+        </div>
+
+        <div class="modal-item">
+            <label for="location"
+                >Location
+                <span>*</span>
+            </label>
+            <input
+                id="location"
+                type="text"
+                formControlName="location"
+                placeholder="Enter event location"
+            />
+            <div
+                *ngIf="
+                    location().invalid &&
+                    (location().dirty || location().touched)
+                "
+                class="error-message"
+            >
+                <p *ngIf="location().hasError('required')">
+                    Location is required
+                </p>
+                <p *ngIf="location().hasError('minlength')">
+                    Location must be at least
+                    {{ location().errors?.['minlength'].requiredLength }}
+                    characters long
+                </p>
+                <p *ngIf="location().hasError('maxlength')">
+                    Location must be no longer than
+                    {{ location().errors?.['maxlength'].requiredLength }}
+                    characters
+                </p>
+            </div>
+        </div>
+
+        <div class="modal-item">
+            <label for="maxParticipants"
+                >Max Participants
+                <span>*</span>
+            </label>
+            <input
+                id="maxParticipants"
+                type="number"
+                min="1"
+                formControlName="maxParticipants"
+                placeholder="Enter max participants"
+            />
+            <div
+                *ngIf="
+                    maxParticipants().invalid &&
+                    (maxParticipants().dirty || maxParticipants().touched)
+                "
+                class="error-message"
+            >
+                <p *ngIf="maxParticipants().hasError('required')">
+                    Max participants are required
+                </p>
+                <p *ngIf="maxParticipants().hasError('min')">
+                    Max participants must be at least 1
+                </p>
+            </div>
+        </div>
+
+        <div class="modal-item">
+            <label for="categoryId"
+                >Category
+                <span>*</span>
+            </label>
+            <select
+                id="categoryId"
+                formControlName="categoryId"
+                (change)="newCategory($event)"
+            >
+                <option value="" disabled selected>Category</option>
+                <option
+                    *ngFor="let category of categories"
+                    [value]="category.id"
+                >
+                    {{ category.name }}
+                </option>
+                <option value="new" class="new-category">
+                    New Category...
+                </option>
+            </select>
+            <div
+                *ngIf="
+                    maxParticipants().invalid &&
+                    (maxParticipants().dirty || maxParticipants().touched)
+                "
+                class="error-message"
+            >
+                <p *ngIf="maxParticipants().hasError('required')">
+                    Category are required
+                </p>
+            </div>
+        </div>
+
+        <div style="width: 100%">
+            <div class="modal-item">
+                <label for="imageUrl">Image URL</label>
+                <input
+                    id="imageUrl"
+                    type="text"
+                    formControlName="imageUrl"
+                    placeholder="Enter event image URL"
+                />
+            </div>
+
+            <div class="modal-item">
+                <label for="description">Description</label>
+                <textarea
+                    id="description"
+                    formControlName="description"
+                    placeholder="Enter event description"
+                ></textarea>
+                <div
+                    *ngIf="
+                        description().invalid &&
+                        (description().dirty || description().touched)
+                    "
+                    class="error-message"
+                >
+                    <p *ngIf="description().hasError('maxlength')">
+                        Event description must be no longer than
+                        {{ description().errors?.['maxlength'].requiredLength }}
+                        characters
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div style="width: 100%">
+            <button
+                type="submit"
+                [disabled]="createEventForm.invalid"
+                class="btn btn-primary"
+            >
+                Create Event
+            </button>
+
+            <button
+                type="button"
+                (click)="closeModal()"
+                class="btn btn-primary close"
+            >
+                Close
+            </button>
+        </div>
+    </form>
+</div>
+
+<app-create-category
+    *ngIf="isNewCategory"
+    (updateData)="updateCategory($event)"
+    (close)="this.isNewCategory = false"
+></app-create-category>
