@@ -1,0 +1,62 @@
+<div class="header-content">
+    <app-filter
+        *ngIf="isHomePage"
+        (filterChanged)="onFilterChanged($event)"
+    ></app-filter>
+
+    <div
+        class="search-container"
+        [style]="isLoggedIn() ? 'margin-right: 10px' : 'margin-right: 0'"
+    >
+        <input
+            type="text"
+            class="search-bar"
+            placeholder="Search..."
+            (keydown.enter)="onSearch($event)"
+        />
+        <img src="/svgs/icons/search.svg" alt="Search" class="search-icon" />
+    </div>
+
+    <div class="header-right" *ngIf="isLoggedIn()">
+        <div class="user-menu" (click)="toggleMenu()">
+            <div class="user-avatar">
+                <img
+                    src="/svgs/icons/profile.svg"
+                    alt="User Icon"
+                    class="avatar-img"
+                />
+            </div>
+            <div class="menu-toggle">
+                <img
+                    [src]="
+                        menuOpen
+                            ? '/svgs/icons/close.svg'
+                            : '/svgs/icons/menu.svg'
+                    "
+                    alt="Menu Toggle"
+                    class="menu-icon"
+                />
+            </div>
+        </div>
+        <div class="dropdown-menu" *ngIf="menuOpen">
+            <a routerLink="/profile" class="menu-item">
+                <img
+                    src="/svgs/icons/setting.svg"
+                    alt="Profile Icon"
+                    class="menu-item-icon"
+                />
+                <span>Profile</span>
+            </a>
+            <a (click)="logout()" class="menu-item">
+                <img
+                    src="/svgs/icons/logout.svg"
+                    alt="Logout Icon"
+                    class="menu-item-icon"
+                />
+                <span>Logout</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<app-notification></app-notification>
