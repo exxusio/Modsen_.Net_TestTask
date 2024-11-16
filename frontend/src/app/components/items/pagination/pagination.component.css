@@ -1,0 +1,78 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: auto;
+}
+
+.page {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 65px;
+    background: rgb(var(--secondary-light));
+    box-shadow: 0 4px 8px rgba(var(--black-color), 0.2);
+    width: 690px;
+    margin-bottom: 20px;
+}
+
+.page__numbers,
+.page__btn,
+.page__dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0.8rem;
+    font-size: 1.4rem;
+    cursor: pointer;
+}
+
+.page__numbers {
+    margin: 0.8rem;
+}
+
+.page__dots {
+    width: 2.6rem;
+    height: 2.6rem;
+    color: rgb(var(--black-color));
+    cursor: initial;
+}
+
+.page__numbers {
+    width: 2.6rem;
+    height: 2.6rem;
+}
+
+.page__numbers:hover {
+    color: rgb(var(--primary-color));
+}
+
+.page__numbers.active {
+    color: rgb(var(--secondary-light));
+    background: rgb(var(--primary-light));
+    font-weight: 600;
+}
+
+.page__btn {
+    color: rgb(var(--error-dark));
+    pointer-events: none;
+}
+
+.page__btn.active {
+    color: rgb(var(--primary-dark));
+    pointer-events: initial;
+}
+
+.page__btn.active:hover {
+    color: rgb(var(--primary-color));
+}
+
+.page__btn.next {
+    margin-left: auto;
+}
+
+.page__btn.prev {
+    margin-right: auto;
+}
