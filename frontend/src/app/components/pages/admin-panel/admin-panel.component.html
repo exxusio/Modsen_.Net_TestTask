@@ -1,0 +1,13 @@
+<app-tabs
+    [activeTab]="activeTab"
+    [tabList]="tabList"
+    (tabChange)="setActiveTab($event)"
+></app-tabs>
+
+<div class="admin-panel">
+    <app-event-section *ngIf="activeTab === 'events'"></app-event-section>
+    <app-user-section *ngIf="activeTab === 'users'"></app-user-section>
+    <app-registration-section
+        *ngIf="activeTab === 'registrations'"
+    ></app-registration-section>
+</div>
