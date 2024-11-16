@@ -1,0 +1,28 @@
+<app-search
+    [data]="getUsers"
+    [searchField]="searchField"
+    (searchResults)="users = $event"
+></app-search>
+
+<div class="table">
+    <div class="user-list-header">
+        <div class="user-cell">Email</div>
+        <div class="user-cell">First Name</div>
+        <div class="user-cell">Last Name</div>
+    </div>
+
+    <div class="user-list-body">
+        <app-row
+            *ngFor="let user of users"
+            [data]="user"
+            [columns]="columns"
+            (clicked)="onUserClicked($event)"
+        ></app-row>
+    </div>
+</div>
+
+<app-change-role
+    *ngIf="isChangeRole"
+    [userId]="currentUserId"
+    (close)="isChangeRole = false && (currentUserId = '')"
+></app-change-role>
