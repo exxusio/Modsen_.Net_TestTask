@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Authorization;
 using EventsWebApplication.Application.Configs.Policies;
 using EventsWebApplication.Application.UseCases.Users.EventCategoryCases.Queries.GetAllCategories;
 using EventsWebApplication.Application.UseCases.Admins.EventCategoryCases.Commands.CreateCategory;
-using EventsWebApplication.Application.UseCases.Admins.EventCategoryCases.Commands.DeleteCategory;
 
 namespace EventsWebApplication.Presentation.Controllers
 {
@@ -27,17 +26,6 @@ namespace EventsWebApplication.Presentation.Controllers
         [Authorize(Policy = Policies.CreateEvents)]
         public async Task<IActionResult> CreateCategory([FromBody] CreateCategoryCommand command, CancellationToken cancellationToken = default)
         {
-            var category = await mediator.Send(command, cancellationToken);
-
-            return Ok(category);
-        }
-
-        [HttpDelete("{categoryId}")]
-        [Authorize(Policy = Policies.DeleteEvents)]
-        public async Task<IActionResult> DeleteCategory(Guid categoryId, [FromQuery] DeleteCategoryCommand command, CancellationToken cancellationToken = default)
-        {
-            command.CategoryId = categoryId;
-
             var category = await mediator.Send(command, cancellationToken);
 
             return Ok(category);
