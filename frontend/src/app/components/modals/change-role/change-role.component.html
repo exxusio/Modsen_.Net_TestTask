@@ -1,0 +1,68 @@
+<div class="modal-content">
+    <div *ngIf="user" class="user-container">
+        <div class="user-info">
+            <div class="user-item">
+                <label for="firstName">First Name</label>
+                <div class="info">{{ user.firstName }}</div>
+            </div>
+
+            <div class="user-item">
+                <label for="lastName">Last Name</label>
+                <div class="info">{{ user.lastName }}</div>
+            </div>
+
+            <div class="user-item">
+                <label for="dateOfBirth">Date of Birth</label>
+                <div class="info">
+                    {{
+                        user.dateOfBirth
+                            ? (user.dateOfBirth | date : "dd.MM.yyyy")
+                            : "Date not specified"
+                    }}
+                </div>
+            </div>
+
+            <div class="user-item">
+                <label for="email">Email</label>
+                <div class="info">{{ user.email }}</div>
+            </div>
+
+            <form
+                class="modal-form"
+                [formGroup]="changeRoleForm"
+                (ngSubmit)="changeUserRole()"
+            >
+                <div class="modal-item">
+                    <label for="roleId"
+                        >Role
+                        <span>*</span>
+                    </label>
+                    <select id="roleId" formControlName="roleId">
+                        <option value="" disabled selected>Role</option>
+                        <option *ngFor="let role of roles" [value]="role.id">
+                            {{ role.name }}
+                        </option>
+                    </select>
+                </div>
+
+                <div style="width: 100%">
+                    <button
+                        type="submit"
+                        [disabled]="changeRoleForm.invalid"
+                        class="btn btn-primary"
+                    >
+                        Update User
+                    </button>
+
+                    <button
+                        type="button"
+                        (click)="closeModal()"
+                        class="btn btn-primary close"
+                    >
+                        Close
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
