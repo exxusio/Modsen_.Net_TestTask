@@ -56,6 +56,16 @@ namespace EventsWebApplication.Application.UseCases.Users.EventRegistrationCases
                 );
             }
 
+            if (_event.Date < registration.RegistrationDate)
+            {
+                throw new EventExpiredException(
+                    "The event has already passed",
+                    request.UserId.ToString(),
+                    request.EventId.ToString(),
+                    registration.RegistrationDate.ToString()
+                );
+            }
+
             eventRegistrationRepository.Delete(registration);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 

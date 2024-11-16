@@ -66,6 +66,16 @@ namespace EventsWebApplication.Application.UseCases.Users.EventRegistrationCases
 
             var registration = _mapper.Map<EventRegistration>(request);
 
+            if (_event.Date < registration.RegistrationDate)
+            {
+                throw new EventExpiredException(
+                    "The event has already passed",
+                    request.UserId.ToString(),
+                    request.EventId.ToString(),
+                    registration.RegistrationDate.ToString()
+                );
+            }
+
             await eventRegistrationRepository.AddAsync(registration, cancellationToken);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
