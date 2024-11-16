@@ -49,7 +49,6 @@ body {
 .btn {
     border: none;
     padding: 12px;
-    border-radius: 8px;
     cursor: pointer;
     font-size: 18px;
     transition: background-color 0.3s ease;
@@ -97,4 +96,42 @@ body {
 
 .btn-secondary:disabled {
     background-color: rgb(var(--tertiary-light), 0.3);
+}
+
+.close {
+    background-color: rgb(var(--error-dark));
+    margin-top: 10px;
+}
+
+.close:hover {
+    background-color: rgb(var(--error-color));
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid rgb(var(--primary-light));
+    font-size: 14px;
+    color: rgb(var(--black-color));
+    box-sizing: border-box;
+    transition: border-color 0.3s ease-in-out;
+    margin-top: 10px;
+}
+
+textarea {
+    resize: none;
+    height: 150px;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: rgb(var(--primary-dark));
+    outline: none;
+}
+
+option[disabled] {
+    color: rgba(var(--black-color), 0.3);
 }
