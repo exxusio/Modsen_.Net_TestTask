@@ -1,0 +1,48 @@
+* {
+    box-sizing: border-box;
+}
+
+:host {
+    width: 100%;
+    max-width: 800px;
+    margin: 30px auto;
+}
+
+.table {
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(var(--black-color), 0.15);
+    background-color: rgb(var(--white-color));
+}
+
+.user-list-header {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    font-size: 1rem;
+    background-color: rgba(var(--black-color), 0.05);
+    font-weight: bold;
+    color: rgb(var(--black-color));
+    border-bottom: 2px solid rgb(var(--primary-color));
+}
+
+.user-list-body {
+    max-height: 465px;
+    overflow-y: auto;
+}
+
+.user-cell {
+    flex: 1;
+    padding: 10px;
+    text-align: center;
+    font-size: 1rem;
+    color: rgb(var(--black-color));
+    word-wrap: break-word;
+    white-space: normal;
+}
+
+@media (max-width: 1200px) {
+    .user-list-body {
+        max-height: 195px;
+        overflow-y: auto;
+    }
+}

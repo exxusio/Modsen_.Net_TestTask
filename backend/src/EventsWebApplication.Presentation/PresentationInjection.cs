@@ -2,6 +2,7 @@ using Serilog;
 using Serilog.Exceptions;
 using Serilog.Formatting.Json;
 using Microsoft.OpenApi.Models;
+using EventsWebApplication.Application.Configs.Policies;
 using EventsWebApplication.Presentation.Middlewares;
 
 namespace EventsWebApplication.Presentation
@@ -14,6 +15,7 @@ namespace EventsWebApplication.Presentation
             services.SwaggerConfigure();
             services.LoggerConfigure(configuration);
             services.MiddlewareScoped();
+            services.CorsConfigure();
             return services;
         }
 
@@ -66,6 +68,24 @@ namespace EventsWebApplication.Presentation
                     retainedFileCountLimit: int.Parse(loggingSettings["RetainedFileCountLimit"]!),
                     fileSizeLimitBytes: long.Parse(loggingSettings["FileSizeLimitBytes"]!))
                 .CreateLogger();
+
+            return services;
+        }
+
+        private static IServiceCollection CorsConfigure(this IServiceCollection services)
+        {
+            services
+                .AddCors(options =>
+                {
+                    options.AddPolicy(Policies.CORS,
+                        builder =>
+                        {
+                            builder.WithOrigins("http://localhost:7000", "https://localhost:7000")
+                                .AllowAnyHeader()
+                                .AllowAnyMethod()
+                                .AllowCredentials();
+                        });
+                });
 
             return services;
         }

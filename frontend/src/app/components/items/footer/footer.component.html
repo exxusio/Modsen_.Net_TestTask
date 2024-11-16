@@ -1,0 +1,36 @@
+<div class="footer-content">
+    <div class="footer-left">
+        <p>&copy; 2024 EventsWebApplication</p>
+    </div>
+    <div class="footer-center">
+        <a
+            href="/policy"
+            class="footer-link"
+            (click)="preventNavigation($event)"
+            >Privacy Policy</a
+        >
+    </div>
+    <div class="footer-right">
+        <p class="social-text">Follow us:</p>
+        <div class="social-links">
+            <a href="#" (click)="preventNavigation($event)"
+                ><img
+                    src="/svgs/links/instagram.svg"
+                    alt="Instagram"
+                    class="social-icon-img"
+            /></a>
+            <a href="#" (click)="preventNavigation($event)"
+                ><img
+                    src="/svgs/links/linkedin.svg"
+                    alt="LinkedIn"
+                    class="social-icon-img"
+            /></a>
+            <a href="#" (click)="preventNavigation($event)"
+                ><img
+                    src="/svgs/links/telegram.svg"
+                    alt="Telegram"
+                    class="social-icon-img"
+            /></a>
+        </div>
+    </div>
+</div>

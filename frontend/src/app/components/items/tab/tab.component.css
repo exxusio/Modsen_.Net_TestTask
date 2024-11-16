@@ -1,0 +1,27 @@
+:host {
+    display: flex;
+    justify-content: center;
+}
+
+.tab {
+    background-color: rgb(var(--white-color));
+    box-shadow: 0 6px 14px rgba(var(--black-color), 0.25);
+    border: none;
+    padding: 20px 30px;
+    margin: 0 10px;
+    font-size: 20px;
+    cursor: pointer;
+    outline: none;
+    border-bottom: 6px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.tab:hover {
+    background-color: rgba(var(--black-color), 0.08);
+}
+
+.tab.active {
+    border-bottom: 6px solid rgb(var(--secondary-dark));
+    color: rgb(var(--secondary-dark));
+    font-weight: bold;
+}

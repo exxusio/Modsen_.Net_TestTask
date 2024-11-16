@@ -1,0 +1,13 @@
+<div class="events-list" *ngIf="eventsByFilter">
+    <app-event-card
+        *ngFor="let event of eventsByFilter.events"
+        [event]="event"
+        (eventClicked)="onEventClicked($event)"
+    ></app-event-card>
+</div>
+
+<app-pagination
+    [currentPage]="currentPage"
+    [totalPages]="totalPages"
+    (pageChange)="onPageChange($event)"
+></app-pagination>

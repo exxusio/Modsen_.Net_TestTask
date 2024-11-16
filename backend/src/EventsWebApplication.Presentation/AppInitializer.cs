@@ -1,3 +1,4 @@
+using EventsWebApplication.Application.Configs.Policies;
 using EventsWebApplication.Application.Abstractions.Data;
 using EventsWebApplication.Application.Abstractions.Auth;
 using EventsWebApplication.Infrastructure.Data;
@@ -10,6 +11,8 @@ namespace EventsWebApplication.Presentation
     {
         public static async Task<WebApplication> StartApplication(this WebApplication webApplication)
         {
+            webApplication.UseCors(Policies.CORS);
+
             webApplication.UseRouting();
 
             webApplication.UseAuthentication();

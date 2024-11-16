@@ -1,0 +1,10 @@
+<div class="search-block">
+    <input
+        type="text"
+        class="search-bar"
+        placeholder="Search..."
+        (keydown.enter)="onSearch($event)"
+    />
+    <img src="/svgs/icons/search.svg" alt="Search" class="search-icon" />
+</div>
+<ng-content></ng-content>

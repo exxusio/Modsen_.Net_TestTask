@@ -1,0 +1,62 @@
+<button class="filter-toggle" (click)="toggleFilterPanel()">
+    <img
+        [src]="
+            isFilterPanelVisible
+                ? '/svgs/icons/filter-close.svg'
+                : '/svgs/icons/filter.svg'
+        "
+        alt="Filter"
+    />
+</button>
+
+<form
+    *ngIf="isFilterPanelVisible"
+    [formGroup]="filterForm"
+    (ngSubmit)="onSubmit()"
+>
+    <div class="filter-panel">
+        <div class="filter-row">
+            <label for="fromDate">From Date:</label>
+            <input id="fromDate" type="date" formControlName="fromDate" />
+        </div>
+        <div class="filter-row">
+            <label for="toDate">To Date:</label>
+            <input id="toDate" type="date" formControlName="toDate" />
+        </div>
+        <div class="filter-row">
+            <label for="fromTime">From Time:</label>
+            <input id="fromTime" type="time" formControlName="fromTime" />
+        </div>
+        <div class="filter-row">
+            <label for="toTime">To Time:</label>
+            <input id="toTime" type="time" formControlName="toTime" />
+        </div>
+        <div class="filter-row">
+            <label for="location">Location:</label>
+            <input
+                id="location"
+                type="text"
+                formControlName="location"
+                placeholder="Enter location"
+            />
+        </div>
+        <div class="filter-row">
+            <label for="categoryId">Category:</label>
+            <select id="categoryId" formControlName="categoryId">
+                <option value="">All Categories</option>
+                <option
+                    *ngFor="let category of categories"
+                    [value]="category.id"
+                >
+                    {{ category.name }}
+                </option>
+            </select>
+        </div>
+    </div>
+    <div class="filter-buttons">
+        <button type="submit" class="btn apply-button">Apply Filters</button>
+        <button type="button" (click)="onReset()" class="btn reset-button">
+            Reset
+        </button>
+    </div>
+</form>

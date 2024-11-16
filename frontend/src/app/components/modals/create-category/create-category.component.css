@@ -1,0 +1,46 @@
+:host {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(var(--black-color), 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1006;
+}
+
+.modal-content {
+    background-color: rgb(var(--white-color));
+    padding: 30px;
+    width: 600px;
+    box-shadow: 0 2px 10px rgba(var(--black-color), 0.2);
+}
+
+.modal-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.modal-item {
+    flex: 1 1 calc(50% - 20px);
+    margin-bottom: 20px;
+}
+
+label {
+    font-weight: bold;
+    cursor: default;
+}
+
+label span {
+    color: rgb(var(--error-dark));
+    font-size: 1.2em;
+    margin-left: 5px;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+}

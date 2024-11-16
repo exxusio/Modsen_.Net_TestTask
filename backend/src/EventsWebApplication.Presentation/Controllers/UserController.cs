@@ -10,8 +10,6 @@ using EventsWebApplication.Application.UseCases.Users.UserCases.Commands.ChangeU
 using EventsWebApplication.Application.UseCases.Users.UserCases.Queries.GetCurrentUser;
 using EventsWebApplication.Application.UseCases.Users.UserCases.Commands.CreateUser;
 using EventsWebApplication.Application.UseCases.Users.UserCases.Commands.UpdateUser;
-using EventsWebApplication.Application.UseCases.Users.UserCases.Commands.LogoutUser;
-using EventsWebApplication.Application.UseCases.Users.UserCases.Commands.DeleteUser;
 using EventsWebApplication.Application.UseCases.Users.UserCases.Commands.LoginUser;
 
 namespace EventsWebApplication.Presentation.Controllers
@@ -106,28 +104,6 @@ namespace EventsWebApplication.Presentation.Controllers
         public async Task<IActionResult> ChangeUserRole([FromBody] ChangeUserRoleQuery query, CancellationToken cancellationToken = default)
         {
             var user = await mediator.Send(query, cancellationToken);
-
-            return Ok(user);
-        }
-
-        [HttpPost("logout")]
-        [Authorize]
-        public async Task<IActionResult> LogoutUser([FromBody] LogoutUserCommand command, CancellationToken cancellationToken = default)
-        {
-            command.UserId = UserId;
-
-            await mediator.Send(command, cancellationToken);
-
-            return Ok();
-        }
-
-        [HttpDelete]
-        [Authorize]
-        public async Task<IActionResult> DeleteUser([FromQuery] DeleteUserCommand command, CancellationToken cancellationToken = default)
-        {
-            command.UserId = UserId;
-
-            var user = await mediator.Send(command, cancellationToken);
 
             return Ok(user);
         }

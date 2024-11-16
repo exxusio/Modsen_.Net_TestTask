@@ -1,0 +1,54 @@
+<div class="sidebar-header">
+    <img src="/svgs/favicon.svg" alt="Site Icon" class="site-icon" />
+    <span class="site-name">EventWebApplication</span>
+</div>
+<ul class="sidebar-menu">
+    <li>
+        <a routerLink="/">
+            <img src="/svgs/icons/home.svg" alt="Events" class="icon" />
+            <span class="menu-text">Home</span>
+        </a>
+    </li>
+    <li *ngIf="isLoggedIn()">
+        <a routerLink="my-registrations">
+            <img
+                src="/svgs/icons/document.svg"
+                alt="Registrations"
+                class="icon"
+            />
+            <span class="menu-text">Registrations</span>
+        </a>
+    </li>
+    <li *ngIf="isLoggedIn() && isAdmin()">
+        <a routerLink="admin-panel">
+            <img src="/svgs/icons/lock.svg" alt="Admin Panel" class="icon" />
+            <span class="menu-text">Admin Panel</span>
+        </a>
+    </li>
+    <li (click)="preventNavigation($event)">
+        <a href="/contact">
+            <img src="/svgs/icons/contact.svg" alt="Contact" class="icon" />
+            <span class="menu-text">Contact</span>
+        </a>
+    </li>
+    <li (click)="preventNavigation($event)">
+        <a href="/about">
+            <img src="/svgs/icons/about.svg" alt="About" class="icon" />
+            <span class="menu-text">About</span>
+        </a>
+    </li>
+</ul>
+<ul class="sidebar-menu bottom-menu">
+    <li class="logout" *ngIf="isLoggedIn()">
+        <a (click)="logout()">
+            <img src="/svgs/icons/logout.svg" alt="Logout" class="icon" />
+            <span class="menu-text">Logout</span>
+        </a>
+    </li>
+    <li class="login" *ngIf="!isLoggedIn()">
+        <a routerLink="/log-in">
+            <img src="/svgs/icons/log-in.svg" alt="Log In" class="icon" />
+            <span class="menu-text">Log In</span>
+        </a>
+    </li>
+</ul>

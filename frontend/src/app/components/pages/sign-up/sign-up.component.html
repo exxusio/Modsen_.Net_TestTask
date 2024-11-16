@@ -1,0 +1,174 @@
+<div class="sign-up-form">
+    <h2>Registration</h2>
+
+    <form [formGroup]="Form" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input id="firstName" formControlName="firstName" type="text" />
+            <div
+                *ngIf="
+                    firstName().invalid &&
+                    (!firstName().untouched || firstName().dirty)
+                "
+                class="error-message"
+            >
+                <p *ngIf="firstName().hasError('required')">
+                    First Name is required
+                </p>
+                <p *ngIf="firstName().hasError('minlength')">
+                    First Name must be at least
+                    {{ firstName().errors?.['minlength'].requiredLength }}
+                    characters long
+                </p>
+                <p *ngIf="firstName().hasError('maxlength')">
+                    First Name must be no longer than
+                    {{ firstName().errors?.['maxlength'].requiredLength }}
+                    characters
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input id="lastName" formControlName="lastName" type="text" />
+            <div
+                *ngIf="
+                    lastName().invalid &&
+                    (!lastName().untouched || lastName().dirty)
+                "
+                class="error-message"
+            >
+                <p *ngIf="lastName().hasError('required')">
+                    Last Name is required
+                </p>
+                <p *ngIf="lastName().hasError('minlength')">
+                    Last Name must be at least
+                    {{ lastName().errors?.['minlength'].requiredLength }}
+                    characters long
+                </p>
+                <p *ngIf="lastName().hasError('maxlength')">
+                    Last Name must be no longer than
+                    {{ lastName().errors?.['maxlength'].requiredLength }}
+                    characters
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input id="email" formControlName="email" type="email" />
+            <div
+                *ngIf="email().invalid && (!email().untouched || email().dirty)"
+                class="error-message"
+            >
+                <p *ngIf="email().hasError('required')">Email is required</p>
+                <p *ngIf="email().hasError('email')">
+                    Please enter a valid email address
+                </p>
+                <p *ngIf="email().hasError('maxlength')">
+                    Email must be no longer than
+                    {{ email().errors?.['maxlength'].requiredLength }}
+                    characters
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="login">Login</label>
+            <input
+                id="login"
+                formControlName="login"
+                type="text"
+                autocomplete="login"
+            />
+            <div
+                *ngIf="login().invalid && (!login().untouched || login().dirty)"
+                class="error-message"
+            >
+                <p *ngIf="login().hasError('required')">Login is required</p>
+                <p *ngIf="login().hasError('minlength')">
+                    Login must be at least
+                    {{ login().errors?.['minlength'].requiredLength }}
+                    characters long
+                </p>
+                <p *ngIf="login().hasError('maxlength')">
+                    Login must be no longer than
+                    {{ login().errors?.['maxlength'].requiredLength }}
+                    characters
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input
+                id="password"
+                formControlName="password"
+                type="password"
+                autocomplete="password"
+            />
+            <div
+                *ngIf="
+                    password().invalid &&
+                    (!password().untouched || password().dirty)
+                "
+                class="error-message"
+            >
+                <p *ngIf="password().hasError('required')">
+                    Password is required
+                </p>
+                <p *ngIf="password().hasError('minlength')">
+                    Password must be at least
+                    {{ password().errors?.['minlength'].requiredLength }}
+                    characters long
+                </p>
+                <p *ngIf="password().hasError('maxlength')">
+                    Password must be no longer than
+                    {{ password().errors?.['maxlength'].requiredLength }}
+                    characters
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="confirmPassword">Confirm Password</label>
+            <input
+                id="confirmPassword"
+                formControlName="confirmPassword"
+                type="password"
+                autocomplete="confirm-password"
+            />
+            <div
+                *ngIf="
+                    confirmPassword().invalid &&
+                    (!confirmPassword().untouched || confirmPassword().dirty)
+                "
+                class="error-message"
+            >
+                <p *ngIf="confirmPassword().hasError('required')">
+                    Confirm Password is required
+                </p>
+                <p *ngIf="confirmPassword().hasError('notEqual')">
+                    Passwords must match
+                </p>
+            </div>
+        </div>
+
+        <div class="button-group">
+            <button
+                type="submit"
+                [disabled]="Form.invalid"
+                class="btn btn-primary"
+            >
+                Register
+            </button>
+            <button
+                type="button"
+                class="btn btn-secondary"
+                routerLink="/log-in"
+            >
+                Log In
+            </button>
+        </div>
+    </form>
+</div>

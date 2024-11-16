@@ -1,0 +1,122 @@
+.filter-toggle {
+    position: relative;
+    right: 0;
+    padding-right: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.filter-toggle img {
+    width: 30px;
+    height: 30px;
+}
+
+form {
+    top: 60px;
+    left: 0;
+    width: 100%;
+    position: absolute;
+    background-color: rgb(var(--white-color));
+    box-shadow: 0 8px 8px rgba(var(--black-color), 0.1);
+    border-width: 1px 0 1px 0;
+    border-style: solid;
+    border-color: rgba(var(--black-color), 0.1);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 10px;
+    padding-left: 80px;
+}
+
+.filter-panel {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.filter-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 15px;
+}
+
+.filter-row label {
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: rgb(var(--primary-color));
+    margin-right: 10px;
+}
+
+.filter-row input,
+.filter-row select {
+    font-size: 12px;
+    width: 145px;
+    height: 30px;
+    padding: 8px;
+    text-align: center;
+    margin-top: 0;
+}
+
+.filter-row input::placeholder {
+    color: rgba(var(--black-color), 0.6);
+}
+
+.filter-row input:focus {
+    border-color: rgb(var(--primary-dark));
+    outline: none;
+}
+
+.filter-buttons {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.apply-button,
+.reset-button {
+    font-size: 14px;
+    padding: 8px 15px;
+    margin-left: 10px;
+}
+
+.apply-button {
+    background-color: rgb(var(--tertiary-color));
+    color: rgb(var(--white-color));
+}
+
+.reset-button {
+    background-color: rgb(var(--error-color));
+    color: rgb(var(--white-color));
+}
+
+.apply-button:hover {
+    background-color: rgb(var(--tertiary-dark));
+}
+
+.reset-button:hover {
+    background-color: rgb(var(--error-dark));
+}
+
+@media (max-width: 1200px) {
+    .filter-row label {
+        font-size: 12px;
+    }
+
+    .filter-row input,
+    .filter-row select {
+        font-size: 10px;
+        width: 125px;
+        height: 25px;
+        padding: 6px;
+    }
+
+    .apply-button,
+    .reset-button {
+        font-size: 12px;
+    }
+}

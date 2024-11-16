@@ -1,0 +1,21 @@
+:host {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 20px;
+}
+
+app-tabs {
+    margin-bottom: 30px;
+    margin-top: 10px;
+}
+
+.admin-panel {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}

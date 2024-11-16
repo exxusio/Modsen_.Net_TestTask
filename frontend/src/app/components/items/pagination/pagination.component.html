@@ -1,0 +1,54 @@
+<div id="app" class="container">
+    <ul class="page">
+        <li
+            class="page__btn prev"
+            (click)="changePage(currentPage - 1)"
+            [ngClass]="{ active: !(currentPage <= 1) }"
+        >
+            <span>-</span>
+        </li>
+
+        <li
+            *ngIf="currentPage > 3"
+            class="page__numbers"
+            (click)="changePage(1)"
+        >
+            1
+        </li>
+
+        <li *ngIf="currentPage > 3" class="page__dots">...</li>
+
+        <li
+            *ngFor="let page of getPages()"
+            class="page__numbers"
+            [ngClass]="{ active: currentPage === page }"
+            (click)="changePage(page)"
+        >
+            {{ page }}
+        </li>
+
+        <li
+            *ngIf="totalPages > 5 && currentPage < totalPages - 2"
+            class="page__dots"
+        >
+            ...
+        </li>
+
+        <li
+            class="page__numbers"
+            *ngIf="totalPages > 5 && currentPage < totalPages - 2"
+            [ngClass]="{ active: currentPage === totalPages }"
+            (click)="changePage(totalPages)"
+        >
+            {{ totalPages }}
+        </li>
+
+        <li
+            class="page__btn next"
+            (click)="changePage(currentPage + 1)"
+            [ngClass]="{ active: !(currentPage >= totalPages) }"
+        >
+            <span>+</span>
+        </li>
+    </ul>
+</div>

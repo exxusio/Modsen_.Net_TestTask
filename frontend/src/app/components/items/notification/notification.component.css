@@ -1,0 +1,45 @@
+:host {
+    position: absolute;
+    cursor: pointer;
+    right: 10px;
+    top: 70px;
+}
+
+.notify {
+    background: rgba(var(--black-color), 0.6);
+    opacity: 0;
+    padding: 15px 20px;
+    color: rgb(var(--white-color));
+    font-weight: 500;
+    font-size: 14px;
+    margin-bottom: 10px;
+    width: 340px;
+    transform: translateY(-20%) scale(1);
+    transition-property: opacity, transform, margin, scale;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in-out;
+    word-wrap: break-word;
+    white-space: normal;
+}
+
+.notify > div:first-child {
+    margin-bottom: 10px;
+}
+
+.notify.success > div:first-child {
+    color: rgb(var(--tertiary-dark));
+}
+
+.notify.error > div:first-child {
+    color: rgb(var(--error-dark));
+}
+
+.notify.info > div:first-child {
+    color: rgb(var(--white-color));
+}
+
+.notify.active {
+    opacity: 1;
+    transform: translateY(0px) scale(1);
+    pointer-events: auto;
+}

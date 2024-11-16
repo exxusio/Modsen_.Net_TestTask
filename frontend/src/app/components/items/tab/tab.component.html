@@ -1,0 +1,8 @@
+<button
+    *ngFor="let tab of tabList"
+    class="tab"
+    [class.active]="activeTab === tab.toLowerCase()"
+    (click)="setActiveTab(tab.toLowerCase())"
+>
+    {{ tab }}
+</button>

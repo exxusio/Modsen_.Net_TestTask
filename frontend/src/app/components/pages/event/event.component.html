@@ -1,0 +1,113 @@
+<div *ngIf="event" class="event-page">
+    <div class="event-header">
+        <div class="event-info">
+            <h1 class="event-title">{{ event.name }}</h1>
+            <p class="event-category">{{ event.category.name }}</p>
+            <div class="event-meta">
+                <span class="event-date">{{
+                    event.date | date : "dd.MM.yyyy"
+                }}</span>
+                <span class="event-time">{{
+                    event.time | time : "HH:mm"
+                }}</span>
+                <span class="event-location">{{ event.location }}</span>
+            </div>
+            <p class="event-seats" [ngClass]="{ no: !event.hasAvailableSeats }">
+                Seats: {{ event.registeredCount }} / {{ event.maxParticipants }}
+            </p>
+        </div>
+        <img
+            [src]="event.imageUrl || defaultImage"
+            alt="{{ event.name }}"
+            class="event-image"
+        />
+    </div>
+
+    <div class="event-footer">
+        <div class="event-description-container">
+            <div
+                class="event-description"
+                [ngClass]="{ collapsed: isCollapsed }"
+            >
+                <p>{{ truncatedDescription }}</p>
+            </div>
+            <button
+                class="read-more"
+                *ngIf="
+                    isCollapsed && event.description.length > descriptionLimit
+                "
+                (click)="toggleDescription()"
+            >
+                Read more
+            </button>
+        </div>
+
+        <div class="registration-buttons">
+            <button
+                class="btn btn-primary"
+                *ngIf="!isRegistered && !isEventInPast()"
+                [disabled]="!event.hasAvailableSeats"
+                (click)="registerForEvent()"
+            >
+                Register
+            </button>
+            <button
+                class="btn btn-primary"
+                *ngIf="isRegistered && !isEventInPast()"
+                (click)="unregisterFromEvent()"
+            >
+                UnRegister
+            </button>
+            <button
+                disabled
+                class="btn btn-primary end"
+                *ngIf="isEventInPast()"
+            >
+                {{ getEventStatusText() }}
+            </button>
+
+            <div *ngIf="isAdminStatus" class="admin-menu">
+                <button
+                    [class.open]="isMore"
+                    class="button-more"
+                    (click)="isMore = true"
+                >
+                    <img src="/svgs/icons/more.svg" alt="More" />
+                </button>
+
+                <div
+                    *ngIf="isMore"
+                    class="admin-buttons"
+                    (mouseleave)="isMore = false"
+                >
+                    <button class="admin-button ed" (click)="isEventEdit()">
+                        <img src="/svgs/icons/edit.svg" alt="Edit" />
+                    </button>
+                    <button class="admin-button view" (click)="isViewUsers()">
+                        <img src="/svgs/icons/document.svg" alt="View" />
+                    </button>
+                    <button class="admin-button del" (click)="isEventDelete()">
+                        <img src="/svgs/icons/delete.svg" alt="Delete" />
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-update-event
+    *ngIf="isEdit"
+    [event]="event"
+    (updateData)="loadEventDetails($event)"
+    (close)="isEdit = false"
+></app-update-event>
+<app-event-registration
+    *ngIf="isView"
+    [eventId]="eventId"
+    (close)="isView = false"
+></app-event-registration>
+<app-delete-event
+    *ngIf="isDelete"
+    [eventId]="eventId"
+    (close)="isDelete = false"
+></app-delete-event>

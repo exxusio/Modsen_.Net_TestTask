@@ -65,7 +65,7 @@ namespace EventsWebApplication.Tests.UseCases.Events.Queries
                     It.IsAny<EventFilter>(),
                     It.IsAny<CancellationToken>()
                 )
-            ).ReturnsAsync(eventsFromRepo);
+            ).ReturnsAsync((eventsFromRepo, eventsFromRepo.Count));
 
             var handler = new GetEventsByFilterHandler(
                 _mockRepository.Object,
@@ -78,8 +78,9 @@ namespace EventsWebApplication.Tests.UseCases.Events.Queries
             );
 
             Assert.NotNull(result);
-            Assert.Single(result);
-            Assert.Equal(query.EventName, result.First().Name);
+            Assert.Single(result.Events);
+            Assert.Equal(result.TotalCount, eventsFromRepo.Count);
+            Assert.Equal(query.EventName, result.Events.First().Name);
 
             _mockRepository.Verify(r =>
                 r.GetByFilterAsync(
@@ -111,7 +112,7 @@ namespace EventsWebApplication.Tests.UseCases.Events.Queries
                     It.IsAny<EventFilter>(),
                     It.IsAny<CancellationToken>()
                 )
-            ).ReturnsAsync(new List<Event>());
+            ).ReturnsAsync((new List<Event>(), 0));
 
             var handler = new GetEventsByFilterHandler(
                 _mockRepository.Object,
@@ -124,7 +125,7 @@ namespace EventsWebApplication.Tests.UseCases.Events.Queries
             );
 
             Assert.NotNull(result);
-            Assert.Empty(result);
+            Assert.Empty(result.Events);
 
             _mockRepository.Verify(r =>
                 r.GetByFilterAsync(
@@ -166,9 +167,10 @@ namespace EventsWebApplication.Tests.UseCases.Events.Queries
                     It.IsAny<CancellationToken>()
                 )
             ).ReturnsAsync(
-                eventsFromRepo
+                (eventsFromRepo
                     .Skip((query.PageNumber - 1) * query.PageSize)
-                    .Take(query.PageSize)
+                    .Take(query.PageSize),
+                5)
             );
 
             var handler = new GetEventsByFilterHandler(
@@ -182,8 +184,8 @@ namespace EventsWebApplication.Tests.UseCases.Events.Queries
             );
 
             Assert.NotNull(result);
-            Assert.Equal(2, result.Count());
-            Assert.Equal("Event 1", result.First().Name);
+            Assert.Equal(2, result.Events.Count());
+            Assert.Equal("Event 1", result.Events.First().Name);
         }
 
         [Fact]
@@ -214,9 +216,10 @@ namespace EventsWebApplication.Tests.UseCases.Events.Queries
                     It.IsAny<CancellationToken>()
                 )
             ).ReturnsAsync(
-                eventsFromRepo
+                (eventsFromRepo
                     .Skip((query.PageNumber - 1) * query.PageSize)
-                    .Take(query.PageSize)
+                    .Take(query.PageSize),
+                2)
             );
 
             var handler = new GetEventsByFilterHandler(
@@ -230,8 +233,8 @@ namespace EventsWebApplication.Tests.UseCases.Events.Queries
             );
 
             Assert.NotNull(result);
-            Assert.Equal(2, result.Count());
-            Assert.All(result, e =>
+            Assert.Equal(2, result.Events.Count());
+            Assert.All(result.Events, e =>
                 Assert.Equal(location, e.Location)
             );
         }

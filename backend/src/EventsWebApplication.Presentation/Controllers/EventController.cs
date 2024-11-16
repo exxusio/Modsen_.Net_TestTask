@@ -42,11 +42,10 @@ namespace EventsWebApplication.Presentation.Controllers
         public async Task<IActionResult> GetEventsByFilter(int pageNumber, [FromQuery] GetEventsByFilterQuery query, CancellationToken cancellationToken = default)
         {
             query.PageNumber = pageNumber;
-            query.PageSize = 20;
 
-            var events = await mediator.Send(query, cancellationToken);
+            var eventsByFilter = await mediator.Send(query, cancellationToken);
 
-            return Ok(events);
+            return Ok(eventsByFilter);
         }
 
         [HttpPost]

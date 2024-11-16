@@ -1,0 +1,22 @@
+<div class="table">
+    <h2 class="title">My Registrations</h2>
+
+    <div class="registration-list-header">
+        <div class="registration-cell">Registration Date</div>
+        <div class="registration-cell">Event Name</div>
+        <div class="registration-cell">Event Date & Time</div>
+    </div>
+
+    <div class="registration-list-body">
+        <app-row
+            *ngFor="let registration of registrations"
+            [data]="registration"
+            [columns]="[
+                'registrationDate',
+                'event.name',
+                '[event.date, event.time]'
+            ]"
+            (clicked)="onRegistrationClicked($event)"
+        ></app-row>
+    </div>
+</div>
