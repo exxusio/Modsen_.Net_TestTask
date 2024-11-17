@@ -15,4 +15,8 @@ export class RoleService {
     public getAllRoles(): Observable<RoleRead[]> {
         return this._http.get<RoleRead[]>(this._apiUrl);
     }
+
+    public getRoleByName(name: string): Observable<RoleRead> {
+        return this._http.get<RoleRead>(`${this._apiUrl}/${name}`);
+    }
 }

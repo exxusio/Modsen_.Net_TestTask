@@ -3,9 +3,9 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using EventsWebApplication.Application.Configs.Policies;
-using EventsWebApplication.Application.UseCases.Admins.EventRegistrationCases.Queries.GetRegistrationDetails;
 using EventsWebApplication.Application.UseCases.Admins.EventRegistrationCases.Queries.GetEventRegistrations;
 using EventsWebApplication.Application.UseCases.Admins.EventRegistrationCases.Queries.GetAllRegistrations;
+using EventsWebApplication.Application.UseCases.Users.EventRegistrationCases.Queries.GetRegistrationDetails;
 using EventsWebApplication.Application.UseCases.Users.EventRegistrationCases.Queries.GetUserRegistrations;
 using EventsWebApplication.Application.UseCases.Users.EventRegistrationCases.Commands.UnregisterFromEvent;
 using EventsWebApplication.Application.UseCases.Users.EventRegistrationCases.Commands.RegisterForEvent;
@@ -35,12 +35,12 @@ namespace EventsWebApplication.Presentation.Controllers
             return Ok(registrations);
         }
 
-        [HttpGet("{eventId}/{userId}")]
-        [Authorize(Policy = Policies.AdminOnlyActions)]
-        public async Task<IActionResult> GetRegistrationDetails(Guid eventId, Guid userId, [FromQuery] GetRegistrationDetailsQuery query, CancellationToken cancellationToken = default)
+        [HttpGet("{eventId}")]
+        [Authorize]
+        public async Task<IActionResult> GetRegistrationDetails(Guid eventId, [FromQuery] GetRegistrationDetailsQuery query, CancellationToken cancellationToken = default)
         {
             query.EventId = eventId;
-            query.UserId = userId;
+            query.UserId = UserId;
 
             var registration = await mediator.Send(query, cancellationToken);
 

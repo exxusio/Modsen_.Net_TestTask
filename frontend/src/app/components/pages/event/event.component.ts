@@ -11,6 +11,7 @@ import { RegistrationService } from './../../../data/services/registration.servi
 import { DeleteEventComponent } from '../../modals/delete-event/delete-event.component';
 import { UpdateEventComponent } from '../../modals/update-event/update-event.component';
 import { EventRegistrationComponent } from '../../modals/event-registration/event-registration.component';
+import { catchError, of } from 'rxjs';
 
 @Component({
     selector: 'app-event',
@@ -149,11 +150,15 @@ export class EventComponent {
         }
 
         this._registrationService
-            .getUserRegistrations() /**/
-            .subscribe((registrations) => {
-                this.isRegistered = registrations.some(
-                    (reg) => reg.event.id === eventId
-                );
+            .getRegistrationDetails(eventId)
+            .pipe(
+                catchError(() => {
+                    this.isRegistered = false;
+                    return of(null);
+                })
+            )
+            .subscribe((registration) => {
+                this.isRegistered = !!registration;
             });
     }
 

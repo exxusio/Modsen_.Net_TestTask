@@ -10,7 +10,7 @@ namespace EventsWebApplication.Domain.Specifications.Bases
     {
         public override Expression<Func<TEntity, bool>> ToExpression()
         {
-            return entity => entity.Name == name;
+            return entity => entity.Name.ToLower() == name.ToLower();
         }
     }
 }

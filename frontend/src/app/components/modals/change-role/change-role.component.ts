@@ -52,7 +52,7 @@ export class ChangeRoleComponent {
         this._userService.getUser(this.userId).subscribe({
             next: (user) => {
                 this.user = user;
-                this.loadCurrentRole(); /*плохо работает*/
+                this.loadCurrentRole();
             },
             error: (error) => {
                 this._notifyService.showUnexpectedError();
@@ -72,15 +72,17 @@ export class ChangeRoleComponent {
     }
 
     private loadCurrentRole(): void {
-        if (this.user && this.roles.length > 0) {
-            const userRole = this.roles.find(
-                (role) => role.name === this.user.roleName /**/
-            );
-            if (userRole) {
-                this.changeRoleForm.patchValue({
-                    roleId: userRole.id,
-                });
-            }
+        if (this.user) {
+            this._roleService.getRoleByName(this.user.roleName).subscribe({
+                next: (role) => {
+                    this.changeRoleForm.patchValue({
+                        roleId: role.id,
+                    });
+                },
+                error: (error) => {
+                    this._notifyService.showUnexpectedError();
+                },
+            });
         }
     }
 

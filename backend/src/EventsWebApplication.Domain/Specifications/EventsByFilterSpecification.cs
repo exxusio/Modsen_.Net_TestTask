@@ -16,7 +16,7 @@ namespace EventsWebApplication.Domain.Specifications
 
             if (!string.IsNullOrEmpty(filter.EventName))
             {
-                predicate = predicate.And(_event => _event.Name.Contains(filter.EventName));
+                predicate = predicate.And(_event => _event.Name.ToLower().Contains(filter.EventName.ToLower()));
             }
 
             if (filter.FromDate.HasValue)
@@ -41,7 +41,7 @@ namespace EventsWebApplication.Domain.Specifications
 
             if (!string.IsNullOrEmpty(filter.Location))
             {
-                predicate = predicate.And(_event => _event.Location.Contains(filter.Location));
+                predicate = predicate.And(_event => _event.Location.ToLower().Contains(filter.Location.ToLower()));
             }
 
             if (filter.CategoryId.HasValue)

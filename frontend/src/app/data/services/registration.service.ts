@@ -17,12 +17,9 @@ export class RegistrationService {
     }
 
     public getRegistrationDetails(
-        eventId: string,
-        userId: string
+        eventId: string
     ): Observable<RegistrationRead> {
-        return this._http.get<RegistrationRead>(
-            `${this._apiUrl}/${eventId}/${userId}`
-        );
+        return this._http.get<RegistrationRead>(`${this._apiUrl}/${eventId}`);
     }
 
     public getEventRegistrations(

@@ -10,7 +10,7 @@ namespace EventsWebApplication.Domain.Specifications
     {
         public override Expression<Func<User, bool>> ToExpression()
         {
-            return user => user.Email == email;
+            return user => user.Email.ToLower() == email.ToLower();
         }
     }
 }

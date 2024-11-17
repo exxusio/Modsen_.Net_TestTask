@@ -86,7 +86,7 @@ export class RegistrationSectionComponent {
         this.registrations = registrations.map((registration) => ({
             ...registration,
             registrationDate: DataHelper.formatDateForServer(
-                registration.registrationDate /**/
+                registration.registrationDate
             ),
         }));
     }

@@ -5,7 +5,7 @@ using EventsWebApplication.Domain.Repositories;
 using EventsWebApplication.Domain.Exceptions;
 using EventsWebApplication.Domain.Entities;
 
-namespace EventsWebApplication.Application.UseCases.Admins.EventRegistrationCases.Queries.GetRegistrationDetails
+namespace EventsWebApplication.Application.UseCases.Users.EventRegistrationCases.Queries.GetRegistrationDetails
 {
     public class GetRegistrationDetailsHandler(
         IEventRegistrationRepository _repository,
@@ -14,7 +14,7 @@ namespace EventsWebApplication.Application.UseCases.Admins.EventRegistrationCase
     {
         public async Task<EventRegistrationReadDto> Handle(GetRegistrationDetailsQuery request, CancellationToken cancellationToken)
         {
-            var registration = await _repository.GetByEventIdAndParticipantIdAsync(request.UserId, request.EventId, cancellationToken);
+            var registration = await _repository.GetByEventIdAndParticipantIdAsync(request.EventId, request.UserId, cancellationToken);
             if (registration == null)
             {
                 throw new NotFoundException(
