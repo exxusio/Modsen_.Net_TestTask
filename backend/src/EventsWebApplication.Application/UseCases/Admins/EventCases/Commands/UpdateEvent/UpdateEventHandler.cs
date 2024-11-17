@@ -3,16 +3,19 @@ using AutoMapper;
 using EventsWebApplication.Application.DTOs;
 using EventsWebApplication.Application.Abstractions.Data;
 using EventsWebApplication.Application.Abstractions.Caching;
+using EventsWebApplication.Application.Abstractions.Notify;
 using EventsWebApplication.Domain.Repositories;
 using EventsWebApplication.Domain.Exceptions;
 using EventsWebApplication.Domain.Entities;
+using EventsWebApplication.Domain.Consts;
 
 namespace EventsWebApplication.Application.UseCases.Admins.EventCases.Commands.UpdateEvent
 {
     public class UpdateEventHandler(
         ICacheService _cache,
         IUnitOfWork _unitOfWork,
-        IMapper _mapper
+        IMapper _mapper,
+        INotificationService _notifyService
     ) : IRequestHandler<UpdateEventCommand, EventReadDto>
     {
         public async Task<EventReadDto> Handle(UpdateEventCommand request, CancellationToken cancellationToken)
@@ -60,6 +63,13 @@ namespace EventsWebApplication.Application.UseCases.Admins.EventCases.Commands.U
 
             var eventReadDto = _mapper.Map<EventReadDto>(newEvent);
             await _cache.SetAsync(eventReadDto.Id.ToString(), eventReadDto);
+
+            await _notifyService.SendToAllEventChange(
+                eventReadDto,
+                "The event has been updated",
+                NotifyType.EventUpdated,
+                cancellationToken
+            );
 
             return eventReadDto;
         }

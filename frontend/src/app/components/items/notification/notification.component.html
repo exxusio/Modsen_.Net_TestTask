@@ -3,7 +3,8 @@
     class="notify"
     [class]="notification.type"
     (click)="removeNotification(notification)"
+    (click)="handleURL(notification)"
 >
     <div>{{ notification.action }}:</div>
-    <div>{{ notification.text }}</div>
+    <div [innerHTML]="notification.text" class="notification-text"></div>
 </div>

@@ -1,6 +1,7 @@
 using EventsWebApplication.Application.Configs.Policies;
 using EventsWebApplication.Application.Abstractions.Data;
 using EventsWebApplication.Application.Abstractions.Auth;
+using EventsWebApplication.Infrastructure.Notify.SignalR.Hubs;
 using EventsWebApplication.Infrastructure.Data;
 using EventsWebApplication.Infrastructure;
 using EventsWebApplication.Presentation.Middlewares;
@@ -22,6 +23,8 @@ namespace EventsWebApplication.Presentation
             webApplication.UseMiddleware<ExceptionHandlingMiddleware>();
 
             webApplication.UseHttpsRedirection();
+
+            webApplication.MapHub<EventNotificationHub>("/notify/event");
 
             webApplication.MapControllers();
 

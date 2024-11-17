@@ -22,6 +22,10 @@
     white-space: normal;
 }
 
+.notification-text {
+    line-height: 1.3;
+}
+
 .notify > div:first-child {
     margin-bottom: 10px;
 }
@@ -36,6 +40,10 @@
 
 .notify.info > div:first-child {
     color: rgb(var(--white-color));
+}
+
+.notify.warning > div:first-child {
+    color: rgb(var(--secondary-dark));
 }
 
 .notify.active {

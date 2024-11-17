@@ -12,7 +12,9 @@ using EventsWebApplication.Application.Configs.Policies;
 using EventsWebApplication.Application.Abstractions.Auth;
 using EventsWebApplication.Application.Abstractions.Data;
 using EventsWebApplication.Application.Abstractions.Caching;
+using EventsWebApplication.Application.Abstractions.Notify;
 using EventsWebApplication.Infrastructure.Data.Repositories;
+using EventsWebApplication.Infrastructure.Notify.SignalR.Services;
 using EventsWebApplication.Infrastructure.Caching;
 using EventsWebApplication.Infrastructure.Auth;
 using EventsWebApplication.Infrastructure.Data;
@@ -28,6 +30,7 @@ namespace EventsWebApplication.Infrastructure
             services.AuthConfigure(configuration);
             services.RepositoriesConfigure();
             services.UnitOfWorkConfigure();
+            services.SignalRConfigure();
 
             return services;
         }
@@ -46,7 +49,7 @@ namespace EventsWebApplication.Infrastructure
         private static IServiceCollection RedisConfigure(this IServiceCollection services, IConfiguration configuration)
         {
             var connectionString = configuration.GetConnectionString("RedisConnection");
-            var redis = ConnectionMultiplexer.Connect(connectionString);
+            var redis = ConnectionMultiplexer.Connect(connectionString!);
 
             services.AddSingleton<IConnectionMultiplexer>(redis);
             services.AddScoped<ICacheService, RedisCacheService>();
@@ -75,6 +78,21 @@ namespace EventsWebApplication.Infrastructure
                     ValidateAudience = false,
                     RequireExpirationTime = true,
                     ValidateIssuerSigningKey = true
+                };
+
+                options.Events = new JwtBearerEvents
+                {
+                    OnMessageReceived = context =>
+                    {
+                        var accessToken = context.Request.Query["access_token"];
+
+                        var path = context.HttpContext.Request.Path;
+                        if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/notify/event"))
+                        {
+                            context.Token = accessToken;
+                        }
+                        return Task.CompletedTask;
+                    }
                 };
             });
 
@@ -117,6 +135,14 @@ namespace EventsWebApplication.Infrastructure
         private static IServiceCollection UnitOfWorkConfigure(this IServiceCollection services)
         {
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            return services;
+        }
+
+        private static IServiceCollection SignalRConfigure(this IServiceCollection services)
+        {
+            services.AddSignalR();
+            services.AddScoped<INotificationService, SignalRNotificationService>();
 
             return services;
         }
