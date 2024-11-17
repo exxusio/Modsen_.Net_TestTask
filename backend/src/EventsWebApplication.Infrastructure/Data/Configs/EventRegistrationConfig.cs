@@ -28,12 +28,12 @@ namespace EventsWebApplication.Infrastructure.Data.Configs
             builder.HasOne(er => er.Event)
                 .WithMany(e => e.EventRegistrations)
                 .HasForeignKey(er => er.EventId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(er => er.Participant)
                 .WithMany(u => u.EventRegistrations)
                 .HasForeignKey(er => er.ParticipantId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
