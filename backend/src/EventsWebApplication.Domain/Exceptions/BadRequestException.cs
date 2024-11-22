@@ -5,7 +5,7 @@ namespace EventsWebApplication.Domain.Exceptions
     public class BadRequestException(
         string message,
         object details
-    ) : BaseException(message, 400)
+    ) : BaseException(message)
     {
         public object? Details { get; } = details ?? null;
 

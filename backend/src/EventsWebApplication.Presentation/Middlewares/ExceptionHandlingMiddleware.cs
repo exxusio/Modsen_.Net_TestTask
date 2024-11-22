@@ -1,5 +1,5 @@
 using System.Text.Json;
-using EventsWebApplication.Domain.Exceptions.Bases;
+using EventsWebApplication.Domain.Exceptions;
 
 namespace EventsWebApplication.Presentation.Middlewares
 {
@@ -11,9 +11,34 @@ namespace EventsWebApplication.Presentation.Middlewares
             {
                 await next(context);
             }
-            catch (BaseException ex)
+            catch (UnauthorizedException ex)
             {
-                await GenerateErrorDetails(context, ex.Message, ex.Status);
+                await GenerateErrorDetails(context, ex.Message, 401);
+                throw;
+            }
+            catch (ExpireException ex)
+            {
+                await GenerateErrorDetails(context, ex.Message, 401);
+                throw;
+            }
+            catch (NoPermissionException ex)
+            {
+                await GenerateErrorDetails(context, ex.Message, 403);
+                throw;
+            }
+            catch (AlreadyExistsException ex)
+            {
+                await GenerateErrorDetails(context, ex.Message, 409);
+                throw;
+            }
+            catch (NotFoundException ex)
+            {
+                await GenerateErrorDetails(context, ex.Message, 404);
+                throw;
+            }
+            catch (BadRequestException ex)
+            {
+                await GenerateErrorDetails(context, ex.Message, 400);
                 throw;
             }
             catch (Exception ex)

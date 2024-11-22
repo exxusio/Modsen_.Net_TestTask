@@ -6,7 +6,7 @@ namespace EventsWebApplication.Domain.Exceptions
     {
         public ExpireException(
             string message
-        ) : base(message, 401)
+        ) : base(message)
         {
         }
     }

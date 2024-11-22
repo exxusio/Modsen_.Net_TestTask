@@ -6,7 +6,7 @@ namespace EventsWebApplication.Domain.Exceptions
         string message,
         string userId,
         string action
-    ) : BaseException(message, 403)
+    ) : BaseException(message)
     {
         public string? UserId { get; } = userId;
         public string? Action { get; } = action;

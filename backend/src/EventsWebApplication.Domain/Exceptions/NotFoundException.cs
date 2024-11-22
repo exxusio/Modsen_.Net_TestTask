@@ -7,7 +7,7 @@ namespace EventsWebApplication.Domain.Exceptions
         string resource,
         string field,
         string value
-    ) : BaseException(message, 404)
+    ) : BaseException(message)
     {
         public string Resource { get; } = resource;
         public string Field { get; } = field;
