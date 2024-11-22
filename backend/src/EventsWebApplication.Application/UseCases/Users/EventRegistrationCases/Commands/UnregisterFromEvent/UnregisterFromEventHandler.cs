@@ -58,11 +58,15 @@ namespace EventsWebApplication.Application.UseCases.Users.EventRegistrationCases
 
             if (_event.Date < registration.RegistrationDate)
             {
-                throw new EventExpiredException(
+                throw new BadRequestException(
                     "The event has already passed",
-                    request.UserId.ToString(),
-                    request.EventId.ToString(),
-                    registration.RegistrationDate.ToString()
+                    new
+                    {
+                        UserId = request.UserId.ToString(),
+                        EventId = request.EventId.ToString(),
+                        RegistrationDate = registration.RegistrationDate.ToString(),
+                        EventDate = _event.Date.ToString()
+                    }
                 );
             }
 

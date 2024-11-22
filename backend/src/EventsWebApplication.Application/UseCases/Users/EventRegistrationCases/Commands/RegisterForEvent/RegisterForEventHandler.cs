@@ -48,19 +48,27 @@ namespace EventsWebApplication.Application.UseCases.Users.EventRegistrationCases
             var existingRegistration = await eventRegistrationRepository.GetByEventIdAndParticipantIdAsync(request.EventId, request.UserId, cancellationToken);
             if (existingRegistration != null)
             {
-                throw new DuplicateRegistrationException(
+                throw new BadRequestException(
                     "User is already registered for this event",
-                    request.UserId.ToString(),
-                    request.EventId.ToString()
+                    new
+                    {
+                        UserId = request.UserId.ToString(),
+                        EventId = request.EventId.ToString()
+                    }
                 );
             }
 
             if (_event.EventRegistrations.Count() >= _event.MaxParticipants)
             {
-                throw new NoAvailableSeatsException(
+                throw new BadRequestException(
                     "No available seats for this event",
-                    request.UserId.ToString(),
-                    request.EventId.ToString()
+                    new
+                    {
+                        UserId = request.UserId.ToString(),
+                        EventId = request.EventId.ToString(),
+                        MaxRegistrations = _event.MaxParticipants.ToString(),
+                        CurrentRegistrations = _event.EventRegistrations.Count().ToString()
+                    }
                 );
             }
 
@@ -68,11 +76,15 @@ namespace EventsWebApplication.Application.UseCases.Users.EventRegistrationCases
 
             if (_event.Date < registration.RegistrationDate)
             {
-                throw new EventExpiredException(
+                throw new BadRequestException(
                     "The event has already passed",
-                    request.UserId.ToString(),
-                    request.EventId.ToString(),
-                    registration.RegistrationDate.ToString()
+                    new
+                    {
+                        UserId = request.UserId.ToString(),
+                        EventId = request.EventId.ToString(),
+                        RegistrationDate = registration.RegistrationDate.ToString(),
+                        EventDate = _event.Date.ToString()
+                    }
                 );
             }
 
