@@ -1,4 +1,4 @@
-namespace EventsWebApplication.Application.DTOs.Tokens
+namespace EventsWebApplication.Domain.Entities
 {
     public class Token
     {

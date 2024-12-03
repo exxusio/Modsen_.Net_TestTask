@@ -1,10 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using EventsWebApplication.Infrastructure.Data;
-using EventsWebApplication.Domain.Repositories;
+using EventsWebApplication.Domain.Abstractions.Data.Repositories;
+using EventsWebApplication.Domain.Abstractions.Data;
+using EventsWebApplication.Domain.Abstractions.Auth;
 using EventsWebApplication.Domain.Entities;
 using EventsWebApplication.Domain.Consts;
-using EventsWebApplication.Application.Abstractions.Data;
-using EventsWebApplication.Application.Abstractions.Auth;
 
 namespace EventsWebApplication.Infrastructure
 {

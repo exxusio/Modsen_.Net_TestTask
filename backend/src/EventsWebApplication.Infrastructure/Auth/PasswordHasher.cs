@@ -1,5 +1,5 @@
 using System.Security.Cryptography;
-using EventsWebApplication.Application.Abstractions.Auth;
+using EventsWebApplication.Domain.Abstractions.Auth;
 
 namespace EventsWebApplication.Infrastructure.Auth
 {

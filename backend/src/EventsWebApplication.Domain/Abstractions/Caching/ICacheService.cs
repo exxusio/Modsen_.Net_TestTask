@@ -1,4 +1,4 @@
-namespace EventsWebApplication.Application.Abstractions.Caching
+namespace EventsWebApplication.Domain.Abstractions.Caching
 {
     public interface ICacheService
     {

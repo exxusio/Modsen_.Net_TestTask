@@ -1,6 +1,6 @@
-using EventsWebApplication.Domain.Repositories.Bases;
+using EventsWebApplication.Domain.Abstractions.Data.Repositories.Bases;
 
-namespace EventsWebApplication.Application.Abstractions.Data
+namespace EventsWebApplication.Domain.Abstractions.Data
 {
     public interface IUnitOfWork
     {

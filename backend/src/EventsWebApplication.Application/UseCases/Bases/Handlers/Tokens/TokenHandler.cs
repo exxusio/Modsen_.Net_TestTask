@@ -1,7 +1,7 @@
 using AutoMapper;
-using EventsWebApplication.Application.DTOs.Tokens;
-using EventsWebApplication.Application.Abstractions.Auth;
-using EventsWebApplication.Application.Abstractions.Data;
+using EventsWebApplication.Application.DTOs;
+using EventsWebApplication.Domain.Abstractions.Auth;
+using EventsWebApplication.Domain.Abstractions.Data;
 using EventsWebApplication.Domain.Entities;
 
 namespace EventsWebApplication.Application.UseCases.Bases.Handlers.Tokens

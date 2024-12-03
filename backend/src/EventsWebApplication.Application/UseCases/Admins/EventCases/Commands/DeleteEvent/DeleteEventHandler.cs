@@ -1,10 +1,10 @@
 using MediatR;
 using AutoMapper;
 using EventsWebApplication.Application.DTOs;
-using EventsWebApplication.Application.Abstractions.Caching;
-using EventsWebApplication.Application.Abstractions.Notify;
 using EventsWebApplication.Application.Exceptions;
-using EventsWebApplication.Domain.Repositories;
+using EventsWebApplication.Domain.Abstractions.Data.Repositories;
+using EventsWebApplication.Domain.Abstractions.Caching;
+using EventsWebApplication.Domain.Abstractions.Notify;
 using EventsWebApplication.Domain.Entities;
 using EventsWebApplication.Domain.Consts;
 
@@ -33,7 +33,8 @@ namespace EventsWebApplication.Application.UseCases.Admins.EventCases.Commands.D
             var eventReadDto = _mapper.Map<EventReadDto>(_event);
 
             await _notifyService.SendToAllEventChange(
-                eventReadDto,
+                eventReadDto.Id,
+                eventReadDto.Name,
                 "The event has been deleted",
                 NotifyType.EventDeleted,
                 cancellationToken

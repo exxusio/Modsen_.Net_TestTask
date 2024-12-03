@@ -1,8 +1,8 @@
 using System.Text.Json;
 using StackExchange.Redis;
 using Microsoft.Extensions.Configuration;
-using EventsWebApplication.Application.Abstractions.Caching;
 using EventsWebApplication.Application.Exceptions;
+using EventsWebApplication.Domain.Abstractions.Caching;
 
 namespace EventsWebApplication.Infrastructure.Caching
 {

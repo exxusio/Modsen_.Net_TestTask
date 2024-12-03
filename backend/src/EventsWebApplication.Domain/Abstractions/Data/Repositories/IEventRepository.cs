@@ -1,8 +1,8 @@
-using EventsWebApplication.Domain.Repositories.Bases;
+using EventsWebApplication.Domain.Abstractions.Data.Repositories.Bases;
 using EventsWebApplication.Domain.Entities;
 using EventsWebApplication.Domain.Filters;
 
-namespace EventsWebApplication.Domain.Repositories
+namespace EventsWebApplication.Domain.Abstractions.Data.Repositories
 {
     public interface IEventRepository
     : IRepository<Event>

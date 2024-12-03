@@ -1,4 +1,4 @@
-namespace EventsWebApplication.Domain.Repositories.Bases
+namespace EventsWebApplication.Domain.Abstractions.Data.Repositories.Bases
 {
     public interface IRepository<TEntity>
     where TEntity : class

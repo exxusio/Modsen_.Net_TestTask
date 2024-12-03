@@ -1,4 +1,6 @@
-namespace EventsWebApplication.Application.DTOs.Tokens
+using EventsWebApplication.Domain.Entities;
+
+namespace EventsWebApplication.Application.DTOs
 {
     public class TokensResponse
     {

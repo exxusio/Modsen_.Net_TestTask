@@ -101,13 +101,13 @@ export class NotificationService {
         this._hubConnection.on(NotifyType.EventUpdated, (message) => {
             this.showWarningNotification(
                 message?.message +
-                    `: ${message?.event.name}<br>Click to view details`,
-                `events/${message?.event.id}`
+                    `: ${message?.eventName}<br>Click to view details`,
+                `events/${message?.eventId}`
             );
         });
         this._hubConnection.on(NotifyType.EventDeleted, (message) => {
             this.showWarningNotification(
-                message?.message + `: ${message?.event.name}`
+                message?.message + `: ${message?.eventName}`
             );
         });
     }

@@ -1,5 +1,5 @@
 using MediatR;
-using EventsWebApplication.Application.DTOs.Tokens;
+using EventsWebApplication.Application.DTOs;
 
 namespace EventsWebApplication.Application.UseCases.Users.UserCases.Commands.LoginUser
 {

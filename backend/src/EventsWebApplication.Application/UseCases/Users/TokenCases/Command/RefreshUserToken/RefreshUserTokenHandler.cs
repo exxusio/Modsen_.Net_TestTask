@@ -1,11 +1,11 @@
 using MediatR;
 using AutoMapper;
-using EventsWebApplication.Application.DTOs.Tokens;
-using EventsWebApplication.Application.Abstractions.Auth;
-using EventsWebApplication.Application.Abstractions.Data;
 using EventsWebApplication.Application.UseCases.Bases.Handlers.Tokens;
 using EventsWebApplication.Application.Exceptions;
-using EventsWebApplication.Domain.Repositories;
+using EventsWebApplication.Application.DTOs;
+using EventsWebApplication.Domain.Abstractions.Data.Repositories;
+using EventsWebApplication.Domain.Abstractions.Auth;
+using EventsWebApplication.Domain.Abstractions.Data;
 using EventsWebApplication.Domain.Entities;
 
 namespace EventsWebApplication.Application.UseCases.Users.TokenCases.Command.RefreshUserToken

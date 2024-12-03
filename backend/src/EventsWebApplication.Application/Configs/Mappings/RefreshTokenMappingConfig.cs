@@ -1,5 +1,4 @@
 using AutoMapper;
-using EventsWebApplication.Application.DTOs.Tokens;
 using EventsWebApplication.Domain.Entities;
 
 namespace EventsWebApplication.Application.Configs.Mappings

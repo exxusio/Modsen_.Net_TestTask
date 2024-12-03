@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using EventsWebApplication.Infrastructure.Data.Repositories.Bases;
 using EventsWebApplication.Infrastructure.Data.Specifications;
-using EventsWebApplication.Domain.Repositories;
+using EventsWebApplication.Domain.Abstractions.Data.Repositories;
 using EventsWebApplication.Domain.Entities;
 
 namespace EventsWebApplication.Infrastructure.Data.Repositories

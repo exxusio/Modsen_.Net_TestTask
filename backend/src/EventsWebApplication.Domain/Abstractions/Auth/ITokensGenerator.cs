@@ -1,7 +1,6 @@
-using EventsWebApplication.Application.DTOs.Tokens;
 using EventsWebApplication.Domain.Entities;
 
-namespace EventsWebApplication.Application.Abstractions.Auth
+namespace EventsWebApplication.Domain.Abstractions.Auth
 {
     public interface ITokensGenerator
     {

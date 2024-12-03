@@ -1,6 +1,6 @@
+using EventsWebApplication.Domain.Abstractions.Auth;
+using EventsWebApplication.Domain.Abstractions.Data;
 using EventsWebApplication.Application.Configs.Policies;
-using EventsWebApplication.Application.Abstractions.Data;
-using EventsWebApplication.Application.Abstractions.Auth;
 using EventsWebApplication.Infrastructure.Notify.SignalR.Hubs;
 using EventsWebApplication.Infrastructure.Data;
 using EventsWebApplication.Infrastructure;

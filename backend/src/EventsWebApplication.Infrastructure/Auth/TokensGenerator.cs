@@ -3,9 +3,8 @@ using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.Extensions.Configuration;
-using EventsWebApplication.Application.DTOs.Tokens;
-using EventsWebApplication.Application.Abstractions.Auth;
 using EventsWebApplication.Application.Exceptions;
+using EventsWebApplication.Domain.Abstractions.Auth;
 using EventsWebApplication.Domain.Entities;
 
 namespace EventsWebApplication.Infrastructure.Auth

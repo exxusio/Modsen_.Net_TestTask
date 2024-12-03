@@ -1,9 +1,9 @@
 using MediatR;
 using AutoMapper;
 using EventsWebApplication.Application.DTOs.Users;
-using EventsWebApplication.Application.Abstractions.Data;
 using EventsWebApplication.Application.Exceptions;
-using EventsWebApplication.Domain.Repositories;
+using EventsWebApplication.Domain.Abstractions.Data.Repositories;
+using EventsWebApplication.Domain.Abstractions.Data;
 using EventsWebApplication.Domain.Entities;
 
 namespace EventsWebApplication.Application.UseCases.Admins.UserCases.Commands.ChangeUserRole

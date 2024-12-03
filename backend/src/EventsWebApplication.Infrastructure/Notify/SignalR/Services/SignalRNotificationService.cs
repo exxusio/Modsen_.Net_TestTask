@@ -1,8 +1,7 @@
 using Microsoft.AspNetCore.SignalR;
 using EventsWebApplication.Infrastructure.Notify.SignalR.Hubs;
-using EventsWebApplication.Application.Abstractions.Notify;
-using EventsWebApplication.Domain.Repositories;
-using EventsWebApplication.Application.DTOs;
+using EventsWebApplication.Domain.Abstractions.Data.Repositories;
+using EventsWebApplication.Domain.Abstractions.Notify;
 
 namespace EventsWebApplication.Infrastructure.Notify.SignalR.Services
 {
@@ -11,9 +10,9 @@ namespace EventsWebApplication.Infrastructure.Notify.SignalR.Services
         IEventRegistrationRepository _registrationRepository
     ) : INotificationService
     {
-        public async Task SendToAllEventChange(EventReadDto _event, string message, string type, CancellationToken cancellationToken)
+        public async Task SendToAllEventChange(Guid eventId, string eventName, string message, string type, CancellationToken cancellationToken)
         {
-            var registrations = await _registrationRepository.GetByEventIdAsync(_event.Id, cancellationToken);
+            var registrations = await _registrationRepository.GetByEventIdAsync(eventId, cancellationToken);
 
             foreach (var registration in registrations)
             {
@@ -23,7 +22,8 @@ namespace EventsWebApplication.Infrastructure.Notify.SignalR.Services
                     type,
                     new
                     {
-                        Event = _event,
+                        EventId = eventId.ToString(),
+                        EventName = eventName,
                         Message = message
                     },
                     cancellationToken

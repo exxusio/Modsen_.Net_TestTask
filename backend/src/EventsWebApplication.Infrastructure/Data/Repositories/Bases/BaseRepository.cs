@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using EventsWebApplication.Domain.Repositories.Bases;
+using EventsWebApplication.Domain.Abstractions.Data.Repositories.Bases;
 
 namespace EventsWebApplication.Infrastructure.Data.Repositories.Bases
 {

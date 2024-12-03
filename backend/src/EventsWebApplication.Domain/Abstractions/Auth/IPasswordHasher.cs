@@ -1,4 +1,4 @@
-namespace EventsWebApplication.Application.Abstractions.Auth
+namespace EventsWebApplication.Domain.Abstractions.Auth
 {
     public interface IPasswordHasher
     {

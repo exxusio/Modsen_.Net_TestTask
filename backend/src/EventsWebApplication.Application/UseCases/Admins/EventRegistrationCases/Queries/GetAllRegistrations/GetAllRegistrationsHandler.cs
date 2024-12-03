@@ -1,7 +1,7 @@
 using MediatR;
 using AutoMapper;
 using EventsWebApplication.Application.DTOs;
-using EventsWebApplication.Domain.Repositories;
+using EventsWebApplication.Domain.Abstractions.Data.Repositories;
 
 namespace EventsWebApplication.Application.UseCases.Admins.EventRegistrationCases.Queries.GetAllRegistrations
 {
