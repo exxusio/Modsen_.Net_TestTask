@@ -2,7 +2,6 @@ using MediatR;
 using AutoMapper;
 using EventsWebApplication.Application.DTOs;
 using EventsWebApplication.Application.Exceptions;
-using EventsWebApplication.Domain.Abstractions.Data.Repositories;
 using EventsWebApplication.Domain.Abstractions.Caching;
 using EventsWebApplication.Domain.Abstractions.Data;
 using EventsWebApplication.Domain.Entities;
@@ -17,9 +16,7 @@ namespace EventsWebApplication.Application.UseCases.Users.EventRegistrationCases
     {
         public async Task<EventRegistrationReadDto> Handle(UnregisterFromEventCommand request, CancellationToken cancellationToken)
         {
-            var eventRepository = _unitOfWork.GetRepository<Event>();
-
-            var _event = await eventRepository.GetByIdAsync(request.EventId, cancellationToken);
+            var _event = await _unitOfWork.Events.GetByIdAsync(request.EventId, cancellationToken);
             if (_event == null)
             {
                 throw new NotFoundException(
@@ -30,9 +27,7 @@ namespace EventsWebApplication.Application.UseCases.Users.EventRegistrationCases
                 );
             }
 
-            var userRepository = _unitOfWork.GetRepository<User>();
-
-            var user = await userRepository.GetByIdAsync(request.UserId, cancellationToken);
+            var user = await _unitOfWork.Users.GetByIdAsync(request.UserId, cancellationToken);
             if (user == null)
             {
                 throw new NotFoundException(
@@ -43,9 +38,7 @@ namespace EventsWebApplication.Application.UseCases.Users.EventRegistrationCases
                 );
             }
 
-            var eventRegistrationRepository = _unitOfWork.GetRepository<IEventRegistrationRepository, EventRegistration>();
-
-            var registration = await eventRegistrationRepository.GetByEventIdAndParticipantIdAsync(request.EventId, request.UserId, cancellationToken);
+            var registration = await _unitOfWork.EventRegistrations.GetByEventIdAndParticipantIdAsync(request.EventId, request.UserId, cancellationToken);
             if (registration == null)
             {
                 throw new NotFoundException(
@@ -70,7 +63,7 @@ namespace EventsWebApplication.Application.UseCases.Users.EventRegistrationCases
                 );
             }
 
-            eventRegistrationRepository.Delete(registration);
+            _unitOfWork.EventRegistrations.Delete(registration);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             var registrationReadDto = _mapper.Map<EventRegistrationReadDto>(registration);

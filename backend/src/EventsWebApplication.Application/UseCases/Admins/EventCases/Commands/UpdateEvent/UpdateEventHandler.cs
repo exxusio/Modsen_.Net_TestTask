@@ -2,7 +2,6 @@ using MediatR;
 using AutoMapper;
 using EventsWebApplication.Application.DTOs;
 using EventsWebApplication.Application.Exceptions;
-using EventsWebApplication.Domain.Abstractions.Data.Repositories;
 using EventsWebApplication.Domain.Abstractions.Caching;
 using EventsWebApplication.Domain.Abstractions.Notify;
 using EventsWebApplication.Domain.Abstractions.Data;
@@ -20,9 +19,7 @@ namespace EventsWebApplication.Application.UseCases.Admins.EventCases.Commands.U
     {
         public async Task<EventReadDto> Handle(UpdateEventCommand request, CancellationToken cancellationToken)
         {
-            var eventRepository = _unitOfWork.GetRepository<IEventRepository, Event>();
-
-            var _event = await eventRepository.GetByIdAsync(request.EventId, cancellationToken);
+            var _event = await _unitOfWork.Events.GetByIdAsync(request.EventId, cancellationToken);
             if (_event == null)
             {
                 throw new NotFoundException(
@@ -33,7 +30,7 @@ namespace EventsWebApplication.Application.UseCases.Admins.EventCases.Commands.U
                 );
             }
 
-            var existingEvent = await eventRepository.GetByNameAsync(request.Name, cancellationToken);
+            var existingEvent = await _unitOfWork.Events.GetByNameAsync(request.Name, cancellationToken);
             if (existingEvent != null && existingEvent.Id != _event.Id)
             {
                 throw new AlreadyExistsException(
@@ -44,9 +41,7 @@ namespace EventsWebApplication.Application.UseCases.Admins.EventCases.Commands.U
                 );
             }
 
-            var categoryRepository = _unitOfWork.GetRepository<EventCategory>();
-
-            var existingCategory = await categoryRepository.GetByIdAsync(request.CategoryId, cancellationToken);
+            var existingCategory = await _unitOfWork.EventCategories.GetByIdAsync(request.CategoryId, cancellationToken);
             if (existingCategory == null)
             {
                 throw new NotFoundException(

@@ -17,14 +17,11 @@ namespace EventsWebApplication.Infrastructure
 
         public static async Task SeedAsync(IUnitOfWork unitOfWork, IPasswordHasher passwordHasher)
         {
-            var userRepository = unitOfWork.GetRepository<IUserRepository, User>();
-            var roleRepository = unitOfWork.GetRepository<IRoleRepository, Role>();
-
-            var adminRole = await roleRepository.GetByNameAsync(BaseRoles.Admin);
+            var adminRole = await unitOfWork.Roles.GetByNameAsync(BaseRoles.Admin);
             if (adminRole == null)
             {
                 adminRole = new Role { Name = BaseRoles.Admin };
-                await roleRepository.AddAsync(adminRole);
+                await unitOfWork.Roles.AddAsync(adminRole);
 
                 var hashPassword = passwordHasher.HashPassword("admin");
                 var adminUser = new User
@@ -38,14 +35,14 @@ namespace EventsWebApplication.Infrastructure
                     RoleId = adminRole.Id
                 };
 
-                await userRepository.AddAsync(adminUser);
+                await unitOfWork.Users.AddAsync(adminUser);
             }
 
-            var userRole = await roleRepository.GetByNameAsync(BaseRoles.User);
+            var userRole = await unitOfWork.Roles.GetByNameAsync(BaseRoles.User);
             if (userRole == null)
             {
                 userRole = new Role { Name = BaseRoles.User };
-                await roleRepository.AddAsync(userRole);
+                await unitOfWork.Roles.AddAsync(userRole);
             }
 
             await unitOfWork.SaveChangesAsync();

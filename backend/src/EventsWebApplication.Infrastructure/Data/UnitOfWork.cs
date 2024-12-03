@@ -1,62 +1,26 @@
-using EventsWebApplication.Infrastructure.Data.Repositories;
-using EventsWebApplication.Application.Exceptions;
-using EventsWebApplication.Domain.Abstractions.Data.Repositories.Bases;
+using EventsWebApplication.Domain.Abstractions.Data.Repositories;
 using EventsWebApplication.Domain.Abstractions.Data;
-using EventsWebApplication.Domain.Entities;
 
 namespace EventsWebApplication.Infrastructure.Data
 {
     public class UnitOfWork(
-        AppDbContext dbContext
+        AppDbContext dbContext,
+        IEventRegistrationRepository eventRegistrationRepository,
+        IEventCategoryRepository eventCategoryRepository,
+        IRefreshTokenRepository refreshTokenRepository,
+        IEventRepository eventRepository,
+        IUserRepository userRepository,
+        IRoleRepository roleRepository
     ) : IUnitOfWork
     {
         private readonly AppDbContext _dbContext = dbContext;
-        private readonly Dictionary<Type, Func<AppDbContext, object>> _repositoryFactories =
-        new Dictionary<Type, Func<AppDbContext, object>>
-        {
-            { typeof(EventRegistration), ctx => new EventRegistrationRepository(ctx) },
-            { typeof(EventCategory), ctx => new EventCategoryRepository(ctx) },
-            { typeof(RefreshToken), ctx => new RefreshTokenRepository(ctx) },
-            { typeof(Event), ctx => new EventRepository(ctx) },
-            { typeof(User), ctx => new UserRepository(ctx) },
-            { typeof(Role), ctx => new RoleRepository(ctx) }
-        };
 
-        public IRepository<TEntity> GetRepository<TEntity>()
-            where TEntity : class
-        {
-            if (_repositoryFactories.TryGetValue(typeof(TEntity), out var factory))
-            {
-                var repository = (IRepository<TEntity>)factory.Invoke(_dbContext);
-                return repository;
-            }
-            else
-                throw new NotFoundException(
-                    "No repository factory found",
-                    nameof(TEntity),
-                    "Repository",
-                    "RepositoryName"
-                );
-        }
-
-        public TRepository GetRepository<TRepository, TEntity>()
-            where TRepository : IRepository<TEntity>
-            where TEntity : class
-        {
-            if (_repositoryFactories.TryGetValue(typeof(TEntity), out var factory))
-            {
-                return (TRepository)factory.Invoke(_dbContext);
-            }
-            else
-            {
-                throw new NotFoundException(
-                    "No repository factory found",
-                    nameof(TEntity),
-                    "Repository",
-                    "RepositoryName"
-                );
-            }
-        }
+        public IEventRegistrationRepository EventRegistrations { get; } = eventRegistrationRepository;
+        public IEventCategoryRepository EventCategories { get; } = eventCategoryRepository;
+        public IRefreshTokenRepository RefreshTokens { get; } = refreshTokenRepository;
+        public IEventRepository Events { get; } = eventRepository;
+        public IUserRepository Users { get; } = userRepository;
+        public IRoleRepository Roles { get; } = roleRepository;
 
         public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {

@@ -1,14 +1,16 @@
-using EventsWebApplication.Domain.Abstractions.Data.Repositories.Bases;
+using EventsWebApplication.Domain.Abstractions.Data.Repositories;
 
 namespace EventsWebApplication.Domain.Abstractions.Data
 {
     public interface IUnitOfWork
     {
-        IRepository<TEntity> GetRepository<TEntity>()
-            where TEntity : class;
-        TRepository GetRepository<TRepository, TEntity>()
-            where TRepository : IRepository<TEntity>
-            where TEntity : class;
+        IEventRegistrationRepository EventRegistrations { get; }
+        IEventCategoryRepository EventCategories { get; }
+        IRefreshTokenRepository RefreshTokens { get; }
+        IEventRepository Events { get; }
+        IUserRepository Users { get; }
+        IRoleRepository Roles { get; }
+
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }

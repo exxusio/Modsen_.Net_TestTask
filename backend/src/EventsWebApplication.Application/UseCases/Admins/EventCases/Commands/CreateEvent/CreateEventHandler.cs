@@ -2,7 +2,6 @@ using MediatR;
 using AutoMapper;
 using EventsWebApplication.Application.DTOs;
 using EventsWebApplication.Application.Exceptions;
-using EventsWebApplication.Domain.Abstractions.Data.Repositories;
 using EventsWebApplication.Domain.Abstractions.Caching;
 using EventsWebApplication.Domain.Abstractions.Data;
 using EventsWebApplication.Domain.Entities;
@@ -17,9 +16,7 @@ namespace EventsWebApplication.Application.UseCases.Admins.EventCases.Commands.C
     {
         public async Task<EventReadDto> Handle(CreateEventCommand request, CancellationToken cancellationToken)
         {
-            var eventRepository = _unitOfWork.GetRepository<IEventRepository, Event>();
-
-            var existingEvent = await eventRepository.GetByNameAsync(request.Name, cancellationToken);
+            var existingEvent = await _unitOfWork.Events.GetByNameAsync(request.Name, cancellationToken);
             if (existingEvent != null)
             {
                 throw new AlreadyExistsException(
@@ -30,9 +27,7 @@ namespace EventsWebApplication.Application.UseCases.Admins.EventCases.Commands.C
                 );
             }
 
-            var categoryRepository = _unitOfWork.GetRepository<EventCategory>();
-
-            var existingCategory = await categoryRepository.GetByIdAsync(request.CategoryId, cancellationToken);
+            var existingCategory = await _unitOfWork.EventCategories.GetByIdAsync(request.CategoryId, cancellationToken);
             if (existingCategory == null)
             {
                 throw new NotFoundException(
@@ -46,7 +41,7 @@ namespace EventsWebApplication.Application.UseCases.Admins.EventCases.Commands.C
             var _event = _mapper.Map<Event>(request);
             _event.Category = existingCategory;
 
-            await eventRepository.AddAsync(_event, cancellationToken);
+            await _unitOfWork.Events.AddAsync(_event, cancellationToken);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             var eventReadDto = _mapper.Map<EventReadDto>(_event);

@@ -19,9 +19,7 @@ namespace EventsWebApplication.Application.UseCases.Users.UserCases.Commands.Log
     {
         public async Task<TokensResponse> Handle(LoginUserCommand request, CancellationToken cancellationToken)
         {
-            var userRepository = _unitOfWork.GetRepository<IUserRepository, User>();
-
-            var user = await userRepository.FindByLoginAsync(request.Login, cancellationToken);
+            var user = await _unitOfWork.Users.FindByLoginAsync(request.Login, cancellationToken);
             if (user == null)
             {
                 throw new UnauthorizedException(

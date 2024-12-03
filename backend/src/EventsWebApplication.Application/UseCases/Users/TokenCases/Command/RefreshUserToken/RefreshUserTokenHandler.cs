@@ -18,9 +18,7 @@ namespace EventsWebApplication.Application.UseCases.Users.TokenCases.Command.Ref
     {
         public async Task<TokensResponse> Handle(RefreshUserTokenCommand request, CancellationToken cancellationToken)
         {
-            var refreshTokenRepository = _unitOfWork.GetRepository<IRefreshTokenRepository, RefreshToken>();
-
-            var refreshToken = await refreshTokenRepository.GetByIdAsync(request.Key);
+            var refreshToken = await _unitOfWork.RefreshTokens.GetByIdAsync(request.Key);
             if (refreshToken == null)
             {
                 throw new NotFoundException(
@@ -33,7 +31,7 @@ namespace EventsWebApplication.Application.UseCases.Users.TokenCases.Command.Ref
 
             var user = refreshToken.User;
 
-            refreshTokenRepository.Delete(refreshToken);
+            _unitOfWork.RefreshTokens.Delete(refreshToken);
             if (!refreshToken.IsActive)
             {
                 throw new ExpireException(

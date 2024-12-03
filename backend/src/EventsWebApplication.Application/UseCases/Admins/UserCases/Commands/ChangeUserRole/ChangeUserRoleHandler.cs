@@ -2,7 +2,6 @@ using MediatR;
 using AutoMapper;
 using EventsWebApplication.Application.DTOs.Users;
 using EventsWebApplication.Application.Exceptions;
-using EventsWebApplication.Domain.Abstractions.Data.Repositories;
 using EventsWebApplication.Domain.Abstractions.Data;
 using EventsWebApplication.Domain.Entities;
 
@@ -15,9 +14,7 @@ namespace EventsWebApplication.Application.UseCases.Admins.UserCases.Commands.Ch
     {
         public async Task<UserReadDto> Handle(ChangeUserRoleQuery request, CancellationToken cancellationToken)
         {
-            var userRepository = _unitOfWork.GetRepository<User>();
-
-            var user = await userRepository.GetByIdAsync(request.UserId, cancellationToken);
+            var user = await _unitOfWork.Users.GetByIdAsync(request.UserId, cancellationToken);
             if (user == null)
             {
                 throw new NotFoundException(
@@ -28,9 +25,7 @@ namespace EventsWebApplication.Application.UseCases.Admins.UserCases.Commands.Ch
                 );
             }
 
-            var roleRepository = _unitOfWork.GetRepository<IRoleRepository, Role>();
-
-            var role = await roleRepository.GetByIdAsync(request.RoleId, cancellationToken);
+            var role = await _unitOfWork.Roles.GetByIdAsync(request.RoleId, cancellationToken);
             if (role == null)
             {
                 throw new NotFoundException(

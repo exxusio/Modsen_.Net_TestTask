@@ -26,10 +26,8 @@ namespace EventsWebApplication.Application.UseCases.Bases.Handlers.Tokens
             var refreshToken = _mapper.Map<RefreshToken>(token);
             refreshToken.User = user;
 
-            var refreshTokenRepository = _unitOfWork.GetRepository<RefreshToken>();
-
-            await refreshTokenRepository.AddAsync(refreshToken, cancellationToken);
-            await refreshTokenRepository.SaveChangesAsync(cancellationToken);
+            await _unitOfWork.RefreshTokens.AddAsync(refreshToken, cancellationToken);
+            await _unitOfWork.RefreshTokens.SaveChangesAsync(cancellationToken);
 
             var tokenResponse = new TokensResponse
             {
