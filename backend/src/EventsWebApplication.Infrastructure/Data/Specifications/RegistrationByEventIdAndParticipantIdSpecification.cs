@@ -1,9 +1,9 @@
 using System.Linq.Expressions;
-using EventsWebApplication.Domain.Specifications.Extensions;
-using EventsWebApplication.Domain.Specifications.Bases;
+using EventsWebApplication.Infrastructure.Data.Specifications.Extensions;
+using EventsWebApplication.Infrastructure.Data.Specifications.Bases;
 using EventsWebApplication.Domain.Entities;
 
-namespace EventsWebApplication.Domain.Specifications
+namespace EventsWebApplication.Infrastructure.Data.Specifications
 {
     public class RegistrationByEventIdAndParticipantIdSpecification(
         Guid eventId,

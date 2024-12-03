@@ -1,7 +1,7 @@
 using System.Linq.Expressions;
 using EventsWebApplication.Domain.Entities.Interfaces;
 
-namespace EventsWebApplication.Domain.Specifications.Bases
+namespace EventsWebApplication.Infrastructure.Data.Specifications.Bases
 {
     public abstract class ByNameSpecification<TEntity>(
         string name

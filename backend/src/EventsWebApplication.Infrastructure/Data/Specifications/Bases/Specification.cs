@@ -1,7 +1,7 @@
 using System.Linq.Expressions;
-using EventsWebApplication.Domain.Specifications.Interfaces;
+using EventsWebApplication.Infrastructure.Data.Specifications.Interfaces;
 
-namespace EventsWebApplication.Domain.Specifications.Bases
+namespace EventsWebApplication.Infrastructure.Data.Specifications.Bases
 {
     public abstract class Specification<TEntity>
     : ISpecification<TEntity>

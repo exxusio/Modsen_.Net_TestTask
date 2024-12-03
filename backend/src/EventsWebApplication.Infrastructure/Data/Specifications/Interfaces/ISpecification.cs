@@ -1,6 +1,6 @@
 using System.Linq.Expressions;
 
-namespace EventsWebApplication.Domain.Specifications.Interfaces
+namespace EventsWebApplication.Infrastructure.Data.Specifications.Interfaces
 {
     public interface ISpecification<TEntity>
     {
