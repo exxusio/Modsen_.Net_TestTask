@@ -29,17 +29,16 @@ namespace EventsWebApplication.Application.UseCases.Users.TokenCases.Command.Ref
                 );
             }
 
-            var user = refreshToken.User;
-
-            _unitOfWork.RefreshTokens.Delete(refreshToken);
             if (!refreshToken.IsActive)
             {
+                _unitOfWork.RefreshTokens.Delete(refreshToken);
+
                 throw new ExpireException(
                     "The refresh token is expired and can no longer be used"
                 );
             }
 
-            return await GenerateAndSaveTokens(user, cancellationToken);
+            return GenerateAccessTokenForUser(refreshToken);
         }
     }
 }

@@ -29,10 +29,20 @@ namespace EventsWebApplication.Application.UseCases.Bases.Handlers.Tokens
             await _unitOfWork.RefreshTokens.AddAsync(refreshToken, cancellationToken);
             await _unitOfWork.RefreshTokens.SaveChangesAsync(cancellationToken);
 
+            return GenerateTokenResponse(refreshToken);
+        }
+
+        protected TokensResponse GenerateAccessTokenForUser(RefreshToken refreshToken)
+        {
+            return GenerateTokenResponse(refreshToken);
+        }
+
+        private TokensResponse GenerateTokenResponse(RefreshToken refreshToken)
+        {
             var tokenResponse = new TokensResponse
             {
                 AccessToken = _tokenGenerator.GenerateAccessToken(refreshToken.User),
-                RefreshToken = token
+                RefreshToken = _mapper.Map<Token>(refreshToken)
             };
 
             return tokenResponse;
