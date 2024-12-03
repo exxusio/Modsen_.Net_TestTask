@@ -3,8 +3,8 @@ using AutoMapper;
 using EventsWebApplication.Application.DTOs.Users;
 using EventsWebApplication.Application.Abstractions.Auth;
 using EventsWebApplication.Application.Abstractions.Data;
+using EventsWebApplication.Application.Exceptions;
 using EventsWebApplication.Domain.Repositories;
-using EventsWebApplication.Domain.Exceptions;
 using EventsWebApplication.Domain.Entities;
 using EventsWebApplication.Domain.Consts;
 

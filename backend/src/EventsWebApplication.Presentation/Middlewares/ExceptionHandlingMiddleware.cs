@@ -1,5 +1,5 @@
 using System.Text.Json;
-using EventsWebApplication.Domain.Exceptions;
+using EventsWebApplication.Application.Exceptions;
 
 namespace EventsWebApplication.Presentation.Middlewares
 {

@@ -1,8 +1,8 @@
 using MediatR;
 using AutoMapper;
 using EventsWebApplication.Application.DTOs.Users;
+using EventsWebApplication.Application.Exceptions;
 using EventsWebApplication.Domain.Repositories;
-using EventsWebApplication.Domain.Exceptions;
 using EventsWebApplication.Domain.Entities;
 
 namespace EventsWebApplication.Application.UseCases.Users.UserCases.Queries.GetCurrentUser

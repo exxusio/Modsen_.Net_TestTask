@@ -2,7 +2,7 @@ using System.Text.Json;
 using StackExchange.Redis;
 using Microsoft.Extensions.Configuration;
 using EventsWebApplication.Application.Abstractions.Caching;
-using EventsWebApplication.Domain.Exceptions;
+using EventsWebApplication.Application.Exceptions;
 
 namespace EventsWebApplication.Infrastructure.Caching
 {

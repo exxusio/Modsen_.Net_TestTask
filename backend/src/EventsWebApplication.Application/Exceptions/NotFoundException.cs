@@ -1,16 +1,16 @@
-using EventsWebApplication.Domain.Exceptions.Bases;
+using EventsWebApplication.Application.Exceptions.Bases;
 
-namespace EventsWebApplication.Domain.Exceptions
+namespace EventsWebApplication.Application.Exceptions
 {
-    public class AlreadyExistsException(
+    public class NotFoundException(
         string message,
         string resource,
-        string parameter,
+        string field,
         string value
     ) : BaseException(message)
     {
         public string Resource { get; } = resource;
-        public string Parameter { get; } = parameter;
+        public string Field { get; } = field;
         public string Value { get; } = value;
 
         public override object GetErrorDetails()
@@ -21,7 +21,7 @@ namespace EventsWebApplication.Domain.Exceptions
                 Details = new
                 {
                     Resource,
-                    Parameter,
+                    Field,
                     Value
                 }
             };
@@ -29,7 +29,7 @@ namespace EventsWebApplication.Domain.Exceptions
 
         public override string ToString()
         {
-            return $"{base.ToString()}, Resource: {Resource}, Parameter: {Parameter}, Value: {Value}";
+            return $"{base.ToString()}, Resource: {Resource}, Field: {Field}, Value: {Value}";
         }
     }
 }

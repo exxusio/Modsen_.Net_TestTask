@@ -1,6 +1,6 @@
-using EventsWebApplication.Domain.Exceptions.Bases;
+using EventsWebApplication.Application.Exceptions.Bases;
 
-namespace EventsWebApplication.Domain.Exceptions
+namespace EventsWebApplication.Application.Exceptions
 {
     public class UnauthorizedException : BaseException
     {

@@ -1,7 +1,7 @@
 using EventsWebApplication.Infrastructure.Data.Repositories;
 using EventsWebApplication.Application.Abstractions.Data;
+using EventsWebApplication.Application.Exceptions;
 using EventsWebApplication.Domain.Repositories.Bases;
-using EventsWebApplication.Domain.Exceptions;
 using EventsWebApplication.Domain.Entities;
 
 namespace EventsWebApplication.Infrastructure.Data

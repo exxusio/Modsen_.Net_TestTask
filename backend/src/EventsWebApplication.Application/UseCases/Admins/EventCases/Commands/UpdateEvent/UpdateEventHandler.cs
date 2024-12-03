@@ -4,8 +4,8 @@ using EventsWebApplication.Application.DTOs;
 using EventsWebApplication.Application.Abstractions.Data;
 using EventsWebApplication.Application.Abstractions.Caching;
 using EventsWebApplication.Application.Abstractions.Notify;
+using EventsWebApplication.Application.Exceptions;
 using EventsWebApplication.Domain.Repositories;
-using EventsWebApplication.Domain.Exceptions;
 using EventsWebApplication.Domain.Entities;
 using EventsWebApplication.Domain.Consts;
 

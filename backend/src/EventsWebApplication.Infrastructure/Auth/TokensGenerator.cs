@@ -5,7 +5,7 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.Extensions.Configuration;
 using EventsWebApplication.Application.DTOs.Tokens;
 using EventsWebApplication.Application.Abstractions.Auth;
-using EventsWebApplication.Domain.Exceptions;
+using EventsWebApplication.Application.Exceptions;
 using EventsWebApplication.Domain.Entities;
 
 namespace EventsWebApplication.Infrastructure.Auth

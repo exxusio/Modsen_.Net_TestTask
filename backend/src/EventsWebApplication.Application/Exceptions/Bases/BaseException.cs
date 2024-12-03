@@ -1,4 +1,4 @@
-namespace EventsWebApplication.Domain.Exceptions.Bases
+namespace EventsWebApplication.Application.Exceptions.Bases
 {
     public abstract class BaseException(
         string message

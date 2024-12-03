@@ -4,8 +4,8 @@ using EventsWebApplication.Application.DTOs.Tokens;
 using EventsWebApplication.Application.Abstractions.Auth;
 using EventsWebApplication.Application.Abstractions.Data;
 using EventsWebApplication.Application.UseCases.Bases.Handlers.Tokens;
+using EventsWebApplication.Application.Exceptions;
 using EventsWebApplication.Domain.Repositories;
-using EventsWebApplication.Domain.Exceptions;
 using EventsWebApplication.Domain.Entities;
 
 namespace EventsWebApplication.Application.UseCases.Users.UserCases.Commands.LoginUser

@@ -1,6 +1,6 @@
 using Serilog;
 using Serilog.Events;
-using EventsWebApplication.Domain.Exceptions;
+using EventsWebApplication.Application.Exceptions;
 
 namespace EventsWebApplication.Presentation.Middlewares
 {
