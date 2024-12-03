@@ -1,13 +1,14 @@
+
 using AutoMapper;
 using EventsWebApplication.Application.UseCases.Users.EventCases.Queries.GetEventsByFilter;
 using EventsWebApplication.Domain.Filters;
 
-namespace EventsWebApplication.Application.Configs.Mappings
+namespace EventsWebApplication.Application.Configs.Mappings.Filters
 {
-    public class FilterMappingConfig
+    public class GetEventsByFilterQueryToEventFilterProfile
     : Profile
     {
-        public FilterMappingConfig()
+        public GetEventsByFilterQueryToEventFilterProfile()
         {
             CreateMap<GetEventsByFilterQuery, EventFilter>();
         }

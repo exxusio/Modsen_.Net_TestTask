@@ -2,12 +2,12 @@ using AutoMapper;
 using EventsWebApplication.Application.UseCases.Bases.Queries.Paged;
 using EventsWebApplication.Domain.Filters;
 
-namespace EventsWebApplication.Application.Configs.Mappings
+namespace EventsWebApplication.Application.Configs.Mappings.Paged
 {
-    public class PagedMappingConfig
+    public class PagedQueryToPagedFilterProfile
     : Profile
     {
-        public PagedMappingConfig()
+        public PagedQueryToPagedFilterProfile()
         {
             CreateMap<PagedQuery, PagedFilter>();
         }

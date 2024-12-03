@@ -1,12 +1,13 @@
+
 using AutoMapper;
 using EventsWebApplication.Domain.Entities;
 
-namespace EventsWebApplication.Application.Configs.Mappings
+namespace EventsWebApplication.Application.Configs.Mappings.Tokens
 {
-    public class RefreshTokenMappingConfig
+    public class TokenToRefreshTokenProfile
     : Profile
     {
-        public RefreshTokenMappingConfig()
+        public TokenToRefreshTokenProfile()
         {
             CreateMap<Token, RefreshToken>()
                 .ForMember(dest => dest.Key, opt => opt.MapFrom(src => src.Value))
