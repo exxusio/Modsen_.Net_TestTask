@@ -1,4 +1,4 @@
-
+using AutoMapper;
 using System.Text;
 using StackExchange.Redis;
 using Microsoft.EntityFrameworkCore;
@@ -124,10 +124,18 @@ namespace EventsWebApplication.Infrastructure
         {
             services.AddScoped<IEventCategoryRepository, EventCategoryRepository>();
             services.AddScoped<IEventRegistrationRepository, EventRegistrationRepository>();
-            services.AddScoped<IEventRepository, EventRepository>();
             services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+
+            services.AddScoped<EventRepository>();
+            services.AddScoped<IEventRepository>(provider =>
+            {
+                var baseRepository = provider.GetRequiredService<EventRepository>();
+                var cacheService = provider.GetRequiredService<ICacheService>();
+                var mapper = provider.GetRequiredService<IMapper>();
+                return new CachedEventRepository(baseRepository, cacheService, mapper);
+            });
 
             return services;
         }

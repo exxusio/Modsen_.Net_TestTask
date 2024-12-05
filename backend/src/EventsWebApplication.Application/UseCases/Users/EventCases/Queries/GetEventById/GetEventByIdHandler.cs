@@ -3,25 +3,17 @@ using AutoMapper;
 using EventsWebApplication.Application.DTOs;
 using EventsWebApplication.Application.Exceptions;
 using EventsWebApplication.Domain.Abstractions.Data.Repositories;
-using EventsWebApplication.Domain.Abstractions.Caching;
 using EventsWebApplication.Domain.Entities;
 
 namespace EventsWebApplication.Application.UseCases.Users.EventCases.Queries.GetEventById
 {
     public class GetEventByIdHandler(
-        ICacheService _cache,
         IEventRepository _repository,
         IMapper _mapper
     ) : IRequestHandler<GetEventByIdQuery, EventReadDto>
     {
         public async Task<EventReadDto> Handle(GetEventByIdQuery request, CancellationToken cancellationToken)
         {
-            var cachedEvent = await _cache.GetAsync<EventReadDto>(request.EventId.ToString());
-            if (cachedEvent != null)
-            {
-                return cachedEvent;
-            }
-
             var _event = await _repository.GetByIdAsync(request.EventId, cancellationToken);
             if (_event == null)
             {
@@ -33,11 +25,7 @@ namespace EventsWebApplication.Application.UseCases.Users.EventCases.Queries.Get
                 );
             }
 
-            var eventReadDto = _mapper.Map<EventReadDto>(_event);
-
-            await _cache.SetAsync(eventReadDto.Id.ToString(), eventReadDto);
-
-            return eventReadDto;
+            return _mapper.Map<EventReadDto>(_event);
         }
     }
 }

@@ -25,6 +25,11 @@ namespace EventsWebApplication.Application.Configs.Mappings.Events
                             : 0
                     )
                 );
+
+            CreateMap<EventReadDto, Event>()
+                .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category))
+                .ForMember(dest => dest.EventRegistrations, opt => opt.Ignore())
+                .ForMember(dest => dest.CategoryId, opt => opt.Ignore());
         }
     }
 }

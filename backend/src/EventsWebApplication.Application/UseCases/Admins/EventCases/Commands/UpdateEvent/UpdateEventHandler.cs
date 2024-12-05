@@ -2,7 +2,6 @@ using MediatR;
 using AutoMapper;
 using EventsWebApplication.Application.DTOs;
 using EventsWebApplication.Application.Exceptions;
-using EventsWebApplication.Domain.Abstractions.Caching;
 using EventsWebApplication.Domain.Abstractions.Notify;
 using EventsWebApplication.Domain.Abstractions.Data;
 using EventsWebApplication.Domain.Entities;
@@ -11,7 +10,6 @@ using EventsWebApplication.Domain.Consts;
 namespace EventsWebApplication.Application.UseCases.Admins.EventCases.Commands.UpdateEvent
 {
     public class UpdateEventHandler(
-        ICacheService _cache,
         IUnitOfWork _unitOfWork,
         IMapper _mapper,
         INotificationService _notifyService
@@ -56,18 +54,15 @@ namespace EventsWebApplication.Application.UseCases.Admins.EventCases.Commands.U
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-            var eventReadDto = _mapper.Map<EventReadDto>(newEvent);
-            await _cache.SetAsync(eventReadDto.Id.ToString(), eventReadDto);
-
             await _notifyService.SendToAllEventChange(
-                eventReadDto.Id,
-                eventReadDto.Name,
+                newEvent.Id,
+                _event.Name,
                 "The event has been updated",
                 NotifyType.EventUpdated,
                 cancellationToken
             );
 
-            return eventReadDto;
+            return _mapper.Map<EventReadDto>(newEvent);
         }
     }
 }
