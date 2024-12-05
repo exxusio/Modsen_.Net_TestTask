@@ -11,6 +11,19 @@ namespace EventsWebApplication.Infrastructure.Data.Repositories
         AppDbContext context
     ) : BaseRepository<Event>(context), IEventRepository
     {
+        public void Track(Event _event)
+        {
+            if (_context.Entry(_event).State == EntityState.Detached)
+            {
+                _context.Attach(_event);
+            }
+        }
+
+        public void Update(Event _event)
+        {
+            _dbSet.Update(_event);
+        }
+
         public async Task<(IEnumerable<Event>, int)> GetByFilterAsync(PagedFilter paged, EventFilter filter, CancellationToken cancellationToken)
         {
             var specification = new EventsByFilterSpecification(filter);

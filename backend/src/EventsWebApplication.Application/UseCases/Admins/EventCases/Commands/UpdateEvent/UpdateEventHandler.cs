@@ -52,6 +52,7 @@ namespace EventsWebApplication.Application.UseCases.Admins.EventCases.Commands.U
 
             var newEvent = _mapper.Map(request, _event);
 
+            _unitOfWork.Events.Update(newEvent);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             await _notifyService.SendToAllEventChange(
