@@ -1,19 +1,18 @@
 using Moq;
 using AutoMapper;
 using EventsWebApplication.Domain.Entities;
-using EventsWebApplication.Domain.Exceptions;
-using EventsWebApplication.Domain.Repositories;
+using EventsWebApplication.Domain.Abstractions.Data;
+using EventsWebApplication.Domain.Abstractions.Data.Repositories;
 using EventsWebApplication.Application.UseCases.Admins.EventCases.Commands.CreateEvent;
-using EventsWebApplication.Application.Abstractions.Caching;
-using EventsWebApplication.Application.Abstractions.Data;
-using EventsWebApplication.Application.Configs.Mappings;
+using EventsWebApplication.Application.Configs.Mappings.EventCategories;
+using EventsWebApplication.Application.Configs.Mappings.Events;
+using EventsWebApplication.Application.Exceptions;
 using EventsWebApplication.Application.DTOs;
 
 namespace EventsWebApplication.Tests.UseCases.Events.Commands
 {
     public class CreateEventHandler_Tests
     {
-        private readonly Mock<ICacheService> _mockCacheService;
         private readonly Mock<IEventRepository> _mockEventRepository;
         private readonly Mock<IEventCategoryRepository> _mockCategoryRepository;
         private readonly Mock<IUnitOfWork> _mockUnitOfWork;
@@ -21,15 +20,17 @@ namespace EventsWebApplication.Tests.UseCases.Events.Commands
 
         public CreateEventHandler_Tests()
         {
-            _mockCacheService = new Mock<ICacheService>();
             _mockEventRepository = new Mock<IEventRepository>();
             _mockCategoryRepository = new Mock<IEventCategoryRepository>();
             _mockUnitOfWork = new Mock<IUnitOfWork>();
 
             var mappingConfig = new MapperConfiguration(cfg =>
             {
-                cfg.AddProfile(new EventMappingConfig());
-                cfg.AddProfile(new EventCategoryMappingConfig());
+                cfg.AddProfile(new CreateEventCommandToEventProfile());
+                cfg.AddProfile(new EventToEventReadDtoProfile());
+                cfg.AddProfile(new UpdateEventCommandToEventProfile());
+                cfg.AddProfile(new CreateCategoryCommandToEventCategoryProfile());
+                cfg.AddProfile(new EventCategoryToEventCategoryReadDtoProfile());
             });
             _mapper = mappingConfig.CreateMapper();
         }
@@ -74,15 +75,14 @@ namespace EventsWebApplication.Tests.UseCases.Events.Commands
             ).ReturnsAsync(category);
 
             _mockUnitOfWork.Setup(u =>
-                u.GetRepository<IEventRepository, Event>()
+                u.Events
             ).Returns(_mockEventRepository.Object);
 
             _mockUnitOfWork.Setup(u =>
-                u.GetRepository<EventCategory>()
+                u.EventCategories
             ).Returns(_mockCategoryRepository.Object);
 
             var handler = new CreateEventHandler(
-                _mockCacheService.Object,
                 _mockUnitOfWork.Object,
                 _mapper
             );
@@ -96,14 +96,6 @@ namespace EventsWebApplication.Tests.UseCases.Events.Commands
             Assert.Equal(command.Name, result.Name);
             Assert.Equal(command.Description, result.Description);
             Assert.Equal(command.CategoryId, result.Category.Id);
-
-            _mockCacheService.Verify(c =>
-                c.SetAsync(
-                    It.IsAny<string>(),
-                    It.IsAny<EventReadDto>()
-                ),
-                Times.Once
-            );
         }
 
         [Fact]
@@ -141,11 +133,10 @@ namespace EventsWebApplication.Tests.UseCases.Events.Commands
             ).ReturnsAsync(existingEvent);
 
             _mockUnitOfWork.Setup(u =>
-                u.GetRepository<IEventRepository, Event>()
+                u.Events
             ).Returns(_mockEventRepository.Object);
 
             var handler = new CreateEventHandler(
-                _mockCacheService.Object,
                 _mockUnitOfWork.Object,
                 _mapper
             );
@@ -186,15 +177,14 @@ namespace EventsWebApplication.Tests.UseCases.Events.Commands
             ).ReturnsAsync((EventCategory)null);
 
             _mockUnitOfWork.Setup(u =>
-                u.GetRepository<IEventRepository, Event>()
+                u.Events
             ).Returns(_mockEventRepository.Object);
 
             _mockUnitOfWork.Setup(u =>
-                u.GetRepository<EventCategory>()
+                u.EventCategories
             ).Returns(_mockCategoryRepository.Object);
 
             var handler = new CreateEventHandler(
-                _mockCacheService.Object,
                 _mockUnitOfWork.Object,
                 _mapper)
             ;

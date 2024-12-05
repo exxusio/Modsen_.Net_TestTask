@@ -1,13 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using EventsWebApplication.Domain.Entities;
-using EventsWebApplication.Infrastructure.Data;
+using EventsWebApplication.Domain.Abstractions.Data.Repositories;
 using EventsWebApplication.Infrastructure.Data.Repositories;
+using EventsWebApplication.Infrastructure.Data;
 
 namespace EventsWebApplication.Tests.Repositories.Events
 {
     public class EventRepository_GetByIdAsync_Tests
     {
-        private readonly EventRepository _eventRepository;
+        private readonly IEventRepository _eventRepository;
         private readonly AppDbContext _context;
 
         public EventRepository_GetByIdAsync_Tests()

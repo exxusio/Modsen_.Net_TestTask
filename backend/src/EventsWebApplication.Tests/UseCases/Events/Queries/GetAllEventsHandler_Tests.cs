@@ -1,9 +1,10 @@
 using Moq;
 using AutoMapper;
 using EventsWebApplication.Domain.Entities;
-using EventsWebApplication.Domain.Repositories;
+using EventsWebApplication.Domain.Abstractions.Data.Repositories;
 using EventsWebApplication.Application.UseCases.Admins.EventCases.Queries.GetAllEvents;
-using EventsWebApplication.Application.Configs.Mappings;
+using EventsWebApplication.Application.Configs.Mappings.EventCategories;
+using EventsWebApplication.Application.Configs.Mappings.Events;
 using EventsWebApplication.Application.DTOs;
 
 namespace EventsWebApplication.Tests.UseCases.Events.Queries
@@ -19,8 +20,11 @@ namespace EventsWebApplication.Tests.UseCases.Events.Queries
 
             var mappingConfig = new MapperConfiguration(cfg =>
             {
-                cfg.AddProfile(new EventMappingConfig());
-                cfg.AddProfile(new EventCategoryMappingConfig());
+                cfg.AddProfile(new CreateEventCommandToEventProfile());
+                cfg.AddProfile(new EventToEventReadDtoProfile());
+                cfg.AddProfile(new UpdateEventCommandToEventProfile());
+                cfg.AddProfile(new CreateCategoryCommandToEventCategoryProfile());
+                cfg.AddProfile(new EventCategoryToEventCategoryReadDtoProfile());
             });
             _mapper = mappingConfig.CreateMapper();
         }

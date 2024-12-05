@@ -1,30 +1,34 @@
 using Moq;
 using AutoMapper;
 using EventsWebApplication.Domain.Entities;
-using EventsWebApplication.Domain.Exceptions;
-using EventsWebApplication.Domain.Repositories;
+using EventsWebApplication.Domain.Abstractions.Notify;
+using EventsWebApplication.Domain.Abstractions.Data.Repositories;
 using EventsWebApplication.Application.UseCases.Admins.EventCases.Commands.DeleteEvent;
-using EventsWebApplication.Application.Abstractions.Caching;
-using EventsWebApplication.Application.Configs.Mappings;
+using EventsWebApplication.Application.Configs.Mappings.EventCategories;
+using EventsWebApplication.Application.Configs.Mappings.Events;
+using EventsWebApplication.Application.Exceptions;
 using EventsWebApplication.Application.DTOs;
 
 namespace EventsWebApplication.Tests.UseCases.Events.Commands
 {
     public class DeleteEventHandler_Tests
     {
-        private readonly Mock<ICacheService> _mockCacheService;
         private readonly Mock<IEventRepository> _mockRepository;
+        private readonly Mock<INotificationService> _mockNotifyService;
         private readonly IMapper _mapper;
 
         public DeleteEventHandler_Tests()
         {
-            _mockCacheService = new Mock<ICacheService>();
             _mockRepository = new Mock<IEventRepository>();
+            _mockNotifyService = new Mock<INotificationService>();
 
             var mappingConfig = new MapperConfiguration(cfg =>
             {
-                cfg.AddProfile(new EventMappingConfig());
-                cfg.AddProfile(new EventCategoryMappingConfig());
+                cfg.AddProfile(new CreateEventCommandToEventProfile());
+                cfg.AddProfile(new EventToEventReadDtoProfile());
+                cfg.AddProfile(new UpdateEventCommandToEventProfile());
+                cfg.AddProfile(new CreateCategoryCommandToEventCategoryProfile());
+                cfg.AddProfile(new EventCategoryToEventCategoryReadDtoProfile());
             });
             _mapper = mappingConfig.CreateMapper();
         }
@@ -49,15 +53,14 @@ namespace EventsWebApplication.Tests.UseCases.Events.Commands
                 r.SaveChangesAsync(It.IsAny<CancellationToken>())
             );
 
-            _mockCacheService.Setup(c =>
-                c.DeleteAsync<EventReadDto>(eventReadDto.Id.ToString())
-            ).Returns(Task.CompletedTask)
-            .Verifiable();
+            _mockNotifyService.Setup(r =>
+                r.SendToAllEventChange(It.IsAny<Guid>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>())
+            );
 
             var handler = new DeleteEventHandler(
-                _mockCacheService.Object,
                 _mockRepository.Object,
-                _mapper
+                _mapper,
+                _mockNotifyService.Object
             );
 
             var result = await handler.Handle(
@@ -72,10 +75,6 @@ namespace EventsWebApplication.Tests.UseCases.Events.Commands
                 r.Delete(It.IsAny<Event>()),
                 Times.Once
             );
-            _mockCacheService.Verify(c =>
-                c.DeleteAsync<EventReadDto>(eventReadDto.Id.ToString()),
-                Times.Once
-            );
         }
 
         [Fact]
@@ -87,10 +86,14 @@ namespace EventsWebApplication.Tests.UseCases.Events.Commands
                 r.GetByIdAsync(eventId, It.IsAny<CancellationToken>())
             ).ReturnsAsync((Event)null);
 
+            _mockNotifyService.Setup(r =>
+                r.SendToAllEventChange(It.IsAny<Guid>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>())
+            );
+
             var handler = new DeleteEventHandler(
-                _mockCacheService.Object,
                 _mockRepository.Object,
-                _mapper
+                _mapper,
+                _mockNotifyService.Object
             );
 
             var exception = await Assert.ThrowsAsync<NotFoundException>(() =>
@@ -123,15 +126,14 @@ namespace EventsWebApplication.Tests.UseCases.Events.Commands
                 r.SaveChangesAsync(It.IsAny<CancellationToken>())
             );
 
-            _mockCacheService.Setup(c =>
-                c.DeleteAsync<EventReadDto>(eventReadDto.Id.ToString())
-            ).Returns(Task.CompletedTask)
-            .Verifiable();
+            _mockNotifyService.Setup(r =>
+                r.SendToAllEventChange(It.IsAny<Guid>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>())
+            );
 
             var handler = new DeleteEventHandler(
-                _mockCacheService.Object,
                 _mockRepository.Object,
-                _mapper
+                _mapper,
+                _mockNotifyService.Object
             );
 
             await handler.Handle(
